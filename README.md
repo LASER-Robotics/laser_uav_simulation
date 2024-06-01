@@ -15,3 +15,15 @@ git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git -b foxy-de
 cd ~/laser_uav_system_ws
 colcon build --symlink-install
 ```
+
+```
+cd ~/git/laser_uav_system/ros_packages/px4_firmware
+rm -r build
+mkdir build && cd build
+cmake ..
+make topic_bridge_files
+make
+cd ..
+bash ./Tools/setup/ubuntu.sh
+make px4_sitl
+```
