@@ -8,8 +8,8 @@ cd "$SIMULATION_PATH"
 
 FILE="$SIMULATION_PATH"/sitl_targets_gazebo-classic.cmake
 
-MODELS_TEXT="laser_x500"
-WORLDS_TEXT="laser_empty"
+MODELS_TEXT="x500"
+WORLDS_TEXT="custom_empty"
 
 sed -i "/set(models/a $MODELS_TEXT" $FILE
 

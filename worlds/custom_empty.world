@@ -81,25 +81,24 @@
             </friction>
           </surface>
         </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>250 250</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grass</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
       </link>
     </model>
-  	<!--}-->
-  	
-    <!-- user camera {-->
-    <gui>
-      <camera name="camera">
-        <pose>6 6 3 0 0.6 -2.64</pose>
-        <track_visual>
-      		<static>false</static>
-      		<use_model_frame>false</use_model_frame>
-      		<inherit_yaw>false</inherit_yaw>
-      		<xyz>0 0 0</xyz>
-      		<min_dist>0.0</min_dist>
-      		<max_dist>100000.0</max_dist>
-      	</track_visual>
-      </camera>
-    </gui>
-    <!--}-->
-  	
+  	<!--}-->	
+ 	
   </world>
 </sdf>

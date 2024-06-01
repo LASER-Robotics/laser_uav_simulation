@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
+
 <sdf version='1.6'>
   <model name="x500">
     <link name="base_link">
@@ -17,7 +20,7 @@
 		    </inertia>
 		  </inertial>
 		  <collision name="base_link_collision">
-        <pose>0 0 -0.05 0 0 0</pose>
+        <pose>0 0 -0.03 0 0 0</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.1</length>
@@ -45,7 +48,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/top_board_mesh_file.dae</uri>
+			      <uri>model://x500/meshes/x500v2/top_board_mesh_file.dae</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -55,7 +58,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/bottom_board_mesh_file.dae</uri>
+			      <uri>model://x500/meshes/x500v2/bottom_board_mesh_file.dae</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -68,7 +71,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			  <mesh>
-			    <uri>model://laser_x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			    <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
 			    <scale>1 1 1</scale>
 			  </mesh>
 		    </geometry>
@@ -78,7 +81,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -93,7 +96,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -108,7 +111,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -124,7 +127,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -134,7 +137,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -149,7 +152,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -164,7 +167,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -180,7 +183,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -190,7 +193,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -205,7 +208,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -220,7 +223,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -236,7 +239,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -246,7 +249,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -261,7 +264,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -276,7 +279,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -292,7 +295,7 @@
 		    <pose>0 0 0 0 0 0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			  </mesh>
 		    </geometry>
@@ -329,7 +332,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -366,7 +369,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -403,7 +406,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -443,7 +446,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/nuc_board_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/nuc_board_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -458,7 +461,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/nuc_cooler_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/nuc_cooler_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -473,7 +476,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -488,7 +491,7 @@
 		    <pose>0 0 0.083 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
 			      <scale>1 1 0.6</scale>
 			    </mesh>
 		    </geometry>
@@ -506,7 +509,7 @@
 		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/pixhawk6c_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/pixhawk6c_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -525,7 +528,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -541,7 +544,7 @@
 		    <pose>0 0 0 0 0 0.0</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -557,7 +560,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -573,7 +576,7 @@
 		    <pose>0 0 0 0 0 1.57079633</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -589,7 +592,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -605,7 +608,7 @@
 		    <pose>0 0 0 0 0 3.14159266</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -621,7 +624,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -637,7 +640,7 @@
 		    <pose>0 0 0 0 0 4.71238899</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -656,7 +659,7 @@
 		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/battery_mount_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/battery_mount_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -671,7 +674,7 @@
 		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/battery_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/battery_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -689,7 +692,7 @@
 		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/gps_mount_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/gps_mount_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -704,7 +707,7 @@
 		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/gps_module_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/gps_module_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -722,7 +725,7 @@
 		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/garmin_mount_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/garmin_mount_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -736,8 +739,8 @@
       <!--}-->
       <gravity>1</gravity>
       <velocity_decay/>
-      <!--}-->
     </link>
+    <!--}-->
 
     <!-- IMU {-->
     <link name='imu_link'>
@@ -794,7 +797,7 @@
 	    <visual name="prop_0_visual_1">
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
 		        <scale>1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -803,7 +806,7 @@
 		    <pose>0 0 -0.0086 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
 		        <scale>1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -867,7 +870,7 @@
 	    <visual name="prop_1_visual_1">
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
 		        <scale>1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -876,7 +879,7 @@
 		    <pose>0 0 -0.0086 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
 		        <scale>1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -940,7 +943,7 @@
 	    <visual name="prop_2_visual_1">
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
 		        <scale>-1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -949,7 +952,7 @@
 		    <pose>0 0 -0.0086 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
 		        <scale>-1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -1013,7 +1016,7 @@
 	    <visual name="prop_3_visual_1">
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
 		        <scale>-1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -1022,7 +1025,7 @@
 		    <pose>0 0 -0.0086 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
 		        <scale>-1 1 1</scale>
 		      </mesh>
 		    </geometry>
@@ -1089,7 +1092,7 @@
 			<pose>0.015 0 0 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/sensors/garmin_lidar_v3.stl</uri>
+		        <uri>model://x500/meshes/sensors/garmin_lidar_v3.stl</uri>
 		        <scale>0.001 0.001 0.001</scale>
 		      </mesh>
 		    </geometry>
@@ -1100,7 +1103,7 @@
           </script>
 		    </material>
       </visual>
-	    <sensor name="garmin_sensor" type='ray'>
+	    <sensor name="garmin" type='ray'>
 	      <update_rate>100</update_rate>
 	      <ray>
 		      <scan>
@@ -1123,6 +1126,15 @@
 		        <resolution>0.005</resolution>
 		      </range>
 	      </ray>
+
+        <plugin name="garmin" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+		  	<remapping>~/out:=/uav1/sensors/garmin/scan</remapping>
+		  </ros>
+		  <output_type>sensor_msgs/LaserScan</output_type>
+          <frameName>rplidar_link</frameName>
+        </plugin>
+
       </sensor>
 	  </link>
 	  <joint name="garmin_joint" type="fixed">
@@ -1130,8 +1142,6 @@
 	    <child>garmin_link</child>
 	  </joint>
     <!--}-->
-
-	<static>0</static>
 
     <!-- Motor Plugins {-->
     <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
@@ -1331,7 +1341,7 @@
 		    <pose>0 0 -0.105 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
-			      <uri>model://laser_x500/meshes/x500v2/lidar_mount_mesh_file.stl</uri>
+			      <uri>model://x500/meshes/x500v2/lidar_mount_mesh_file.stl</uri>
 			      <scale>1 1 1</scale>
 			    </mesh>
 		    </geometry>
@@ -1347,7 +1357,7 @@
 			<pose>0 0 0 0 0 0</pose>
 		    <geometry>
 		      <mesh>
-		        <uri>model://laser_x500/meshes/sensors/rplidar.stl</uri>
+		        <uri>model://x500/meshes/sensors/rplidar.stl</uri>
 		        <scale>0.0009 0.0009 0.0009</scale>
 		      </mesh>
 		    </geometry>
@@ -1359,7 +1369,11 @@
 		    </material>
       </visual>
 
-      <sensor name="laser" type="ray">
+      <sensor name="rplidar" type="ray">
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>false</visualize>
+
         <ray>
           <scan>
             <horizontal>
@@ -1380,14 +1394,15 @@
             <stddev>0.01</stddev>
           </noise>
         </ray>
-        <plugin name="laser" filename="libRayPlugin.so" />
-        <plugin name="gazebo_ros_head_rplidar_controller" filename="libgazebo_ros_laser.so">
-          <topicName>laser/scan</topicName>
+
+        <plugin name="rplidar" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+		  	<remapping>~/out:=/uav1/sensors/rplidar/scan</remapping>
+		  </ros>
+		  <output_type>sensor_msgs/LaserScan</output_type>
           <frameName>rplidar_link</frameName>
         </plugin>
-        <always_on>1</always_on>
-        <update_rate>10</update_rate>
-        <visualize>false</visualize>
+
       </sensor>
     </link>
     <joint name='rplidar_joint' type='fixed'>
@@ -1436,8 +1451,313 @@
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
     </plugin>
+  <!--}-->
+
+	<!-- Realsense Front {-->
+    <link name="front_rgbd_link">
+      <pose>0.0725 0 -0.025 0 0 0</pose>
+      <visual name="front_rgbd_link_visual">
+        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <geometry>
+          <mesh>
+			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
+			<scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.19</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+
+      <sensor name="uav1/front_rgbd/depth" type="depth">
+        <camera name="uav1/front_rgbd/depth">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+          </image>
+          <clip>
+            <near>0.3</near>
+            <far>12</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>5000.0</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/front_rgbd/color" type="camera">
+        <camera name="uav1/front_rgbd/color">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>RGB_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/front_rgbd/ired1" type="camera">
+        <camera name="uav1/front_rgbd/ired1">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+      <sensor name="uav1/front_rgbd/ired2" type="camera">
+        <camera name="uav1/front_rgbd/ired2">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+    </link>
+
+    <joint name="front_rgbd_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_rgbd_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <plugin name="uav1/front_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
+      <prefix>uav1/front_rgbd/</prefix>
+      <depthUpdateRate>60.0</depthUpdateRate>
+      <colorUpdateRate>60.0</colorUpdateRate>
+      <infraredUpdateRate>30.0</infraredUpdateRate>
+	  <!-- Depth -->
+      <depthTopicName>uav1/front_rgbd/depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>uav1/front_rgbd/depth/camera_info</depthCameraInfoTopicName>
+	  <!-- PointCloud -->
+	  <pointCloudTopicName>uav1/front_rgbd/depth/color/points</pointCloudTopicName>
+      <pointCloud>true</pointCloud>
+      <pointCloudCutoff>0.3</pointCloudCutoff>
+	  <!-- Color -->
+      <colorTopicName>uav1/front_rgbd/color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>uav1/front_rgbd/color/camera_info</colorCameraInfoTopicName>
+	  <!-- Infra -->
+      <infrared1TopicName>uav1/front_rgbd/infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>uav1/front_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared2TopicName>uav1/front_rgbd/infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>uav1/front_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
+
+      <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+      <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+      <infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
+      <infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+      <rangeMinDepth>0.3</rangeMinDepth>
+      <rangeMaxDepth>3.0</rangeMaxDepth>
+    </plugin>
 	<!--}-->
 
-    <!--}-->
+	<!-- Realsense Down {-->
+    <link name="down_rgbd_link">
+      <pose>0.0725 0 -0.0465 0 1.57 0</pose>
+      <visual name="down_rgbd_link_visual">
+        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <geometry>
+          <mesh>
+			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
+			<scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.19</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+
+      <sensor name="uav1/down_rgbd/depth" type="depth">
+        <camera name="uav1/down_rgbd/depth">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+          </image>
+          <clip>
+            <near>0.3</near>
+            <far>12</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>5000.0</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/down_rgbd/color" type="camera">
+        <camera name="uav1/down_rgbd/color">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>RGB_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/down_rgbd/ired1" type="camera">
+        <camera name="uav1/down_rgbd/ired1">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+      <sensor name="uav1/down_rgbd/ired2" type="camera">
+        <camera name="uav1/down_rgbd/ired2">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+    </link>
+
+    <joint name="down_rgbd_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>down_rgbd_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <plugin name="uav1/down_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
+      <prefix>uav1/down_rgbd/</prefix>
+      <depthUpdateRate>60.0</depthUpdateRate>
+      <colorUpdateRate>60.0</colorUpdateRate>
+      <infraredUpdateRate>30.0</infraredUpdateRate>
+	  <!-- Depth -->
+      <depthTopicName>uav1/down_rgbd/depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>uav1/down_rgbd/depth/camera_info</depthCameraInfoTopicName>
+	  <!-- PointCloud -->
+	  <pointCloudTopicName>uav1/down_rgbd/depth/color/points</pointCloudTopicName>
+      <pointCloud>true</pointCloud>
+      <pointCloudCutoff>0.3</pointCloudCutoff>
+	  <!-- Color -->
+      <colorTopicName>uav1/down_rgbd/color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>uav1/down_rgbd/color/camera_info</colorCameraInfoTopicName>
+	  <!-- Infra -->
+      <infrared1TopicName>uav1/down_rgbd/infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>uav1/down_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared2TopicName>uav1/down_rgbd/infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>uav1/down_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
+
+      <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+      <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+      <infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
+      <infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+      <rangeMinDepth>0.3</rangeMinDepth>
+      <rangeMaxDepth>3.0</rangeMaxDepth>
+    </plugin>
+	<!--}-->
+
   </model>
 </sdf>

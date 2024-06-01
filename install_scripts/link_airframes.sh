@@ -9,6 +9,6 @@ ln -fs "$MY_PATH"/ROMFS/px4fmu_common/init.d-posix/airframes/* ./
 
 FILE="$SIMULATION_PATH"/CMakeLists.txt
 
-TEXT="		#custom models\n	22000_gazebo-classic_laser_x500"
+TEXT="		#custom models\n	22000_gazebo-classic_x500"
 
 sed -i "$(($(wc -l < $FILE) - 1))i $TEXT" $FILE
