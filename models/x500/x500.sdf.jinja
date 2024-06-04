@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+{% set root = "base_link" %}
+{% set namespace = "uav1" %}
 {% set model_name = "x500" %}
+
+{% import "component_snippets.sdf.jinja" as components %}
 
 <sdf version='1.6'>
   <model name="{{  model_name  }}">
-    <link name="base_link">
+    <link name="{{  root  }}">
 		  <pose>0 0 0 0 0 0</pose>
 
 	    <!-- Body physics {-->
@@ -19,7 +23,7 @@
 			    <izz>0.0625</izz>
 		    </inertia>
 		  </inertial>
-		  <collision name="base_link_collision">
+		  <collision name="{{  root  }}_collision">
         <pose>0 0 -0.03 0 0 0</pose>
 		    <geometry>
 			    <cylinder>
@@ -45,7 +49,7 @@
 
 	    <!-- Boards {-->
 		  <visual name="top_board_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/top_board_mesh_file.dae</uri>
@@ -55,7 +59,7 @@
 		  </visual>
 
 		  <visual name="bottom_board_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/bottom_board_mesh_file.dae</uri>
@@ -86,9 +90,10 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
@@ -101,9 +106,10 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
@@ -124,7 +130,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -134,7 +140,7 @@
 		  </visual>
 
 		  <visual name="elbow_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -142,14 +148,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -157,14 +164,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -180,7 +188,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -190,7 +198,7 @@
 		  </visual>
 
 		  <visual name="elbow_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -198,14 +206,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -213,14 +222,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -236,7 +246,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -246,7 +256,7 @@
 		  </visual>
 
 		  <visual name="elbow_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -254,14 +264,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -269,14 +280,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -329,7 +341,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -345,7 +357,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_front_left_link_collision">
-		    <pose>0.13 0.13 -0.07 0 0 1.57079633</pose>
+		    <pose>0.13 0.13 -0.07 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -366,7 +378,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -382,7 +394,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_back_left_link_collision">
-		    <pose>-0.13 0.13 -0.07 0 0 3.14159266</pose>
+		    <pose>-0.13 0.13 -0.07 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -403,7 +415,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -419,7 +431,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_back_right_link_collision">
-		    <pose>-0.13 -0.13 -0.07 0 0 4.71238899</pose>
+		    <pose>-0.13 -0.13 -0.07 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -443,7 +455,7 @@
 
       <!-- intel nuc {-->
 		  <visual name="nuc_board_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/nuc_board_mesh_file.stl</uri>
@@ -458,7 +470,7 @@
 		    </material>
 		  </visual>
 		  <visual name="nuc_cooler_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/nuc_cooler_mesh_file.stl</uri>
@@ -473,7 +485,7 @@
 		    </material>
 		  </visual>
 		  <visual name="nuc_hex_posts_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
@@ -488,7 +500,7 @@
 		    </material>
 		  </visual>
 		  <visual name="nuc_hex_posts_visual_2">
-		    <pose>0 0 0.083 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.083 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
@@ -506,7 +518,7 @@
 
       <!-- pixhawk {-->
 		  <visual name="pixhawk6c_visual">
-		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/pixhawk6c_mesh_file.stl</uri>
@@ -557,7 +569,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -573,7 +585,7 @@
 		  </visual>
 		  
 		  <visual name="motor_middle_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -589,7 +601,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -605,7 +617,7 @@
 		  </visual>
   
 		  <visual name="motor_middle_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 {{  components.pi  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -621,7 +633,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -637,7 +649,7 @@
 		  </visual>
 		  
 		  <visual name="motor_middle_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 {{  components.rad(270)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -656,7 +668,7 @@
       
       <!-- battery mount and battery {-->
 		  <visual name="battery_mount_visual">
-		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.001 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/battery_mount_mesh_file.stl</uri>
@@ -671,7 +683,7 @@
 		    </material>
 		  </visual>
 		  <visual name="battery_visual">
-		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.001 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/battery_mesh_file.stl</uri>
@@ -689,7 +701,7 @@
       
       <!-- gps mount and gps {-->
 		  <visual name="gps_mount_visual">
-		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.035 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/gps_mount_mesh_file.stl</uri>
@@ -704,7 +716,7 @@
 		    </material>
 		  </visual>
 		  <visual name="gps_module_visual">
-		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.035 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/gps_module_mesh_file.stl</uri>
@@ -722,7 +734,7 @@
       
       <!-- garmin mount {-->
 		  <visual name="garmin_mount_visual">
-		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <pose>0 0 0.001 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/garmin_mount_mesh_file.stl</uri>
@@ -760,7 +772,7 @@
     </link>
     <joint name='imu_joint' type='revolute'>
       <child>imu_link</child>
-      <parent>base_link</parent>
+      <parent>{{  root  }}</parent>
       <axis>
         <xyz>1 0 0</xyz>
         <limit>
@@ -818,7 +830,7 @@
 		    </material>
 	    </visual>
 	    <collision name="prop_0_link_collision">
-		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <pose>0 0 0 0 {{  components.rad(90)  }} 0</pose>
 		    <geometry>
 		      <cylinder>
 		        <length>0.3302</length>
@@ -836,7 +848,7 @@
 	    </collision>
 	  </link>
     <joint name="prop_0_joint" type="revolute">
-	    <parent>base_link</parent>
+	    <parent>{{  root  }}</parent>
 	    <child>prop_0_link</child>
 	    <axis>
 		    <xyz>0 0 1</xyz>
@@ -891,7 +903,7 @@
 		    </material>
 	    </visual>
 	    <collision name="prop_1_link_collision">
-		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <pose>0 0 0 0 {{  components.rad(90)  }} 0</pose>
 		    <geometry>
 		      <cylinder>
 		        <length>0.3302</length>
@@ -909,7 +921,7 @@
 	    </collision>
     </link>
 	  <joint name="prop_1_joint" type="revolute">
-	    <parent>base_link</parent>
+	    <parent>{{  root  }}</parent>
 	    <child>prop_1_link</child>
 	    <axis>
 		    <xyz>0 0 1</xyz>
@@ -964,7 +976,7 @@
 		    </material>
 	    </visual>
 	    <collision name="prop_2_link_collision">
-		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <pose>0 0 0 0 {{  components.rad(90)  }} 0</pose>
 		    <geometry>
 		      <cylinder>
 		        <length>0.3302</length>
@@ -982,7 +994,7 @@
 	    </collision>
 	  </link>
 	  <joint name="prop_2_joint" type="revolute">
-	    <parent>base_link</parent>
+	    <parent>{{  root  }}</parent>
 	    <child>prop_2_link</child>
 	    <axis>
 		    <xyz>0 0 1</xyz>
@@ -1037,7 +1049,7 @@
 		    </material>
 	    </visual>
 	    <collision name="prop_3_link_collision">
-		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <pose>0 0 0 0 {{  components.rad(90)  }} 0</pose>
 		    <geometry>
 		      <cylinder>
 		        <length>0.3302</length>
@@ -1056,7 +1068,7 @@
     </link>
 
     <joint name="prop_3_joint" type="revolute">
-	    <parent>base_link</parent>
+	    <parent>{{  root  }}</parent>
 	    <child>prop_3_link</child>
 	    <axis>
 		    <xyz>0 0 1</xyz>
@@ -1076,7 +1088,7 @@
 
     <!-- Garmin {-->
     <link name="garmin_link">
-	    <pose>0.0 0.0625 -0.005 0 1.5707963267950003 -1.5707963267950003</pose>
+	    <pose>0.0 0.0625 -0.005 0 {{  components.rad(90)  }} {{  components.rad(-90)  }}</pose>
 	    <inertial>
 		    <mass>0.0001</mass>
 		    <inertia>
@@ -1129,7 +1141,7 @@
 
         <plugin name="garmin" filename="libgazebo_ros_ray_sensor.so">
           <ros>
-		  	<remapping>~/out:=/uav1/sensors/garmin/scan</remapping>
+		  	<remapping>~/out:=/{{  namespace  }}/sensors/garmin/scan</remapping>
 		  </ros>
 		  <output_type>sensor_msgs/LaserScan</output_type>
           <frameName>rplidar_link</frameName>
@@ -1138,7 +1150,7 @@
       </sensor>
 	  </link>
 	  <joint name="garmin_joint" type="fixed">
-	    <parent>base_link</parent>
+	    <parent>{{  root  }}</parent>
 	    <child>garmin_link</child>
 	  </joint>
     <!--}-->
@@ -1317,7 +1329,7 @@
     </include>
 	<joint name='gps0_joint' type='fixed'>
 	  <child>gps0::link</child>
-	  <parent>base_link</parent>
+	  <parent>{{  root  }}</parent>
 	</joint>
   <!--}-->
 
@@ -1338,7 +1350,7 @@
       </inertial>
 
 		  <visual name="rplidar_mount_visual">
-		    <pose>0 0 -0.105 0 0 1.5707963267950003</pose>
+		    <pose>0 0 -0.105 0 0 {{  components.rad(90)  }}</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/lidar_mount_mesh_file.stl</uri>
@@ -1379,8 +1391,8 @@
             <horizontal>
               <samples>360</samples>
               <resolution>1</resolution>
-              <min_angle>-3.1415</min_angle>
-              <max_angle>3.1415</max_angle>
+              <min_angle>{{  components.rad(-90)  }}</min_angle>
+              <max_angle>{{  components.rad(90)  }}</max_angle>
             </horizontal>
           </scan>
           <range>
@@ -1397,7 +1409,7 @@
 
         <plugin name="rplidar" filename="libgazebo_ros_ray_sensor.so">
           <ros>
-		  	<remapping>~/out:=/uav1/sensors/rplidar/scan</remapping>
+		  	<remapping>~/out:=/{{  namespace  }}/sensors/rplidar/scan</remapping>
 		  </ros>
 		  <output_type>sensor_msgs/LaserScan</output_type>
           <frameName>rplidar_link</frameName>
@@ -1407,7 +1419,7 @@
     </link>
     <joint name='rplidar_joint' type='fixed'>
       <child>rplidar_link</child>
-      <parent>base_link</parent>
+      <parent>{{  root  }}</parent>
     </joint>
     <!--} -->
 
@@ -1457,7 +1469,7 @@
     <link name="front_rgbd_link">
       <pose>0.0725 0 -0.025 0 0 0</pose>
       <visual name="front_rgbd_link_visual">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 {{  components.rad(-90)  }} 0 {{  components.rad(-90)  }}</pose>
         <geometry>
           <mesh>
 			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
@@ -1479,8 +1491,8 @@
         </inertia>
       </inertial>
 
-      <sensor name="uav1/front_rgbd/depth" type="depth">
-        <camera name="uav1/front_rgbd/depth">
+      <sensor name="{{  namespace  }}/front_rgbd/depth" type="depth">
+        <camera name="{{  namespace  }}/front_rgbd/depth">
           <horizontal_fov>1.211259</horizontal_fov>
           <image>
             <width>1280</width>
@@ -1501,8 +1513,8 @@
         <visualize>0</visualize>
       </sensor>
 
-      <sensor name="uav1/front_rgbd/color" type="camera">
-        <camera name="uav1/front_rgbd/color">
+      <sensor name="{{  namespace  }}/front_rgbd/color" type="camera">
+        <camera name="{{  namespace  }}/front_rgbd/color">
           <horizontal_fov>1.211259</horizontal_fov>
           <image>
             <width>1280</width>
@@ -1524,8 +1536,8 @@
         <visualize>0</visualize>
       </sensor>
 
-      <sensor name="uav1/front_rgbd/ired1" type="camera">
-        <camera name="uav1/front_rgbd/ired1">
+      <sensor name="{{  namespace  }}/front_rgbd/ired1" type="camera">
+        <camera name="{{  namespace  }}/front_rgbd/ired1">
           <horizontal_fov>1.211259</horizontal_fov>
           <image>
             <width>640</width>
@@ -1546,8 +1558,8 @@
         <update_rate>30</update_rate>
         <visualize>0</visualize>
       </sensor>
-      <sensor name="uav1/front_rgbd/ired2" type="camera">
-        <camera name="uav1/front_rgbd/ired2">
+      <sensor name="{{  namespace  }}/front_rgbd/ired2" type="camera">
+        <camera name="{{  namespace  }}/front_rgbd/ired2">
           <horizontal_fov>1.211259</horizontal_fov>
           <image>
             <width>640</width>
@@ -1571,31 +1583,31 @@
     </link>
 
     <joint name="front_rgbd_joint" type="fixed">
-      <parent>base_link</parent>
+      <parent>{{  root  }}</parent>
       <child>front_rgbd_link</child>
       <pose>0 0 0 0 0 0</pose>
     </joint>
 
-    <plugin name="uav1/front_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
-      <prefix>uav1/front_rgbd/</prefix>
+    <plugin name="{{  namespace  }}/front_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
+      <prefix>{{  namespace  }}/front_rgbd/</prefix>
       <depthUpdateRate>60.0</depthUpdateRate>
       <colorUpdateRate>60.0</colorUpdateRate>
       <infraredUpdateRate>30.0</infraredUpdateRate>
 	  <!-- Depth -->
-      <depthTopicName>uav1/front_rgbd/depth/image_raw</depthTopicName>
-      <depthCameraInfoTopicName>uav1/front_rgbd/depth/camera_info</depthCameraInfoTopicName>
+      <depthTopicName>{{  namespace  }}/front_rgbd/depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>{{  namespace  }}/front_rgbd/depth/camera_info</depthCameraInfoTopicName>
 	  <!-- PointCloud -->
-	  <pointCloudTopicName>uav1/front_rgbd/depth/color/points</pointCloudTopicName>
+	  <pointCloudTopicName>{{  namespace  }}/front_rgbd/depth/color/points</pointCloudTopicName>
       <pointCloud>true</pointCloud>
       <pointCloudCutoff>0.3</pointCloudCutoff>
 	  <!-- Color -->
-      <colorTopicName>uav1/front_rgbd/color/image_raw</colorTopicName>
-      <colorCameraInfoTopicName>uav1/front_rgbd/color/camera_info</colorCameraInfoTopicName>
+      <colorTopicName>{{  namespace  }}/front_rgbd/color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>{{  namespace  }}/front_rgbd/color/camera_info</colorCameraInfoTopicName>
 	  <!-- Infra -->
-      <infrared1TopicName>uav1/front_rgbd/infra1/image_raw</infrared1TopicName>
-      <infrared1CameraInfoTopicName>uav1/front_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
-      <infrared2TopicName>uav1/front_rgbd/infra2/image_raw</infrared2TopicName>
-      <infrared2CameraInfoTopicName>uav1/front_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
+      <infrared1TopicName>{{  namespace  }}/front_rgbd/infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>{{  namespace  }}/front_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared2TopicName>{{  namespace  }}/front_rgbd/infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>{{  namespace  }}/front_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
 
       <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
       <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
@@ -1608,12 +1620,13 @@
 
 	<!-- Realsense Down {-->
     <link name="down_rgbd_link">
-      <pose>0.0725 0 -0.0465 0 1.57 0</pose>
+      <!-- <pose>0.0725 0 -0.0465 0 {{  components.rad(90)  }} 0</pose> -->
+	  <pose>0.086 0 -0.065 0 {{  components.rad(90)  }} {{  components.rad(180)  }}</pose>
       <visual name="down_rgbd_link_visual">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 {{  components.rad(-90)  }} 0 {{  components.rad(-90)  }}</pose>
         <geometry>
           <mesh>
-			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
+			<uri>model://x500/meshes/d455/d455.stl</uri>
 			<scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -1632,16 +1645,16 @@
         </inertia>
       </inertial>
 
-      <sensor name="uav1/down_rgbd/depth" type="depth">
-        <camera name="uav1/down_rgbd/depth">
-          <horizontal_fov>1.211259</horizontal_fov>
+      <sensor name="{{  namespace  }}/down_rgbd/depth" type="depth">
+        <camera name="{{  namespace  }}/down_rgbd/depth">
+          <horizontal_fov>{{  components.rad(87)  }}</horizontal_fov>
           <image>
             <width>1280</width>
-            <height>720</height>
+            <height>800</height>
           </image>
           <clip>
-            <near>0.3</near>
-            <far>12</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1650,21 +1663,21 @@
           </noise>
         </camera>
         <always_on>1</always_on>
-        <update_rate>60</update_rate>
+        <update_rate>15</update_rate>
         <visualize>0</visualize>
       </sensor>
 
-      <sensor name="uav1/down_rgbd/color" type="camera">
-        <camera name="uav1/down_rgbd/color">
-          <horizontal_fov>1.211259</horizontal_fov>
+      <sensor name="{{  namespace  }}/down_rgbd/color" type="camera">
+        <camera name="{{  namespace  }}/down_rgbd/color">
+          <horizontal_fov>{{  components.rad(87)  }}</horizontal_fov>
           <image>
             <width>1280</width>
             <height>720</height>
             <format>RGB_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1673,21 +1686,21 @@
           </noise>
         </camera>
         <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
+        <update_rate>30</update_rate>
+        <visualize>1</visualize>
       </sensor>
 
-      <sensor name="uav1/down_rgbd/ired1" type="camera">
-        <camera name="uav1/down_rgbd/ired1">
-          <horizontal_fov>1.211259</horizontal_fov>
+      <sensor name="{{  namespace  }}/down_rgbd/ired1" type="camera">
+        <camera name="{{  namespace  }}/down_rgbd/ired1">
+          <horizontal_fov>{{  components.rad(87)  }}</horizontal_fov>
           <image>
             <width>640</width>
             <height>360</height>
             <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>50</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1699,17 +1712,17 @@
         <update_rate>30</update_rate>
         <visualize>0</visualize>
       </sensor>
-      <sensor name="uav1/down_rgbd/ired2" type="camera">
-        <camera name="uav1/down_rgbd/ired2">
-          <horizontal_fov>1.211259</horizontal_fov>
+      <sensor name="{{  namespace  }}/down_rgbd/ired2" type="camera">
+        <camera name="{{  namespace  }}/down_rgbd/ired2">
+          <horizontal_fov>{{  components.rad(87)  }}</horizontal_fov>
           <image>
             <width>640</width>
             <height>360</height>
             <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>50</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1724,31 +1737,31 @@
     </link>
 
     <joint name="down_rgbd_joint" type="fixed">
-      <parent>base_link</parent>
+      <parent>{{  root  }}</parent>
       <child>down_rgbd_link</child>
       <pose>0 0 0 0 0 0</pose>
     </joint>
 
-    <plugin name="uav1/down_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
-      <prefix>uav1/down_rgbd/</prefix>
-      <depthUpdateRate>60.0</depthUpdateRate>
-      <colorUpdateRate>60.0</colorUpdateRate>
+    <plugin name="{{  namespace  }}/down_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
+      <prefix>{{  namespace  }}/down_rgbd/</prefix>
+      <depthUpdateRate>15.0</depthUpdateRate>
+      <colorUpdateRate>30.0</colorUpdateRate>
       <infraredUpdateRate>30.0</infraredUpdateRate>
 	  <!-- Depth -->
-      <depthTopicName>uav1/down_rgbd/depth/image_raw</depthTopicName>
-      <depthCameraInfoTopicName>uav1/down_rgbd/depth/camera_info</depthCameraInfoTopicName>
+      <depthTopicName>{{  namespace  }}/down_rgbd/depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>{{  namespace  }}/down_rgbd/depth/camera_info</depthCameraInfoTopicName>
 	  <!-- PointCloud -->
-	  <pointCloudTopicName>uav1/down_rgbd/depth/color/points</pointCloudTopicName>
+	  <pointCloudTopicName>{{  namespace  }}/down_rgbd/depth/color/points</pointCloudTopicName>
       <pointCloud>true</pointCloud>
       <pointCloudCutoff>0.3</pointCloudCutoff>
 	  <!-- Color -->
-      <colorTopicName>uav1/down_rgbd/color/image_raw</colorTopicName>
-      <colorCameraInfoTopicName>uav1/down_rgbd/color/camera_info</colorCameraInfoTopicName>
+      <colorTopicName>{{  namespace  }}/down_rgbd/color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>{{  namespace  }}/down_rgbd/color/camera_info</colorCameraInfoTopicName>
 	  <!-- Infra -->
-      <infrared1TopicName>uav1/down_rgbd/infra1/image_raw</infrared1TopicName>
-      <infrared1CameraInfoTopicName>uav1/down_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
-      <infrared2TopicName>uav1/down_rgbd/infra2/image_raw</infrared2TopicName>
-      <infrared2CameraInfoTopicName>uav1/down_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
+      <infrared1TopicName>{{  namespace  }}/down_rgbd/infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>{{  namespace  }}/down_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared2TopicName>{{  namespace  }}/down_rgbd/infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>{{  namespace  }}/down_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
 
       <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
       <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>

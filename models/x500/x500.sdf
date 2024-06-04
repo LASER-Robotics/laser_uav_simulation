@@ -2,6 +2,10 @@
 
 
 
+
+
+
+
 <sdf version='1.6'>
   <model name="x500">
     <link name="base_link">
@@ -86,9 +90,10 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
@@ -101,9 +106,10 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
@@ -124,7 +130,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -134,7 +140,7 @@
 		  </visual>
 
 		  <visual name="elbow_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -142,14 +148,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -157,14 +164,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -180,7 +188,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -190,7 +198,7 @@
 		  </visual>
 
 		  <visual name="elbow_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -198,14 +206,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -213,14 +222,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -236,7 +246,7 @@
 		  </visual>
 
 		  <visual name="arm_carbon_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
@@ -246,7 +256,7 @@
 		  </visual>
 
 		  <visual name="elbow_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
@@ -254,14 +264,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
   
 		  <visual name="hand_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
@@ -269,14 +280,15 @@
 			    </mesh>
 		    </geometry>
 		    <material> <!-- MRS_BLUE -->
-			    <ambient>0.03 0.74 1.0</ambient>
-			    <diffuse>0.03 0.74 1.0</diffuse>
-			    <specular>0.1 0.1 0.1 1</specular>
+          <script>
+            <name>MRS/X500Blue</name>
+            <uri>model://x500/materials/mrs.material</uri>
+          </script>
 		    </material>
 		  </visual>
 		  
 		  <visual name="rotor_base_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
@@ -329,7 +341,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -345,7 +357,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_front_left_link_collision">
-		    <pose>0.13 0.13 -0.07 0 0 1.57079633</pose>
+		    <pose>0.13 0.13 -0.07 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -366,7 +378,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -382,7 +394,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_back_left_link_collision">
-		    <pose>-0.13 0.13 -0.07 0 0 3.14159266</pose>
+		    <pose>-0.13 0.13 -0.07 0 0 3.14159265359</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -403,7 +415,7 @@
 		  </collision>
 
 		  <visual name="leg_3d_print_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
@@ -419,7 +431,7 @@
 		  </visual>
 
 		  <collision name="leg_3d_print_back_right_link_collision">
-		    <pose>-0.13 -0.13 -0.07 0 0 4.71238899</pose>
+		    <pose>-0.13 -0.13 -0.07 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <cylinder>
 			      <length>0.165</length>
@@ -557,7 +569,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -573,7 +585,7 @@
 		  </visual>
 		  
 		  <visual name="motor_middle_front_left_visual">
-		    <pose>0 0 0 0 0 1.57079633</pose>
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -589,7 +601,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -605,7 +617,7 @@
 		  </visual>
   
 		  <visual name="motor_middle_back_left_visual">
-		    <pose>0 0 0 0 0 3.14159266</pose>
+		    <pose>0 0 0 0 0 3.14159265359</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -621,7 +633,7 @@
 		  </visual>
 
 		  <visual name="motor_bottom_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
@@ -637,7 +649,7 @@
 		  </visual>
 		  
 		  <visual name="motor_middle_back_right_visual">
-		    <pose>0 0 0 0 0 4.71238899</pose>
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
 		    <geometry>
 			    <mesh>
 			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
@@ -1379,8 +1391,8 @@
             <horizontal>
               <samples>360</samples>
               <resolution>1</resolution>
-              <min_angle>-3.1415</min_angle>
-              <max_angle>3.1415</max_angle>
+              <min_angle>-1.5707963267950003</min_angle>
+              <max_angle>1.5707963267950003</max_angle>
             </horizontal>
           </scan>
           <range>
@@ -1457,7 +1469,7 @@
     <link name="front_rgbd_link">
       <pose>0.0725 0 -0.025 0 0 0</pose>
       <visual name="front_rgbd_link_visual">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 -1.5707963267950003 0 -1.5707963267950003</pose>
         <geometry>
           <mesh>
 			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
@@ -1608,12 +1620,13 @@
 
 	<!-- Realsense Down {-->
     <link name="down_rgbd_link">
-      <pose>0.0725 0 -0.0465 0 1.57 0</pose>
+      <!-- <pose>0.0725 0 -0.0465 0 1.5707963267950003 0</pose> -->
+	  <pose>0.086 0 -0.065 0 1.5707963267950003 3.1415926535900005</pose>
       <visual name="down_rgbd_link_visual">
-        <pose>0 0 0 -1.57 0 -1.57</pose>
+        <pose>0 0 0 -1.5707963267950003 0 -1.5707963267950003</pose>
         <geometry>
           <mesh>
-			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
+			<uri>model://x500/meshes/d455/d455.stl</uri>
 			<scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -1634,14 +1647,14 @@
 
       <sensor name="uav1/down_rgbd/depth" type="depth">
         <camera name="uav1/down_rgbd/depth">
-          <horizontal_fov>1.211259</horizontal_fov>
+          <horizontal_fov>1.5184364492351667</horizontal_fov>
           <image>
             <width>1280</width>
-            <height>720</height>
+            <height>800</height>
           </image>
           <clip>
-            <near>0.3</near>
-            <far>12</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1650,21 +1663,21 @@
           </noise>
         </camera>
         <always_on>1</always_on>
-        <update_rate>60</update_rate>
+        <update_rate>15</update_rate>
         <visualize>0</visualize>
       </sensor>
 
       <sensor name="uav1/down_rgbd/color" type="camera">
         <camera name="uav1/down_rgbd/color">
-          <horizontal_fov>1.211259</horizontal_fov>
+          <horizontal_fov>1.5184364492351667</horizontal_fov>
           <image>
             <width>1280</width>
             <height>720</height>
             <format>RGB_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>100</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1673,21 +1686,21 @@
           </noise>
         </camera>
         <always_on>1</always_on>
-        <update_rate>60</update_rate>
-        <visualize>0</visualize>
+        <update_rate>30</update_rate>
+        <visualize>1</visualize>
       </sensor>
 
       <sensor name="uav1/down_rgbd/ired1" type="camera">
         <camera name="uav1/down_rgbd/ired1">
-          <horizontal_fov>1.211259</horizontal_fov>
+          <horizontal_fov>1.5184364492351667</horizontal_fov>
           <image>
             <width>640</width>
             <height>360</height>
             <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>50</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1701,15 +1714,15 @@
       </sensor>
       <sensor name="uav1/down_rgbd/ired2" type="camera">
         <camera name="uav1/down_rgbd/ired2">
-          <horizontal_fov>1.211259</horizontal_fov>
+          <horizontal_fov>1.5184364492351667</horizontal_fov>
           <image>
             <width>640</width>
             <height>360</height>
             <format>L_INT8</format>
           </image>
           <clip>
-            <near>0.1</near>
-            <far>50</far>
+            <near>0.2</near>
+            <far>10</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1731,8 +1744,8 @@
 
     <plugin name="uav1/down_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
       <prefix>uav1/down_rgbd/</prefix>
-      <depthUpdateRate>60.0</depthUpdateRate>
-      <colorUpdateRate>60.0</colorUpdateRate>
+      <depthUpdateRate>15.0</depthUpdateRate>
+      <colorUpdateRate>30.0</colorUpdateRate>
       <infraredUpdateRate>30.0</infraredUpdateRate>
 	  <!-- Depth -->
       <depthTopicName>uav1/down_rgbd/depth/image_raw</depthTopicName>
