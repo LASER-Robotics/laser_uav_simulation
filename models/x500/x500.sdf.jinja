@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 {% set root = "base_link" %}
-{% set namespace = "uav1" %}
-{% set model_name = "x500" %}
 
 {% import "component_snippets.sdf.jinja" as components %}
 
@@ -1384,7 +1382,7 @@
       <sensor name="rplidar" type="ray">
         <always_on>1</always_on>
         <update_rate>10</update_rate>
-        <visualize>false</visualize>
+        <visualize>0</visualize>
 
         <ray>
           <scan>
@@ -1464,6 +1462,8 @@
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
     </plugin>
   <!--}-->
+
+	{% if enable_d435_front %}
 
 	<!-- Realsense Front {-->
     <link name="front_rgbd_link">
@@ -1618,6 +1618,10 @@
     </plugin>
 	<!--}-->
 
+	{% endif %}
+	
+	
+	{% if enable_d455_down %}
 	<!-- Realsense Down {-->
     <link name="down_rgbd_link">
       <!-- <pose>0.0725 0 -0.0465 0 {{  components.rad(90)  }} 0</pose> -->
@@ -1687,7 +1691,7 @@
         </camera>
         <always_on>1</always_on>
         <update_rate>30</update_rate>
-        <visualize>1</visualize>
+        <visualize>0</visualize>
       </sensor>
 
       <sensor name="{{  namespace  }}/down_rgbd/ired1" type="camera">
@@ -1771,6 +1775,7 @@
       <rangeMaxDepth>3.0</rangeMaxDepth>
     </plugin>
 	<!--}-->
+	{% endif %}
 
   </model>
 </sdf>

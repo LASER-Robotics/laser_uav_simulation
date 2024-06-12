@@ -38,9 +38,6 @@
     <!-- setup shadows {-->
     <scene>
       <shadows>false</shadows>
-      <!-- <sky> -->
-      <!--   <clouds/> -->
-      <!-- </sky> -->
     </scene>
     <!--}-->
 

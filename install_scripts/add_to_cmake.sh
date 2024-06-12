@@ -9,8 +9,5 @@ cd "$SIMULATION_PATH"
 FILE="$SIMULATION_PATH"/sitl_targets_gazebo-classic.cmake
 
 MODELS_TEXT="x500"
-WORLDS_TEXT="custom_empty"
 
 sed -i "/set(models/a $MODELS_TEXT" $FILE
-
-sed -i "/set(worlds/a $WORLDS_TEXT" $FILE

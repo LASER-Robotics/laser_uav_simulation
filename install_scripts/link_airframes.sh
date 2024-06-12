@@ -5,7 +5,7 @@ MY_PATH="$(dirname "$(dirname "$(realpath "$0")")")"
 SIMULATION_PATH=~/git/laser_uav_system/ros_packages/px4_firmware/ROMFS/px4fmu_common/init.d-posix/airframes
 
 cd "$SIMULATION_PATH"
-ln -fs "$MY_PATH"/ROMFS/px4fmu_common/init.d-posix/airframes/* ./
+ln -fs "$MY_PATH"/ROMFS/airframes/* ./
 
 FILE="$SIMULATION_PATH"/CMakeLists.txt
 
