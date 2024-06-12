@@ -11,4 +11,4 @@ FILE="$SIMULATION_PATH"/CMakeLists.txt
 
 TEXT="		#custom models\n	22000_gazebo-classic_x500"
 
-sed -i "$(($(wc -l < $FILE) - 1))i $TEXT" $FILE
+sed -i "$(($(wc -l < $FILE)))i $TEXT" $FILE

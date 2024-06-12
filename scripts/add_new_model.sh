@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ./change_px4_cmake.sh
-./link_airframe.sh
+./link_airframes.sh
 
 cd ~/git/laser_uav_system/ros_packages/px4_firmware
 
-rm -r build
+sudo rm -r build
 mkdir build && cd build
 cmake ..
 make topic_bridge_files
