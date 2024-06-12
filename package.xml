@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>lus_simulation</name>
+  <name>laser_uav_simulation</name>
   <version>0.1.0</version>
   <description>LUS Simulation</description>
   <maintainer email="rafael.novack07@gmail.com">Rafael Novack</maintainer>
