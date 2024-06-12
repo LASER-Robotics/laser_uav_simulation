@@ -14,7 +14,6 @@ git clone https://github.com/LASER-Robotics/laser_uav_simulation.git -b developm
 cd laser_uav_simulation/install_scripts
 ./add_to_cmake.sh
 ./link_airframes.sh
-./link_models.sh
 ./link_worlds.sh
 ```
 

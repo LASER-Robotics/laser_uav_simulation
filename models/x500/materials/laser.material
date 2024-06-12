@@ -1,4 +1,4 @@
-material MRS/X500Blue
+material LASER/X500Blue
 {
   technique
   {
