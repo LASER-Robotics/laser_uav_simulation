@@ -13,7 +13,6 @@ install(PROGRAMS
 )
 
 install(DIRECTORY
-	launch
   scripts
 	worlds
 	models
