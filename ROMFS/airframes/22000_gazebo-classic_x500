@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# @name Gazebo x500
+# @name LaSER x500
 #
 # @type Quadrotor
 #
@@ -13,6 +13,7 @@
 param set-default CA_AIRFRAME 0
 
 param set-default CA_ROTOR_COUNT 4
+
 param set-default CA_ROTOR0_PX 0.13
 param set-default CA_ROTOR0_PY 0.22
 param set-default CA_ROTOR0_KM  0.05
