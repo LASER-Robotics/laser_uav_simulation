@@ -10,8 +10,6 @@ FILE="$SIMULATION_PATH"/sitl_targets_gazebo-classic.cmake
 
 MODELS_TEXT="x500"
 
-#sed -i "/set(models/a $MODELS_TEXT" $FILE
-
 # Check if the string already exists in the file
 if ! grep -q "$MODELS_TEXT" "$FILE"; then
     sed -i "/set(models/a $MODELS_TEXT" "$FILE"

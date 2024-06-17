@@ -13,8 +13,6 @@ TEXT_COMMENT="#custom models"
 TEXT_MODEL_1="22000_gazebo-classic_x500"
 # TEXT_MODEL_2="22001_gazebo-classic_"
 
-#sed -i "$(($(wc -l < $FILE)))i $TEXT" $FILE
-
 # Check if the string already exists in the file
 if ! grep -q "$TEXT_COMMENT" "$FILE"; then
     sed -i "$(($(wc -l < $FILE)))i \ \n  $TEXT_COMMENT" "$FILE"

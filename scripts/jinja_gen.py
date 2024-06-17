@@ -10,6 +10,7 @@ parser.add_argument('namespace', type=str)
 parser.add_argument('uav_model', type=str)
 parser.add_argument('--enable_d435_front', action='store_true')
 parser.add_argument('--enable_d455_down', action='store_true')
+parser.add_argument('--enable_rplidar', action='store_true')
 
 args = parser.parse_args()
 
@@ -30,7 +31,8 @@ data = {
     'namespace': f'{args.namespace}',
     'model_name': f'{args.uav_model}',
     'enable_d435_front': args.enable_d435_front, 
-    'enable_d455_down': args.enable_d455_down
+    'enable_d455_down': args.enable_d455_down, 
+    'enable_rplidar': args.enable_rplidar
 }
 
 # Renderizar o template
