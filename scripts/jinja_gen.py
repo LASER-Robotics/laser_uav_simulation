@@ -45,3 +45,5 @@ with open((drones_dir + '/' + args.uav_model + '.sdf'), 'w') as file:
 # Path to the shell script
 shell_script_path = './link_models.sh'
 result = subprocess.run(['bash', shell_script_path], capture_output=True, text=True)
+
+print("Generation jinja is successfuly")
