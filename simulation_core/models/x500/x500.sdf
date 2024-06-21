@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+
+<sdf version='1.6'>
+  <model name="x500">
+    <link name="base_link">
+		  <pose>0 0 0 0 0 0</pose>
+
+	    <!-- Body physics {-->
+		  <inertial>
+		    <mass>2.0</mass>
+		    <inertia>
+			    <ixx>0.03166666666666667</ixx>
+			    <ixy>0</ixy>
+			    <ixz>0</ixz>
+			    <iyy>0.03166666666666667</iyy>
+			    <iyz>0</iyz>
+			    <izz>0.0625</izz>
+		    </inertia>
+		  </inertial>
+		  <collision name="base_link_collision">
+        <pose>0 0 -0.03 0 0 0</pose>
+		    <geometry>
+			    <cylinder>
+			      <length>0.1</length>
+			      <radius>0.1</radius>
+			    </cylinder>
+		    </geometry>
+		    <surface>
+			    <contact>
+			      <ode>
+				      <min_depth>0.001</min_depth>
+				      <max_vel>0.0</max_vel>
+			      </ode>
+			    </contact>
+          <friction>
+            <ode/>
+			    </friction>
+		    </surface>
+		  </collision>
+	    <!--}-->
+
+	    <!-- Body visuals {-->
+
+	    <!-- Boards {-->
+		  <visual name="top_board_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/top_board_mesh_file.dae</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		  </visual>
+
+		  <visual name="bottom_board_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/bottom_board_mesh_file.dae</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		  </visual>
+	    <!--}-->
+
+	    <!-- Arms and legs {-->
+
+		  <visual name="arm_carbon_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			  <mesh>
+			    <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			    <scale>1 1 1</scale>
+			  </mesh>
+		    </geometry>
+		  </visual>
+
+		  <visual name="elbow_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+  
+		  <visual name="hand_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="rotor_base_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="arm_carbon_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		  </visual>
+
+		  <visual name="elbow_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+  
+		  <visual name="hand_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="rotor_base_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="arm_carbon_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		  </visual>
+
+		  <visual name="elbow_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+  
+		  <visual name="hand_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="rotor_base_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLUE -->
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="arm_carbon_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/arm_carbon_mesh_file.dae</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		  </visual>
+
+		  <visual name="elbow_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/elbow_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+  
+		  <visual name="hand_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/hand_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+		    <material> <!-- LASER_BLUE -->
+          <script>
+            <name>LASER/X500Blue</name>
+            <uri>model://x500/materials/laser.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="rotor_base_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/rotor_base_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLUE -->
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="leg_3d_print_front_right_visual">
+		    <pose>0 0 0 0 0 0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			  </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <collision name="leg_3d_print_front_right_link_collision">
+		    <pose>0.13 -0.13 -0.07 0 0 0</pose>
+		    <geometry>
+			    <cylinder>
+			      <length>0.165</length>
+			      <radius>0.015</radius>
+			    </cylinder>
+		    </geometry>
+		    <surface>
+			    <contact>
+			      <ode>
+				      <min_depth>0.001</min_depth>
+				      <max_vel>0.0</max_vel>
+			      </ode>
+			    </contact>
+			    <friction>
+			      <ode/>
+			    </friction>
+		    </surface>
+		  </collision>
+
+		  <visual name="leg_3d_print_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <collision name="leg_3d_print_front_left_link_collision">
+		    <pose>0.13 0.13 -0.07 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <cylinder>
+			      <length>0.165</length>
+			      <radius>0.015</radius>
+			    </cylinder>
+		    </geometry>
+		    <surface>
+			    <contact>
+			      <ode>
+				      <min_depth>0.001</min_depth>
+				      <max_vel>0.0</max_vel>
+			      </ode>
+			    </contact>
+			    <friction>
+			      <ode/>
+			    </friction>
+		    </surface>
+		  </collision>
+
+		  <visual name="leg_3d_print_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLUE -->
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <collision name="leg_3d_print_back_left_link_collision">
+		    <pose>-0.13 0.13 -0.07 0 0 3.14159265359</pose>
+		    <geometry>
+			    <cylinder>
+			      <length>0.165</length>
+			      <radius>0.015</radius>
+			    </cylinder>
+		    </geometry>
+		    <surface>
+			    <contact>
+			      <ode>
+				      <min_depth>0.001</min_depth>
+				      <max_vel>0.0</max_vel>
+			      </ode>
+			    </contact>
+			    <friction>
+			      <ode/>
+			    </friction>
+		    </surface>
+		  </collision>
+
+		  <visual name="leg_3d_print_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/leg_3d_print_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLUE -->
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <collision name="leg_3d_print_back_right_link_collision">
+		    <pose>-0.13 -0.13 -0.07 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <cylinder>
+			      <length>0.165</length>
+			      <radius>0.015</radius>
+			    </cylinder>
+		    </geometry>
+		    <surface>
+			    <contact>
+			      <ode>
+				      <min_depth>0.001</min_depth>
+				      <max_vel>0.0</max_vel>
+			      </ode>
+			    </contact>
+			    <friction>
+			      <ode/>
+			    </friction>
+		    </surface>
+		  </collision>
+
+      <!--}-->
+
+      <!-- intel nuc {-->
+		  <visual name="nuc_board_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/nuc_board_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  <visual name="nuc_cooler_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/nuc_cooler_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- DARK GREY -->
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  <visual name="nuc_hex_posts_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GOLD -->
+          <script>
+            <name>Gazebo/Gold</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  <visual name="nuc_hex_posts_visual_2">
+		    <pose>0 0 0.083 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/nuc_hex_posts_mesh_file.stl</uri>
+			      <scale>1 1 0.6</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GOLD -->
+          <script>
+            <name>Gazebo/Gold</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+      <!--}-->
+
+      <!-- pixhawk {-->
+		  <visual name="pixhawk6c_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/pixhawk6c_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- DARK GREY -->
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+      <!--}-->
+
+      <!-- motors {-->
+
+		  <visual name="motor_bottom_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="motor_middle_front_right_visual">
+		    <pose>0 0 0 0 0 0.0</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="motor_bottom_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="motor_middle_front_left_visual">
+		    <pose>0 0 0 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="motor_bottom_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+  
+		  <visual name="motor_middle_back_left_visual">
+		    <pose>0 0 0 0 0 3.14159265359</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+		  <visual name="motor_bottom_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_bottom_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  
+		  <visual name="motor_middle_back_right_visual">
+		    <pose>0 0 0 0 0 4.7123889803850005</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/motor_middle_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+
+      <!--}-->
+      
+      <!-- battery mount and battery {-->
+		  <visual name="battery_mount_visual">
+		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/battery_mount_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLUE -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  <visual name="battery_visual">
+		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/battery_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+      <!--}-->
+      
+      <!-- gps mount and gps {-->
+		  <visual name="gps_mount_visual">
+		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/gps_mount_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+		  <visual name="gps_module_visual">
+		    <pose>0 0 0.035 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/gps_module_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+      <!--}-->
+      
+      <!-- garmin mount {-->
+		  <visual name="garmin_mount_visual">
+		    <pose>0 0 0.001 0 0 1.5707963267950003</pose>
+		    <geometry>
+			    <mesh>
+			      <uri>model://x500/meshes/x500v2/garmin_mount_mesh_file.stl</uri>
+			      <scale>1 1 1</scale>
+			    </mesh>
+		    </geometry>
+        <material> <!-- BLACK -->
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+		  </visual>
+      <!--}-->
+      <gravity>1</gravity>
+      <velocity_decay/>
+    </link>
+    <!--}-->
+
+    <!-- IMU {-->
+    <link name='imu_link'>
+      <pose>0 0 0.02 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <joint name='imu_joint' type='revolute'>
+      <child>imu_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+	<!--}-->
+
+    <!-- Propellers {-->
+    <link name="prop_0_link">
+      <gravity>1</gravity>
+      <velocity_decay/>
+	    <pose>0.1812 -0.1812 0.057 0 0 0</pose>
+	    <inertial>
+		    <mass>0.005</mass>
+		    <inertia>
+		      <ixx>0.0001</ixx>
+		      <ixy>0</ixy>
+		      <ixz>0</ixz>
+		      <iyy>0.0001</iyy>
+		      <iyz>0</iyz>
+		      <izz>0.0001</izz>
+		    </inertia>
+	    </inertial>
+	    <visual name="prop_0_visual_1">
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <scale>1 1 1</scale>
+		      </mesh>
+		    </geometry>
+	    </visual>
+	    <visual name="prop_0_visual_2">
+		    <pose>0 0 -0.0086 0 0 0</pose>
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <scale>1 1 1</scale>
+		      </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+	    </visual>
+	    <collision name="prop_0_link_collision">
+		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <geometry>
+		      <cylinder>
+		        <length>0.3302</length>
+		        <radius>0.01</radius>
+		      </cylinder>
+		    </geometry>
+		    <surface>
+		      <contact>
+		        <ode/>
+		      </contact>
+		      <friction>
+		        <ode/>
+		      </friction>
+		    </surface>
+	    </collision>
+	  </link>
+    <joint name="prop_0_joint" type="revolute">
+	    <parent>base_link</parent>
+	    <child>prop_0_link</child>
+	    <axis>
+		    <xyz>0 0 1</xyz>
+		    <limit>
+		      <lower>-1e+16</lower>
+		      <upper>1e+16</upper>
+		    </limit>
+		    <dynamics>
+		      <spring_reference>0</spring_reference>
+		      <spring_stiffness>0</spring_stiffness>
+		    </dynamics>
+			<use_parent_model_frame>1</use_parent_model_frame>
+	    </axis>
+	  </joint>
+
+    <link name="prop_1_link">
+      <gravity>1</gravity>
+      <velocity_decay/>
+	    <pose>-0.1812 0.1812 0.057 0 0 0</pose>
+	    <inertial>
+		    <mass>0.005</mass>
+		    <inertia>
+		      <ixx>0.0001</ixx>
+		      <ixy>0</ixy>
+		      <ixz>0</ixz>
+		      <iyy>0.0001</iyy>
+		      <iyz>0</iyz>
+		      <izz>0.0001</izz>
+		    </inertia>
+	    </inertial>
+	    <visual name="prop_1_visual_1">
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <scale>1 1 1</scale>
+		      </mesh>
+		    </geometry>
+	    </visual>
+	    <visual name="prop_1_visual_2">
+		    <pose>0 0 -0.0086 0 0 0</pose>
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <scale>1 1 1</scale>
+		      </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+	    </visual>
+	    <collision name="prop_1_link_collision">
+		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <geometry>
+		      <cylinder>
+		        <length>0.3302</length>
+		        <radius>0.01</radius>
+		      </cylinder>
+		    </geometry>
+		    <surface>
+		      <contact>
+		        <ode/>
+		      </contact>
+		      <friction>
+		        <ode/>
+		      </friction>
+		    </surface>
+	    </collision>
+    </link>
+	  <joint name="prop_1_joint" type="revolute">
+	    <parent>base_link</parent>
+	    <child>prop_1_link</child>
+	    <axis>
+		    <xyz>0 0 1</xyz>
+		    <limit>
+		      <lower>-1e+16</lower>
+		      <upper>1e+16</upper>
+		    </limit>
+		    <dynamics>
+		      <spring_reference>0</spring_reference>
+		      <spring_stiffness>0</spring_stiffness>
+		    </dynamics>
+			<use_parent_model_frame>1</use_parent_model_frame>
+	    </axis>
+	  </joint>
+
+    <link name="prop_2_link">
+      <gravity>1</gravity>
+      <velocity_decay/>
+	    <pose>0.1812 0.1812 0.057 0 0 0</pose>
+	    <inertial>
+		    <mass>0.005</mass>
+		    <inertia>
+		      <ixx>0.0001</ixx>
+		      <ixy>0</ixy>
+		      <ixz>0</ixz>
+		      <iyy>0.0001</iyy>
+		      <iyz>0</iyz>
+		      <izz>0.0001</izz>
+		    </inertia>
+	    </inertial>
+	    <visual name="prop_2_visual_1">
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <scale>-1 1 1</scale>
+		      </mesh>
+		    </geometry>
+	    </visual>
+	    <visual name="prop_2_visual_2">
+		    <pose>0 0 -0.0086 0 0 0</pose>
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <scale>-1 1 1</scale>
+		      </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+	    </visual>
+	    <collision name="prop_2_link_collision">
+		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <geometry>
+		      <cylinder>
+		        <length>0.3302</length>
+		        <radius>0.01</radius>
+		      </cylinder>
+		    </geometry>
+		    <surface>
+		      <contact>
+		        <ode/>
+		      </contact>
+		      <friction>
+		        <ode/>
+		      </friction>
+		    </surface>
+	    </collision>
+	  </link>
+	  <joint name="prop_2_joint" type="revolute">
+	    <parent>base_link</parent>
+	    <child>prop_2_link</child>
+	    <axis>
+		    <xyz>0 0 1</xyz>
+		    <limit>
+		      <lower>-1e+16</lower>
+		      <upper>1e+16</upper>
+		    </limit>
+		    <dynamics>
+		      <spring_reference>0</spring_reference>
+		      <spring_stiffness>0</spring_stiffness>
+		    </dynamics>
+			<use_parent_model_frame>1</use_parent_model_frame>
+	    </axis>
+	  </joint>
+
+    <link name="prop_3_link">
+      <gravity>1</gravity>
+      <velocity_decay/>
+	    <pose>-0.1812 -0.1812 0.057 0 0 0</pose>
+	    <inertial>
+		    <mass>0.005</mass>
+		    <inertia>
+		      <ixx>0.0001</ixx>
+		      <ixy>0</ixy>
+		      <ixz>0</ixz>
+		      <iyy>0.0001</iyy>
+		      <iyz>0</iyz>
+		      <izz>0.0001</izz>
+		    </inertia>
+	    </inertial>
+	    <visual name="prop_3_visual_1">
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/prop_mesh_file.dae</uri>
+		        <scale>-1 1 1</scale>
+		      </mesh>
+		    </geometry>
+	    </visual>
+	    <visual name="prop_3_visual_2">
+		    <pose>0 0 -0.0086 0 0 0</pose>
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/x500v2/motor_top_mesh_file.stl</uri>
+		        <scale>-1 1 1</scale>
+		      </mesh>
+		    </geometry>
+        <material> <!-- GREY -->
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+	    </visual>
+	    <collision name="prop_3_link_collision">
+		    <pose>0 0 0 0 1.5707963267950003 0</pose>
+		    <geometry>
+		      <cylinder>
+		        <length>0.3302</length>
+		        <radius>0.01</radius>
+		      </cylinder>
+		    </geometry>
+		    <surface>
+		      <contact>
+		        <ode/>
+		      </contact>
+		      <friction>
+		        <ode/>
+		      </friction>
+		    </surface>
+	    </collision>
+    </link>
+
+    <joint name="prop_3_joint" type="revolute">
+	    <parent>base_link</parent>
+	    <child>prop_3_link</child>
+	    <axis>
+		    <xyz>0 0 1</xyz>
+		    <limit>
+		      <lower>-1e+16</lower>
+		      <upper>1e+16</upper>
+		    </limit>
+		    <dynamics>
+		      <spring_reference>0</spring_reference>
+		      <spring_stiffness>0</spring_stiffness>
+		    </dynamics>
+			<use_parent_model_frame>1</use_parent_model_frame>
+	    </axis>
+	  </joint>
+
+    <!--}-->
+
+    <!-- Garmin {-->
+    <link name="garmin_link">
+	    <pose>0.0 0.0625 -0.005 0 1.5707963267950003 -1.5707963267950003</pose>
+	    <inertial>
+		    <mass>0.0001</mass>
+		    <inertia>
+			    <ixx>1e-7</ixx>
+			    <ixy>0</ixy>
+			    <ixz>0</ixz>
+			    <iyy>1e-7</iyy>
+			    <iyz>0</iyz>
+			    <izz>1e-7</izz>
+		    </inertia>
+      </inertial>
+	    <visual name="garmin_visual">
+			<pose>0.015 0 0 0 0 0</pose>
+		    <geometry>
+		      <mesh>
+		        <uri>model://x500/meshes/sensors/garmin_lidar_v3.stl</uri>
+		        <scale>0.001 0.001 0.001</scale>
+		      </mesh>
+		    </geometry>
+        <material> <!-- DARK GREY -->
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+		    </material>
+      </visual>
+      <sensor name="garmin_sensor" type='ray'>
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>false</visualize>
+	      <ray>
+		      <scan>
+		        <horizontal>
+		          <samples>1</samples>
+		          <resolution>1</resolution>
+		          <min_angle>-0</min_angle>
+		          <max_angle>0</max_angle>
+		        </horizontal>
+		      </scan>
+		      <range>
+		        <min>0.06</min>
+		        <max>35</max>
+		        <resolution>0.01</resolution>
+		      </range>
+        </ray>
+        <plugin name="garmin_plugin" filename="libgazebo_lidar_plugin.so">
+          <robotNamespace/>
+          <min_distance>0.1</min_distance>
+          <max_distance>35.0</max_distance>
+        </plugin>
+      </sensor>
+	  </link>
+	  <joint name="garmin_joint" type="fixed">
+	    <parent>base_link</parent>
+	    <child>garmin_link</child>
+	  </joint>
+    <!--}-->
+
+    <!-- Rosbag {-->
+    <plugin name='rosbag' filename='libgazebo_multirotor_base_plugin.so'>
+      <robotNamespace/>
+      <linkName>base_link</linkName>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+    <!--} -->
+
+    <!-- Motor Plugins {-->
+    <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
+      <robotNamespace/>
+      <jointName>prop_0_joint</jointName>
+      <linkName>prop_0_link</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+	  <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+
+    <plugin name='back_left_motor_model' filename='libgazebo_motor_model.so'>
+      <robotNamespace/>
+      <jointName>prop_1_joint</jointName>
+      <linkName>prop_1_link</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+      <motorNumber>1</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+	  <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+
+    <plugin name='front_left_motor_model' filename='libgazebo_motor_model.so'>
+      <robotNamespace/>
+	  <jointName>prop_2_joint</jointName>
+	  <linkName>prop_2_link</linkName>
+	  <turningDirection>cw</turningDirection>
+	  <timeConstantUp>0.0125</timeConstantUp>
+	  <timeConstantDown>0.025</timeConstantDown>
+	  <maxRotVelocity>1000.0</maxRotVelocity>
+	  <motorConstant>8.54858e-06</motorConstant>
+	  <momentConstant>0.016</momentConstant>
+	  <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+	  <motorNumber>2</motorNumber>
+	  <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+	  <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+	  <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
+	  <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+
+    <plugin name='back_right_motor_model' filename='libgazebo_motor_model.so'>
+      <robotNamespace/>
+	  <jointName>prop_3_joint</jointName>
+	  <linkName>prop_3_link</linkName>
+	  <turningDirection>cw</turningDirection>
+	  <timeConstantUp>0.0125</timeConstantUp>
+	  <timeConstantDown>0.025</timeConstantDown>
+	  <maxRotVelocity>1000.0</maxRotVelocity>
+	  <motorConstant>8.54858e-06</motorConstant>
+	  <momentConstant>0.016</momentConstant>
+	  <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+	  <motorNumber>3</motorNumber>
+	  <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+	  <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+	  <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
+	  <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+	<!--}-->
+    
+    <!-- GPS groundtruth {-->
+    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+      <robotNamespace/>
+    </plugin>
+    <!--}-->
+
+    <!-- Magnetometer {-->
+    <plugin name="magnetometer_plugin" filename="libgazebo_magnetometer_plugin.so">
+	    <robotNamespace/>
+	    <pubRate>100</pubRate>
+	    <noiseDensity>0.0004</noiseDensity>
+	    <randomWalk>6.4e-06</randomWalk>
+	    <biasCorrelationTime>600</biasCorrelationTime>
+	    <magTopic>/mag</magTopic>
+	  </plugin>
+    <!--}-->
+
+    <!-- Barometer {-->
+    <plugin name="barometer_plugin" filename="libgazebo_barometer_plugin.so">
+	    <robotNamespace/>
+	    <pubRate>50</pubRate>
+	    <baroTopic>/baro</baroTopic>
+	    <baroDriftPaPerSec>0</baroDriftPaPerSec>
+	  </plugin>
+    <!--}-->
+
+    <!-- Mavlink interface {-->
+    <plugin name="mavlink_interface_plugin" filename="libgazebo_mavlink_interface.so">
+	  <robotNamespace/>
+	  <imuSubTopic>/imu</imuSubTopic>
+	  <magSubTopic>/mag</magSubTopic>
+	  <baroSubTopic>/baro</baroSubTopic>
+	  <mavlink_addr>INADDR_ANY</mavlink_addr>
+	  <mavlink_udp_port>14560</mavlink_udp_port>
+	  <mavlink_tcp_port>4560</mavlink_tcp_port>
+	  <serialEnabled>0</serialEnabled>
+	  <serialDevice>/dev/ttyACM0</serialDevice>
+	  <baudRate>921600</baudRate>
+	  <qgc_addr>INADDR_ANY</qgc_addr>
+	  <qgc_udp_port>14550</qgc_udp_port>
+	  <sdk_addr>INADDR_ANY</sdk_addr>
+	  <sdk_udp_port>14540</sdk_udp_port>
+	  <hil_mode>0</hil_mode>
+	  <hil_state_level>0</hil_state_level>
+	  <send_vision_estimation>0</send_vision_estimation>
+	  <send_odometry>1</send_odometry>
+	  <enable_lockstep>1</enable_lockstep>
+	  <use_tcp>1</use_tcp>
+	  <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+	  <control_channels>
+		<channel name="rotor1">
+		  <input_index>0</input_index>
+		  <input_offset>0</input_offset>
+		  <input_scaling>1000</input_scaling>
+		  <zero_position_disarmed>0</zero_position_disarmed>
+		  <zero_position_armed>100</zero_position_armed>
+		  <joint_control_type>velocity</joint_control_type>
+		</channel>
+		<channel name="rotor2">
+		  <input_index>1</input_index>
+		  <input_offset>0</input_offset>
+		  <input_scaling>1000</input_scaling>
+		  <zero_position_disarmed>0</zero_position_disarmed>
+		  <zero_position_armed>100</zero_position_armed>
+		  <joint_control_type>velocity</joint_control_type>
+		</channel>
+		<channel name="rotor3">
+		  <input_index>2</input_index>
+		  <input_offset>0</input_offset>
+		  <input_scaling>1000</input_scaling>
+		  <zero_position_disarmed>0</zero_position_disarmed>
+		  <zero_position_armed>100</zero_position_armed>
+		  <joint_control_type>velocity</joint_control_type>
+		</channel>
+		<channel name="rotor4">
+		  <input_index>3</input_index>
+		  <input_offset>0</input_offset>
+		  <input_scaling>1000</input_scaling>
+		  <zero_position_disarmed>0</zero_position_disarmed>
+		  <zero_position_armed>100</zero_position_armed>
+		  <joint_control_type>velocity</joint_control_type>
+    </channel>
+	  </control_channels>
+	</plugin>
+  <!--}-->
+
+  <!-- IMU {-->
+    <plugin name='rotors_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <robotNamespace/>
+      <linkName>imu_link</linkName>
+      <imuTopic>/imu</imuTopic>
+      <gyroscopeNoiseDensity>0.00018665</gyroscopeNoiseDensity>
+      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+      <accelerometerNoiseDensity>0.00186</accelerometerNoiseDensity>
+      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+  <!--}-->
+
+    <!-- GPS {-->
+    <include>
+      <uri>model://gps</uri>
+      <pose>0 0 0 0 0 0</pose>
+      <name>gps0</name>
+    </include>
+	<joint name='gps0_joint' type='fixed'>
+	  <child>gps0::link</child>
+	  <parent>base_link</parent>
+	</joint>
+  <!--}-->
+    
+  
+
+	
+	<!-- Realsense Front {-->
+    <link name="front_rgbd_link">
+      <pose>0.0725 0 -0.025 0 0 0</pose>
+      <visual name="front_rgbd_link_visual">
+        <pose>0 0 0 -1.5707963267950003 0 -1.5707963267950003</pose>
+        <geometry>
+          <mesh>
+			<uri>model://x500/meshes/sensors/realsense_body.stl</uri>
+			<scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.19</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+
+      <sensor name="uav1/front_rgbd/depth" type="depth">
+        <camera name="uav1/front_rgbd/depth">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+          </image>
+          <clip>
+            <near>0.3</near>
+            <far>12</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>5000.0</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/front_rgbd/color" type="camera">
+        <camera name="uav1/front_rgbd/color">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>RGB_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>60</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+
+      <sensor name="uav1/front_rgbd/ired1" type="camera">
+        <camera name="uav1/front_rgbd/ired1">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+      <sensor name="uav1/front_rgbd/ired2" type="camera">
+        <camera name="uav1/front_rgbd/ired2">
+          <horizontal_fov>1.211259</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>360</height>
+            <format>L_INT8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>50</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>0</visualize>
+      </sensor>
+    </link>
+
+    <joint name="front_rgbd_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>front_rgbd_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <plugin name="uav1/front_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
+      <prefix>uav1/front_rgbd/</prefix>
+      <depthUpdateRate>60.0</depthUpdateRate>
+      <colorUpdateRate>60.0</colorUpdateRate>
+      <infraredUpdateRate>30.0</infraredUpdateRate>
+	  <!-- Depth -->
+      <depthTopicName>uav1/front_rgbd/depth/image_raw</depthTopicName>
+      <depthCameraInfoTopicName>uav1/front_rgbd/depth/camera_info</depthCameraInfoTopicName>
+	  <!-- PointCloud -->
+	  <pointCloudTopicName>uav1/front_rgbd/depth/color/points</pointCloudTopicName>
+      <pointCloud>true</pointCloud>
+      <pointCloudCutoff>0.3</pointCloudCutoff>
+	  <!-- Color -->
+      <colorTopicName>uav1/front_rgbd/color/image_raw</colorTopicName>
+      <colorCameraInfoTopicName>uav1/front_rgbd/color/camera_info</colorCameraInfoTopicName>
+	  <!-- Infra -->
+      <infrared1TopicName>uav1/front_rgbd/infra1/image_raw</infrared1TopicName>
+      <infrared1CameraInfoTopicName>uav1/front_rgbd/infra1/camera_info</infrared1CameraInfoTopicName>
+      <infrared2TopicName>uav1/front_rgbd/infra2/image_raw</infrared2TopicName>
+      <infrared2CameraInfoTopicName>uav1/front_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
+
+      <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+      <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+      <infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
+      <infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+      <rangeMinDepth>0.3</rangeMinDepth>
+      <rangeMaxDepth>3.0</rangeMaxDepth>
+    </plugin>
+	<!--}-->
+	
+		
+	
+
+  </model>
+</sdf>
