@@ -1,5 +1,7 @@
 #!/bin/bash
 
+./link_models.sh
+./link_worlds.sh
 ./change_px4_cmake.sh
 ./link_airframes.sh
 
