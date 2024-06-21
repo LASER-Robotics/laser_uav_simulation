@@ -14,7 +14,7 @@ sources:
       - git submodule update --init --recursive
   - repo: git@github.com:IntelRealSense/realsense-ros.git
     name: realsense-ros
-    rev: ros2-development
+    rev: ros2-master
     type: git
     params:
     sparse_paths:
