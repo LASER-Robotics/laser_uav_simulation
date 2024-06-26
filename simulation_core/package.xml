@@ -2,7 +2,7 @@
 <package format="3">
   <name>laser_uav_simulation</name>
   <version>0.1.0</version>
-  <description>LUS Simulation</description>
+  <description>LaSER UAV Simulation</description>
   <maintainer email="rafael.novack07@gmail.com">Rafael Novack</maintainer>
   <license>Apache-2.0</license>
 

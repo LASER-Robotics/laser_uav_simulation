@@ -41,6 +41,8 @@ output = template.render(data)
 # Salvando o arquivo SDF
 with open((drones_dir + '/' + args.uav_model + '.sdf'), 'w') as file:
     file.write(output)
+with open(('/tmp/' + args.uav_model + '.sdf'), 'w') as file:
+    file.write(output)
 
 # Path to the shell script
 shell_script_path = './link_models.sh'

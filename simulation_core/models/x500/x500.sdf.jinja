@@ -1132,21 +1132,11 @@
 		        <resolution>0.01</resolution>
 		      </range>
         </ray>
-
         <plugin name="garmin_plugin" filename="libgazebo_lidar_plugin.so">
           <robotNamespace/>
           <min_distance>0.1</min_distance>
           <max_distance>35.0</max_distance>
         </plugin>
-
-        <!-- <plugin name="garmin" filename="libgazebo_ros_ray_sensor.so"> -->
-        <!--   <ros> -->
-		  	<!-- <remapping>~/out:=/{{  namespace  }}/sensors/garmin/scan</remapping> -->
-		  <!-- </ros> -->
-		  <!-- <output_type>sensor_msgs/LaserScan</output_type> -->
-        <!--   <frameName>garmin_link</frameName> -->
-        <!-- </plugin> -->
-
       </sensor>
 	  </link>
 	  <joint name="garmin_joint" type="fixed">
@@ -1154,6 +1144,14 @@
 	    <child>garmin_link</child>
 	  </joint>
     <!--}-->
+
+    <!-- Rosbag {-->
+    <plugin name='rosbag' filename='libgazebo_multirotor_base_plugin.so'>
+      <robotNamespace/>
+      <linkName>{{  root  }}</linkName>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+    <!--} -->
 
     <!-- Motor Plugins {-->
     <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
@@ -1228,6 +1226,32 @@
 	  <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
 	<!--}-->
+    
+    <!-- GPS groundtruth {-->
+    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+      <robotNamespace/>
+    </plugin>
+    <!--}-->
+
+    <!-- Magnetometer {-->
+    <plugin name="magnetometer_plugin" filename="libgazebo_magnetometer_plugin.so">
+	    <robotNamespace/>
+	    <pubRate>100</pubRate>
+	    <noiseDensity>0.0004</noiseDensity>
+	    <randomWalk>6.4e-06</randomWalk>
+	    <biasCorrelationTime>600</biasCorrelationTime>
+	    <magTopic>/mag</magTopic>
+	  </plugin>
+    <!--}-->
+
+    <!-- Barometer {-->
+    <plugin name="barometer_plugin" filename="libgazebo_barometer_plugin.so">
+	    <robotNamespace/>
+	    <pubRate>50</pubRate>
+	    <baroTopic>/baro</baroTopic>
+	    <baroDriftPaPerSec>0</baroDriftPaPerSec>
+	  </plugin>
+    <!--}-->
 
     <!-- Mavlink interface {-->
     <plugin name="mavlink_interface_plugin" filename="libgazebo_mavlink_interface.so">
@@ -1287,7 +1311,23 @@
     </channel>
 	  </control_channels>
 	</plugin>
-    <!--}-->
+  <!--}-->
+
+  <!-- IMU {-->
+    <plugin name='rotors_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <robotNamespace/>
+      <linkName>imu_link</linkName>
+      <imuTopic>/imu</imuTopic>
+      <gyroscopeNoiseDensity>0.00018665</gyroscopeNoiseDensity>
+      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+      <accelerometerNoiseDensity>0.00186</accelerometerNoiseDensity>
+      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+  <!--}-->
 
     <!-- GPS {-->
     <include>
@@ -1300,9 +1340,9 @@
 	  <parent>{{  root  }}</parent>
 	</joint>
   <!--}-->
-
-    {% if enable_rplidar %}
-    <!-- RPLidar {-->
+    
+  {% if enable_rplidar %}
+  <!-- RPLidar {-->
     <link name="rplidar_link">
 			<pose>0 0 0.1 0 0 0</pose>
       <inertial>
@@ -1354,7 +1394,6 @@
         <always_on>1</always_on>
         <update_rate>20</update_rate>
         <visualize>0</visualize>
-
         <ray>
           <scan>
             <horizontal>
@@ -1375,65 +1414,22 @@
             <stddev>0.01</stddev>
           </noise>
         </ray>
-
-        <!-- <plugin name="rplidar_plugin" filename="libgazebo_ros_ray_sensor.so"> -->
-        <!--   <ros> -->
-		  	<!-- <remapping>~/out:=/{{  namespace  }}/sensors/rplidar/scan</remapping> -->
-		  <!-- </ros> -->
-		  <!-- <output_type>sensor_msgs/LaserScan</output_type> -->
-        <!--   <frameName>rplidar_link</frameName> -->
-        <!-- </plugin> -->
-
+        <plugin name="rplidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+		  	    <remapping>~/out:=/{{  namespace  }}/sensors/rplidar/scan</remapping>
+		      </ros>
+		      <output_type>sensor_msgs/LaserScan</output_type>
+          <frameName>rplidar_link</frameName>
+        </plugin>
       </sensor>
     </link>
+
     <joint name='rplidar_joint' type='fixed'>
       <child>rplidar_link</child>
       <parent>{{  root  }}</parent>
     </joint>
-    <!--} -->
-    {% endif %}
-
-    <!-- GPS groundtruth {-->
-    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
-      <robotNamespace/>
-    </plugin>
-    <!--}-->
-
-    <!-- Magnetometer {-->
-    <plugin name="magnetometer_plugin" filename="libgazebo_magnetometer_plugin.so">
-	  <robotNamespace/>
-	  <pubRate>100</pubRate>
-	  <noiseDensity>0.0004</noiseDensity>
-	  <randomWalk>6.4e-06</randomWalk>
-	  <biasCorrelationTime>600</biasCorrelationTime>
-	  <magTopic>/mag</magTopic>
-	</plugin>
-    <!--}-->
-
-    <!-- Barometer {-->
-    <plugin name="barometer_plugin" filename="libgazebo_barometer_plugin.so">
-	  <robotNamespace/>
-	  <pubRate>50</pubRate>
-	  <baroTopic>/baro</baroTopic>
-	  <baroDriftPaPerSec>0</baroDriftPaPerSec>
-	</plugin>
-    <!--}-->
-
-	<!-- IMU {-->
-    <plugin name='rotors_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
-      <robotNamespace/>
-      <linkName>imu_link</linkName>
-      <imuTopic>/imu</imuTopic>
-      <gyroscopeNoiseDensity>0.00018665</gyroscopeNoiseDensity>
-      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
-      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
-      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
-      <accelerometerNoiseDensity>0.00186</accelerometerNoiseDensity>
-      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
-      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
-      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
-    </plugin>
-  <!--}-->
+  <!--} -->
+  {% endif %}
 
 	{% if enable_d435_front %}
 	<!-- Realsense Front {-->
