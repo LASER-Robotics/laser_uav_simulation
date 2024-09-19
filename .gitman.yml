@@ -1,5 +1,41 @@
 location: .gitman
 sources:
+  - repo: git@github.com:LASER-Robotics/livox_ros_driver2.git
+    name: livox_ros_driver2
+    rev: master
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: third_party/livox_ros_driver
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:stm32f303ret6/livox_laser_simulation_RO2.git
+    name: livox_laser_simulation_RO2
+    rev: main
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: third_party/livox_simulation_plugin
+    scripts:
+      - git submodule update --init --recursive
+  - repo: git@github.com:Livox-SDK/Livox-SDK2.git
+    name: Livox-SDK2
+    rev: master
+    type: git
+    params:
+    sparse_paths:
+      -
+    links:
+      - source: ''
+        target: third_party/livox_sdk
+    scripts:
+      - git submodule update --init --recursive
   - repo: git@github.com:pal-robotics/realsense_gazebo_plugin.git
     name: realsense_gazebo_plugin
     rev: foxy-devel

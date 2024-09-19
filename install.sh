@@ -4,7 +4,13 @@ sudo apt-get install ros-humble-realsense2-*
 sudo apt install ros-humble-librealsense2-*
 sudo apt install ros-humble-gazebo-*
 
-cd ~/git/laser_uav_system/ros_packages/laser_uav_simulation/simulation_core/scripts
+cd third_party/livox_sdk
+mkdir build
+cd build
+cmake .. && make -j
+sudo make install
+
+cd ~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/scripts
 
 ./add_new_model.sh
 ./link_models.sh

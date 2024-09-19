@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(simulation_core)
+project(laser_uav_simulation)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -15,9 +15,9 @@ install(PROGRAMS
 install(DIRECTORY
   scripts
   launch
-	worlds
-	models
-	DESTINATION share/${PROJECT_NAME}
+  worlds
+  models
+  DESTINATION share/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
