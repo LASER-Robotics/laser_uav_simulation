@@ -17,4 +17,4 @@ cd ~/git/laser_uav_system/ros_packages/laser_uav_simulation/core/scripts
 ./link_worlds.sh
 
 cd ~/laser_uav_system_ws/
-colcon build --symlink-install --packages-select realsense2_camera realsense2_camera_msgs realsense2_description realsense_gazebo_plugin simulation_core
+colcon build --symlink-install --packages-select realsense2_camera realsense2_camera_msgs realsense2_description realsense_gazebo_plugin laser_uav_simulation ros2_livox_simulation livox_sdk2 livox_ros_driver2
