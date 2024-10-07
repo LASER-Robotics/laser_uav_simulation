@@ -12,8 +12,8 @@ sources:
         target: third_party/livox_ros_driver
     scripts:
       - git submodule update --init --recursive
-  - repo: git@github.com:stm32f303ret6/livox_laser_simulation_RO2.git
-    name: livox_laser_simulation_RO2
+  - repo: git@github.com:LASER-Robotics/livox_laser_simulation.git
+    name: livox_laser_simulation
     rev: main
     type: git
     params:
