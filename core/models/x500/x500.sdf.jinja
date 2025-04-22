@@ -753,21 +753,80 @@
     <!--}-->
 
     <!-- IMU {-->
-    <link name='imu_link'>
-      <pose>0 0 0.02 0 0 0</pose>
-      <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.015</mass>
-        <inertia>
-          <ixx>1e-05</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>1e-05</iyy>
-          <iyz>0</iyz>
-          <izz>1e-05</izz>
-        </inertia>
-      </inertial>
-    </link>
+  <link name='imu_link'>
+  <pose>0 0 0.02 0 0 0</pose>
+  <inertial>
+    <pose>0 0 0 0 0 0</pose>
+    <mass>0.015</mass>
+    <inertia>
+      <ixx>1e-05</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyy>1e-05</iyy>
+      <iyz>0</iyz>
+      <izz>1e-05</izz>
+    </inertia>
+  </inertial>
+  <!-- Adicione este sensor -->
+  <sensor name="imu_sensor" type="imu">
+    <always_on>1</always_on>
+    <update_rate>100</update_rate>
+    <imu>
+      <angular_velocity>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </z>
+      </angular_velocity>
+      <linear_acceleration>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </z>
+      </linear_acceleration>
+    </imu>
+  </sensor>
+</link>
     <joint name='imu_joint' type='revolute'>
       <child>imu_link</child>
       <parent>{{  root  }}</parent>
@@ -1583,6 +1642,114 @@
       <rangeMinDepth>0.3</rangeMinDepth>
       <rangeMaxDepth>3.0</rangeMaxDepth>
     </plugin>
+
+  <link name='d435_front_imu_link'>
+  <pose>0 0 0.02 0 0 0</pose>
+  <inertial>
+    <pose>0 0 0 0 0 0</pose>
+    <mass>0.015</mass>
+    <inertia>
+      <ixx>1e-05</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyy>1e-05</iyy>
+      <iyz>0</iyz>
+      <izz>1e-05</izz>
+    </inertia>
+  </inertial>
+  <!-- Adicione este sensor -->
+  <sensor name="d435_front_imu_sensor" type="imu">
+    <always_on>1</always_on>
+    <update_rate>100</update_rate>
+    <imu>
+      <angular_velocity>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </z>
+      </angular_velocity>
+      <linear_acceleration>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </z>
+      </linear_acceleration>
+    </imu>
+  </sensor>
+</link>
+    <joint name='d435_front_imu_joint' type='revolute'>
+      <child>d435_front_imu_link</child>
+      <parent>front_rgbd_link</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+ 
+    <plugin name='d435_front_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <robotNamespace/>
+      <linkName>d435_front_imu_link</linkName>
+      <imuTopic>/imu</imuTopic>
+      <gyroscopeNoiseDensity>0.00018665</gyroscopeNoiseDensity>
+      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+      <accelerometerNoiseDensity>0.00186</accelerometerNoiseDensity>
+      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+
 	<!--}-->
 	{% endif %}
 		
@@ -1739,6 +1906,114 @@
       <rangeMinDepth>0.3</rangeMinDepth>
       <rangeMaxDepth>3.0</rangeMaxDepth>
     </plugin>
+
+ <link name='d455_down_imu_link'>
+  <pose>0 0 0.02 0 0 0</pose>
+  <inertial>
+    <pose>0 0 0 0 0 0</pose>
+    <mass>0.015</mass>
+    <inertia>
+      <ixx>1e-05</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyy>1e-05</iyy>
+      <iyz>0</iyz>
+      <izz>1e-05</izz>
+    </inertia>
+  </inertial>
+  <!-- Adicione este sensor -->
+  <sensor name="d455_down_imu_sensor" type="imu">
+    <always_on>1</always_on>
+    <update_rate>100</update_rate>
+    <imu>
+      <angular_velocity>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </z>
+      </angular_velocity>
+      <linear_acceleration>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </z>
+      </linear_acceleration>
+    </imu>
+  </sensor>
+</link>
+    <joint name='d455_down_imu_joint' type='revolute'>
+      <child>d455_down_imu_link</child>
+      <parent>down_rgbd_link</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+ 
+    <plugin name='d455_down_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <robotNamespace/>
+      <linkName>d455_down_imu_link</linkName>
+      <imuTopic>/imu</imuTopic>
+      <gyroscopeNoiseDensity>0.00018665</gyroscopeNoiseDensity>
+      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+      <accelerometerNoiseDensity>0.00186</accelerometerNoiseDensity>
+      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+
 	<!--}-->
 	{% endif %}
 
