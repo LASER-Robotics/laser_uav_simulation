@@ -769,7 +769,7 @@
   </inertial>
     <sensor name="imu" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>200</update_rate>
       <visualize>true</visualize>
       <plugin name="imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">  
         <ros>
@@ -1601,7 +1601,7 @@
     </plugin>
 
   <link name='d435_front_imu_link'>
-  <pose>0 0 0.02 0 0 0</pose>
+  <pose>0 0 0 -1.5708 0 0</pose>
   <inertial>
     <pose>0 0 0 0 0 0</pose>
     <mass>0.015</mass>
@@ -1616,7 +1616,7 @@
   </inertial>
     <sensor name="imu_front_realsense" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>200</update_rate>
       <visualize>true</visualize>
       <plugin name="front_realsenseimu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">  
         <ros>
@@ -1808,7 +1808,7 @@
     </plugin>
 
  <link name='d455_down_imu_link'>
-  <pose>0 0 0.02 0 0 0</pose>
+  <pose>0 0 0 0 3.14159265359 0</pose>
   <inertial>
     <pose>0 0 0 0 0 0</pose>
     <mass>0.015</mass>
@@ -1823,7 +1823,7 @@
   </inertial>
   <sensor name="imu_down_realsense" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>200</update_rate>
       <visualize>true</visualize>
       <plugin name="down_realsenseimu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">  
         <ros>
