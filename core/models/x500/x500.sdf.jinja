@@ -767,13 +767,13 @@
 					<izz>1e-05</izz>
 				</inertia>
 			</inertial>
-			<sensor name="imu" type="imu">
+			<sensor name="{{ namespace }}_imu" type="imu">
 				<always_on>true</always_on>
 				<update_rate>200</update_rate>
 				<visualize>true</visualize>
-				<plugin name="imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
+				<plugin name="{{ namespace }}_imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
 					<ros>
-						<remapping>~/out:=/imu/data</remapping>
+						<remapping>~/out:=/{{ namespace }}/imu/data</remapping>
 					</ros>
 					<body_name>imu_link</body_name>
 					<gaussian_noise>0.0</gaussian_noise>
@@ -1358,7 +1358,7 @@
 		<!--}-->
     
   {% if enable_rplidar %}
-  								<!-- RPLidar {-->
+  																																																												<!-- RPLidar {-->
 		<link name="rplidar_link">
 			<pose>0 0 0.1 0 0 0</pose>
 			<inertial>
@@ -1587,10 +1587,10 @@
 			<infrared2TopicName>{{  namespace  }}/front_rgbd/infra2/image_raw</infrared2TopicName>
 			<infrared2CameraInfoTopicName>{{  namespace  }}/front_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
 
-			<colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
-			<depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
-			<infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
-			<infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+			<colorOpticalframeName>{{  namespace  }}/front_rgbd/camera_color_optical_frame</colorOpticalframeName>
+			<depthOpticalframeName>{{  namespace  }}/front_rgbd/camera_depth_optical_frame</depthOpticalframeName>
+			<infrared1OpticalframeName>{{  namespace  }}/front_rgbd/camera_left_ir_optical_frame</infrared1OpticalframeName>
+			<infrared2OpticalframeName>{{  namespace  }}/front_rgbd/camera_right_ir_optical_frame</infrared2OpticalframeName>
 			<rangeMinDepth>0.3</rangeMinDepth>
 			<rangeMaxDepth>4.0</rangeMaxDepth>
 		</plugin>
@@ -1787,10 +1787,10 @@
 			<infrared2TopicName>{{  namespace  }}/down_rgbd/infra2/image_raw</infrared2TopicName>
 			<infrared2CameraInfoTopicName>{{  namespace  }}/down_rgbd/infra2/camera_info</infrared2CameraInfoTopicName>
 
-			<colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
-			<depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
-			<infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
-			<infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+			<colorOpticalframeName>{{  namespace  }}/down_rgbd/camera_color_optical_frame</colorOpticalframeName>
+			<depthOpticalframeName>{{  namespace  }}/down_rgbd/camera_depth_optical_frame</depthOpticalframeName>
+			<infrared1OpticalframeName>{{  namespace  }}/down_rgbd/camera_left_ir_optical_frame</infrared1OpticalframeName>
+			<infrared2OpticalframeName>{{  namespace  }}/down_rgbd/camera_right_ir_optical_frame</infrared2OpticalframeName>
 			<rangeMinDepth>0.3</rangeMinDepth>
 			<rangeMaxDepth>4.0</rangeMaxDepth>
 		</plugin>
