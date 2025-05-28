@@ -8,7 +8,7 @@ sources:
     sparse_paths:
       -
     links:
-      - source: ''
+      - source: ""
         target: third_party/livox_ros_driver
     scripts:
       - git submodule update --init --recursive
@@ -20,7 +20,7 @@ sources:
     sparse_paths:
       -
     links:
-      - source: ''
+      - source: ""
         target: third_party/livox_simulation_plugin
     scripts:
       - git submodule update --init --recursive
@@ -32,7 +32,7 @@ sources:
     sparse_paths:
       -
     links:
-      - source: ''
+      - source: ""
         target: third_party/livox_sdk
     scripts:
       - git submodule update --init --recursive
@@ -44,23 +44,11 @@ sources:
     sparse_paths:
       -
     links:
-      - source: ''
+      - source: ""
         target: third_party/realsense_gazebo_plugin
-    scripts:
-      - git submodule update --init --recursive
-  - repo: git@github.com:IntelRealSense/realsense-ros.git
-    name: realsense-ros
-    rev: ros2-master
-    type: git
-    params:
-    sparse_paths:
-      -
-    links:
-      - source: ''
-        target: third_party/realsense-ros
     scripts:
       - git submodule update --init --recursive
 sources_locked:
 groups:
   -
-default_group: ''
+default_group: ""

@@ -1359,7 +1359,7 @@
 		<!--}-->
     
   {% if enable_rplidar %}
-  																																																																																																																																																																						<!-- RPLidar {-->
+  																																																																																																																																																																																																		<!-- RPLidar {-->
 		<link name="rplidar_link">
 			<pose>0 0 0.1 0 0 0</pose>
 			<inertial>
@@ -1449,7 +1449,7 @@
   {% endif %}
 
   {% if enable_livox %}
-  																																																																																																																		<!-- Livox {-->
+  																																																																																																																																														<!-- Livox {-->
 		<link name="livox_link">
 
 			<pose>0.12 0 0.025 0 0 0</pose>
@@ -1713,60 +1713,6 @@
 			<sensor name="{{  namespace  }}_front_rgbd_imu" type="imu">
 				<always_on>true</always_on>
 				<update_rate>200</update_rate>
-				<imu>
-					<angular_velocity>
-						<x>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</x>
-						<y>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</y>
-						<z>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</z>
-					</angular_velocity>
-					<linear_acceleration>
-						<x>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</x>
-						<y>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</y>
-						<z>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</z>
-					</linear_acceleration>
-				</imu>
 				<visualize>true</visualize>
 				<plugin name="{{  namespace  }}_front_rgbd_imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
 					<ros>
@@ -1954,60 +1900,6 @@
 			<sensor name="{{  namespace  }}_down_rgbd_imu" type="imu">
 				<always_on>true</always_on>
 				<update_rate>200</update_rate>
-				<imu>
-					<angular_velocity>
-						<x>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</x>
-						<y>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</y>
-						<z>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>2e-4</stddev>
-								<bias_mean>0.0000075</bias_mean>
-								<bias_stddev>0.0000008</bias_stddev>
-							</noise>
-						</z>
-					</angular_velocity>
-					<linear_acceleration>
-						<x>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</x>
-						<y>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</y>
-						<z>
-							<noise type="gaussian">
-								<mean>0.0</mean>
-								<stddev>1.7e-2</stddev>
-								<bias_mean>0.1</bias_mean>
-								<bias_stddev>0.001</bias_stddev>
-							</noise>
-						</z>
-					</linear_acceleration>
-				</imu>
 				<visualize>true</visualize>
 				<plugin name="{{  namespace  }}_down_rgbd_imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
 					<ros>
