@@ -1447,7 +1447,8 @@
 		<!--} -->
   {% endif %}
 
-{% if enable_d435_front %}
+  {% if enable_d435_front %}
+    <!-- REALSENSE: d435_front {-->
 		<link name="{{ namespace }}/front_rgbd_link">
 			<pose>0.0725 0 -0.025 0 0 0</pose>
 			<visual name="front_rgbd_link_visual">
@@ -1537,7 +1538,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>30</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 			<sensor name="{{  namespace  }}/front_rgbd/ired2" type="camera">
@@ -1559,7 +1560,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>30</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 		</link>
@@ -1574,7 +1575,7 @@
 			<prefix>{{  namespace  }}/front_rgbd/</prefix>
 			<depthUpdateRate>60.0</depthUpdateRate>
 			<colorUpdateRate>60.0</colorUpdateRate>
-			<infraredUpdateRate>30.0</infraredUpdateRate>
+			<infraredUpdateRate>60.0</infraredUpdateRate>
 			<depthTopicName>{{  namespace  }}/front_rgbd/depth/image_raw</depthTopicName>
 			<depthCameraInfoTopicName>{{  namespace  }}/front_rgbd/depth/camera_info</depthCameraInfoTopicName>
 			<pointCloudTopicName>{{  namespace  }}/front_rgbd/depth/color/points</pointCloudTopicName>
@@ -1611,7 +1612,7 @@
 			</inertial>
 			<sensor name="{{  namespace  }}_front_rgbd_imu" type="imu">
 				<always_on>true</always_on>
-				<update_rate>200</update_rate>
+				<update_rate>100</update_rate>
 				<visualize>true</visualize>
 				<plugin name="{{  namespace  }}_front_rgbd_imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
 					<ros>
@@ -1644,11 +1645,12 @@
 				<use_parent_model_frame>1</use_parent_model_frame>
 			</axis>
 		</joint>
-
-        {% endif %}
+    <!--} -->
+  {% endif %}
 		
-		{% if enable_d455_down %}
-		<link name="{{ namespace }}/down_rgbd_link">
+	{% if enable_d455_down %}
+    <!-- REALSENSE: d455_down {-->
+    <link name="{{ namespace }}/down_rgbd_link">
 			<pose>0.086 0 -0.065 0 {{  components.rad(90)  }} {{  components.rad(180)  }}</pose>
 			<visual name="down_rgbd_link_visual">
 				<pose>0 0 0 {{  components.rad(-90)  }} 0 {{  components.rad(-90)  }}</pose>
@@ -1691,7 +1693,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>15</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 
@@ -1714,7 +1716,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>30</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 
@@ -1737,7 +1739,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>30</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 			<sensor name="{{  namespace  }}/down_rgbd/ired2" type="camera">
@@ -1759,7 +1761,7 @@
 					</noise>
 				</camera>
 				<always_on>1</always_on>
-				<update_rate>30</update_rate>
+				<update_rate>60</update_rate>
 				<visualize>0</visualize>
 			</sensor>
 		</link>
@@ -1772,9 +1774,9 @@
 
 		<plugin name="{{  namespace  }}/down_rgbd_plugin" filename="librealsense_gazebo_plugin.so">
 			<prefix>{{  namespace  }}/down_rgbd/</prefix>
-			<depthUpdateRate>15.0</depthUpdateRate>
-			<colorUpdateRate>30.0</colorUpdateRate>
-			<infraredUpdateRate>30.0</infraredUpdateRate>
+			<depthUpdateRate>60.0</depthUpdateRate>
+			<colorUpdateRate>60.0</colorUpdateRate>
+			<infraredUpdateRate>60.0</infraredUpdateRate>
 			<depthTopicName>{{  namespace  }}/down_rgbd/depth/image_raw</depthTopicName>
 			<depthCameraInfoTopicName>{{  namespace  }}/down_rgbd/depth/camera_info</depthCameraInfoTopicName>
 			<pointCloudTopicName>{{  namespace  }}/down_rgbd/depth/color/points</pointCloudTopicName>
@@ -1811,7 +1813,7 @@
 			</inertial>
 			<sensor name="{{  namespace  }}_down_rgbd_imu" type="imu">
 				<always_on>true</always_on>
-				<update_rate>200</update_rate>
+				<update_rate>100</update_rate>
 				<visualize>true</visualize>
 				<plugin name="{{  namespace  }}_down_rgbd_imu_gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
 					<ros>
@@ -1844,7 +1846,7 @@
 				<use_parent_model_frame>1</use_parent_model_frame>
 			</axis>
 		</joint>
-
-		{% endif %}
+<!--} -->
+	{% endif %}
 	</model>
 </sdf>
