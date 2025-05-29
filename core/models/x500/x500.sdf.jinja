@@ -1227,8 +1227,9 @@
       <motorNumber>0</motorNumber>
       <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-	  <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
+      <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
     </plugin>
 
     <plugin name='back_left_motor_model' filename='libgazebo_motor_model.so'>
@@ -1245,8 +1246,9 @@
       <motorNumber>1</motorNumber>
       <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-	  <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
+      <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
     </plugin>
 
     <plugin name='front_left_motor_model' filename='libgazebo_motor_model.so'>
@@ -1265,6 +1267,7 @@
 	  <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
 	  <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
 	  <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    <motorType>velocity</motorType>
     </plugin>
 
     <plugin name='back_right_motor_model' filename='libgazebo_motor_model.so'>
@@ -1283,6 +1286,7 @@
 	  <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
 	  <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
 	  <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    <motorType>velocity</motorType>
     </plugin>
 	<!--}-->
     
@@ -2017,5 +2021,29 @@
 	<!--}-->
 	{% endif %}
 
+    <!-- <link name="odometry_ground_truth_link"> -->
+    <!--   <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/> -->
+    <!--   <mass value="0.00001"/> -->
+    <!-- </link> -->
+
+    <!-- <joint name="odometry_ground_truth_link_joint" type="revolute"> -->
+    <!--   <parent>"base_link"</parent> -->
+    <!--   <origin xyz="0 0 0" rpy="0 0 0"/> -->
+    <!--   <child>"odometry_ground_truth_link"</child> -->
+    <!--   <limit upper="0" lower="0" effort="0" velocity="0"/> -->
+    <!-- </joint> -->
+
+      <plugin name="gazebo_ros_p3d" filename="libgazebo_ros_p3d.so">
+        <!-- <ros> -->
+        <!--   <remapping>odom:=odometry/ground_truth</remapping> -->
+        <!-- </ros> -->
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <body_name>base_link</body_name>
+        <topic_name>/groundTruth</topic_name>
+        <frame_name>world</frame_name>
+        <xyz_offset>-1 -1 0</xyz_offset>
+        <!-- <rpy_offset>0 0 0</rpy_offset> -->
+      </plugin>
   </model>
 </sdf>
