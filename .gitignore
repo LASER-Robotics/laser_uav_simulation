@@ -1,4 +1,9 @@
-.gitman
+test_data
+log
+eeprom
 .catkin_tools
 .swo
 .swp
+dataman
+parameters.bson
+parameters.backup.bson
