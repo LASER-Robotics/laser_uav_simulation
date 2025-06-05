@@ -611,7 +611,7 @@
       </imu>
       <plugin name="{{namespace}}_{{sensor_name}}_plugin" filename="libgazebo_ros_imu_sensor.so">
         <ros>
-          <remapping>~/out:={{namespace}}/{{topic_name}}</remapping>
+          <remapping>~/out:={{topic_name}}</remapping>
         </ros>
       </plugin>
     </sensor>
@@ -625,14 +625,14 @@
 {# <!--}--> #}
 
 {# gazebo_ground_thruth_macro {--> #}
-{%- macro gazebo_ground_truth_macro(odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw) -%}
-  <link name="{{ odometry_sensor_name }}_link">
+{%- macro gazebo_ground_truth_macro(namespace, odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw) -%}
+  <link name="{{namespace}}_{{ odometry_sensor_name }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
   </link>
-  <joint name="{{ odometry_sensor_name }}_joint" type="revolute">
+  <joint name="{{namespace}}_{{ odometry_sensor_name }}_joint" type="revolute">
     <parent>{{ parent_link }}</parent>
-    <child>{{ odometry_sensor_name }}_link</child>
+    <child>{{namespace}}_{{ odometry_sensor_name }}_link</child>
     <axis>
       <xyz>0 0 1</xyz>
       <limit>
@@ -644,11 +644,11 @@
       <use_parent_model_frame>1</use_parent_model_frame>
     </axis>
   </joint>
-  <plugin name="{{ odometry_sensor_name }}_plugin" filename="libgazebo_ros_p3d.so">
+  <plugin name="{{namespace}}_{{ odometry_sensor_name }}_plugin" filename="libgazebo_ros_p3d.so">
     <ros>
-      <remapping>odom:={{ topic_name }}</remapping>
+      <remapping>odom:={{namespace}}/{{ topic_name }}</remapping>
     </ros>
-    <body_name>{{ odometry_sensor_name }}_link</body_name>
+    <body_name>{{namespace}}_{{ odometry_sensor_name }}_link</body_name>
     <update_rate>{{ update_rate }}</update_rate>
     <gaussian_noise>{{ noise }}</gaussian_noise>
     <frame_name>{{ frame_name }}</frame_name>
@@ -729,7 +729,7 @@
       pitch = visual_pitch,
       yaw = visual_yaw)
     }}
-    <sensor name="{{namespace}}_{{ camera_name }}_sensor" type="wideanglecamera">
+    <sensor name="{{namespace}}/{{ camera_name }}_sensor" type="wideanglecamera">
       <update_rate>{{ frame_rate }}</update_rate>
       <camera>
         <horizontal_fov>{{ horizontal_fov }}</horizontal_fov>
@@ -988,7 +988,7 @@
       sensor_name = sensor_name + '_imu',
       parent_link = sensor_name + '_link',
       update_rate = imu_rate,
-      topic_name = namespace + '/' + sensor_name + '/imu/data',
+      topic_name = namespace + '/' + sensor_name + '_sensor/imu/data',
       noise_mean = 0,
       x = 0,
       y = 0,

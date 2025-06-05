@@ -670,6 +670,7 @@
     {# Ground truth {--> #}
     {% if enable_ground_truth %}
     {{ components.gazebo_ground_truth_macro(
+      namespace = namespace,
       odometry_sensor_name = 'ground_truth',
       parent_link = root,
       topic_name = 'ground_truth',
