@@ -493,7 +493,7 @@
 {# <!--}--> #}
 
 {# gazebo_mavlink_interface_macro {--> #}
-{%- macro gazebo_mavlink_interface_macro(imu_topic, mag_topic, baro_topic, lidar_topic) -%}
+{%- macro gazebo_mavlink_interface_macro(instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
 <plugin name="mavlink_interface_plugin" filename="libgazebo_mavlink_interface.so">
   <robotNamespace/>
   <imuSubTopic>{{ imu_topic }}</imuSubTopic>
@@ -501,15 +501,15 @@
   <baroSubTopic>{{ baro_topic }}</baroSubTopic>
   <lidarSubTopic>{{ lidar_topic }}</lidarSubTopic>
   <mavlink_addr>INADDR_ANY</mavlink_addr>
-  <mavlink_udp_port>14560</mavlink_udp_port>
-  <mavlink_tcp_port>4560</mavlink_tcp_port>
+  <mavlink_udp_port>{{14560 + instance}}</mavlink_udp_port>
+  <mavlink_tcp_port>{{4560 + instance}}</mavlink_tcp_port>
   <serialEnabled>0</serialEnabled>
   <serialDevice>/dev/ttyACM0</serialDevice>
   <baudRate>921600</baudRate>
   <qgc_addr>INADDR_ANY</qgc_addr>
-  <qgc_udp_port>14550</qgc_udp_port>
+  <qgc_udp_port>{{14550 + instance}}</qgc_udp_port>
   <sdk_addr>INADDR_ANY</sdk_addr>
-  <sdk_udp_port>14540</sdk_udp_port>
+  <sdk_udp_port>{{14540 + instance}}</sdk_udp_port>
   <hil_mode>0</hil_mode>
   <hil_state_level>0</hil_state_level>
   <send_vision_estimation>0</send_vision_estimation>

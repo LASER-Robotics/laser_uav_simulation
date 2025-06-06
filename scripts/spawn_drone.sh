@@ -13,7 +13,10 @@ if [[ ! " ${uavs_available[@]} " =~ " $uav_type " ]]; then
     exit 1
 fi
 
-~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py $uav_name $uav_type $uav_sensors
+instance=$(echo "$uav_name" | sed -n 's/^uav\([0-9]\+\)$/\1/p')
+instance=$((instance - 1))
+
+~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py --namespace $uav_name --uav_model $uav_type --instance $instance $uav_sensors
 
 echo "Waiting for gazebo run."
 while ! pgrep -x "gzserver" > /dev/null; do
@@ -23,7 +26,7 @@ sleep 5
 echo "Spawning the uav $uav_type with namespace $uav_name and sensors: $uav_sensors."
 echo "In Position x: $1, y: $2, z: $3, orientation: $4."
 
-while gz model --verbose --spawn-file="/tmp/laser_uavs_description/sdf/${uav_type}.sdf" --model-name=${uav_name}_${uav_type} -x $1 -y $2 -z $3 -Y $4 | grep -q "An instance of Gazebo is not running."; do
+while gz model --verbose --spawn-file="/tmp/laser_uavs_description/sdf/${uav_type}_$instance.sdf" --model-name=${uav_name}_${uav_type}_$5 -x $1 -y $2 -z $3 -Y $4 | grep -q "An instance of Gazebo is not running."; do
 	echo "gzserver not ready yet, trying again!"
 	sleep 1
 done
@@ -33,4 +36,4 @@ export PX4_SIM_MODEL=$uav_type
 
 cd ~/git/laser_uav_system/ros_packages/laser_uav_simulation/ROMFS/
 
-~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/bin/px4 -s ~/git/laser_uav_system/ros_packages/laser_uav_simulation/ROMFS/etc/init.d-posix/rcS
+~/git/laser_uav_system/ros_packages/px4_firmware/build/px4_sitl_default/bin/px4 -i $instance -s ~/git/laser_uav_system/ros_packages/laser_uav_simulation/ROMFS/etc/init.d-posix/rcS
