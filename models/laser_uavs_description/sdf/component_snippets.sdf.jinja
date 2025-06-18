@@ -108,6 +108,49 @@
 {%- endmacro -%}
 {# <!--}--> #}
 
+{# multirotor_box_physics_macro {--> #}
+{%- macro multirotor_box_physics_macro(mass, body_width,  body_length, body_height, rotor_velocity_slowdown_sim, ixx, ixy, ixz, iyy, iyz, izz) -%}
+  <pose>0 0 0 0 0 0 </pose>
+  <inertial>
+    <mass>{{ mass }}</mass>
+    <inertia>
+      <ixx>{{ ixx }}</ixx>
+      <ixy>{{ ixy }}</ixy>
+      <ixz>{{ ixz }}</ixz>
+      <iyy>{{ iyy }}</iyy>
+      <iyz>{{ iyz }}</iyz>
+      <izz>{{ izz }}</izz>
+    </inertia>
+  </inertial>
+  <gravity>true</gravity>
+  <collision name="base_link_collision">
+    <pose> 0 0 0 0 0 0</pose>
+    <geometry>
+      <box>
+        <size>{{ body_width }} {{ body_length }} {{ body_height }}</size>
+      </box>
+    </geometry>
+    <surface>
+      <contact>
+        <ode>
+          <min_depth>0.001</min_depth>
+          <max_vel>0.0</max_vel>
+        </ode>
+      </contact>
+      <friction>
+        <ode/>
+      </friction>
+    </surface>
+  </collision>
+
+ <plugin filename="libgazebo_multirotor_base_plugin.so" name="multirotor_base_plugin">
+    <robotNamespace/>
+    <linkName>base_link</linkName>
+    <rotorVelocitySlowdownSim>{{ rotor_velocity_slowdown_sim }}</rotorVelocitySlowdownSim>
+  </plugin>
+{%- endmacro -%}
+{# <!--}--> #}
+
 {# leg_collision_offset_macro {--> #}
 {%- macro leg_collision_offset_macro(name, mesh_file, mesh_scale, color, x, y, z, roll, pitch, yaw, collision_height, collision_radius, offset_x, offset_y, offset_z) -%}
   {{ visual_mesh_macro(
