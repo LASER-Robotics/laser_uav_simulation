@@ -505,6 +505,16 @@
       {# <!--}--> #}
       <!--}-->
     </link>
+    
+    {{ components.add_fixed_segment(
+        name='segmento_fixo_1',
+        parent_link='base_link',
+        joint_pose='0 0 -0.10 0 0 0',
+        length=0.01,
+        radius=0.01,
+        mass=0.01
+        ) }}
+
 
   {# Propellers {--> #}
     {%- set prop_list = [
