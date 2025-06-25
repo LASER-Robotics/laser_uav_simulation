@@ -1050,7 +1050,7 @@
 {%- macro add_fixed_segment(name, parent_link, joint_pose, length, radius, mass) -%}
 
   <link name="{{ name }}_link">
-    <pose>0 0 -0.04 0 0 0</pose>
+    <pose>0 0 0 0 0 0</pose> 
     <inertial>
       <mass>{{ mass }}</mass>
       <inertia>
@@ -1082,7 +1082,81 @@
  <joint name="{{ name }}_joint" type="fixed">
     <parent>{{ parent_link }}</parent>
     <child>{{ name }}_link</child>
-    <pose relative_to="{{ parent_link }}">{{ joint_pose }}</pose>
+    <pose>{{ joint_pose }}</pose>
   </joint>
 
+{%- endmacro -%}
+
+{# ================================================================== #}
+{# ||   MACRO P/ CABO FLEXÍVEL (JUNTA UNIVERSAL ESTÁVEL - FINAL)     || #}
+{# ================================================================== #}
+{%- macro add_flexible_cable_macro(name_prefix, parent_link, num_segments, segment_length, segment_radius, segment_mass, joint_damping, anchor_length) -%}
+
+  {%- for i in range(1, num_segments + 1) -%}
+
+    {# Lógica para determinar o pai do próximo segmento. #}
+    {%- if i == 1 -%}
+      {%- set current_parent = parent_link -%}
+      {# A primeira junta conecta-se à ponta da âncora. #}
+      {%- set joint_to_parent_pose = '0 0 ' ~ (-anchor_length) ~ ' 0 0 0' -%}
+    {%- else -%}
+      {%- set current_parent = name_prefix ~ '_link_' ~ (i-1) -%}
+      {# As juntas seguintes conectam-se na ponta do segmento anterior. #}
+      {%- set joint_to_parent_pose = '0 0 ' ~ (-segment_length) ~ ' 0 0 0' -%}
+    {%- endif -%}
+
+    {# ================== ELO INTERMEDIÁRIO (A "RÓTULA" INVISÍVEL) ================== #}
+    <link name="{{ name_prefix }}_intermediate_link_{{ i }}">
+      {# Este link é apenas um ponto de articulação. Não tem visual nem colisão. #}
+      <pose>0 0 0 0 0 0</pose> {# Posição controlada pela junta pai. #}
+      <inertial>
+        <mass>{{ segment_mass / 100.0 }}</mass> {# Massa quase nula #}
+        <inertia><ixx>1e-8</ixx><iyy>1e-8</iyy><izz>1e-8</izz></inertia>
+      </inertial>
+    </link>
+
+    {# JUNTA 1 (Eixo X): Conecta o PAI ao ELO INTERMEDIÁRIO. #}
+    <joint name="{{ name_prefix }}_joint1_{{ i }}" type="revolute">
+      <pose>{{ joint_to_parent_pose }}</pose>
+      <parent>{{ current_parent }}</parent>
+      <child>{{ name_prefix }}_intermediate_link_{{ i }}</child>
+      <axis><xyz>1 0 0</xyz></axis>
+      <dynamics><damping>{{ joint_damping }}</damping></dynamics>
+    </joint>
+
+    {# ================== ELO DO CABO (O SEGMENTO VISÍVEL) ================== #}
+    <link name="{{ name_prefix }}_link_{{ i }}">
+      <pose>0 0 0 0 0 0</pose> {# Posição controlada pela junta pai (joint2). #}
+      <inertial>
+        <mass>{{ segment_mass }}</mass>
+        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
+        <inertia>
+          <ixx>{{ (segment_mass / 12.0) * (3 * segment_radius * segment_radius + segment_length * segment_length) }}</ixx>
+          <iyy>{{ (segment_mass / 12.0) * (3 * segment_radius * segment_radius + segment_length * segment_length) }}</iyy>
+          <izz>{{ (segment_mass / 2.0) * (segment_radius * segment_radius) }}</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="visual">
+        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
+        <geometry><cylinder><length>{{ segment_length }}</length><radius>{{ segment_radius }}</radius></cylinder></geometry>
+        <material><script><name>Gazebo/Blue</name></script></material>
+      </visual>
+      <collision name="collision">
+        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
+        <geometry><cylinder><length>{{ segment_length }}</length><radius>{{ segment_radius }}</radius></cylinder></geometry>
+        <self_collide>false</self_collide>
+      </collision>
+    </link>
+
+    {# JUNTA 2 (Eixo Y): Conecta o ELO INTERMEDIÁRIO ao ELO DO CABO. #}
+    <joint name="{{ name_prefix }}_joint2_{{ i }}" type="revolute">
+      <pose>0 0 0 0 0 0</pose> {# Conecta no mesmo ponto que a junta 1. #}
+      <parent>{{ name_prefix }}_intermediate_link_{{ i }}</parent>
+      <child>{{ name_prefix }}_link_{{ i }}</child>
+      <axis><xyz>0 1 0</xyz></axis>
+      <dynamics><damping>{{ joint_damping }}</damping></dynamics>
+    </joint>
+
+  {%- endfor -%}
 {%- endmacro -%}

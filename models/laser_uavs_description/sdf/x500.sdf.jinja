@@ -509,11 +509,27 @@
     {{ components.add_fixed_segment(
         name='segmento_fixo_1',
         parent_link='base_link',
-        joint_pose='0 0 -0.10 0 0 0',
-        length=0.01,
-        radius=0.01,
+        joint_pose='0 0 -0.01 0 0 0',
+        length=0.05,
+        radius=0.005,
         mass=0.01
         ) }}
+
+  {# ================================================================== #}
+    {# ||                   Adicionando o cabo flexível                || #}
+    {# ================================================================== #}
+    {{ components.add_flexible_cable_macro(
+        name_prefix='meu_cabo_flexivel',
+        parent_link='segmento_fixo_1_link',
+        anchor_length=0.02,
+        num_segments=20,
+        segment_length=0.03,
+        segment_radius=0.002,
+        segment_mass=0.001,
+        joint_damping=0.8
+      )
+    }}
+
 
 
   {# Propellers {--> #}
