@@ -1045,7 +1045,7 @@
 {# <!--}--> #}
 
 {# ================================================================== #}
-{# ||       MACRO PARA ADICIONAR UM SEGMENTO FIXO (VERSÃO FINAL)     || #}
+{# ||       MACRO PARA ADICIONAR UM SEGMENTO FIXO                  || #}
 {# ================================================================== #}
 {%- macro add_fixed_segment(name, parent_link, joint_pose, length, radius, mass) -%}
 
@@ -1088,7 +1088,7 @@
 {%- endmacro -%}
 
 {# ================================================================== #}
-{# ||   MACRO P/ CABO FLEXÍVEL (JUNTA UNIVERSAL ESTÁVEL - FINAL)     || #}
+{# ||   MACRO P/ CABO FLEXÍVEL                                     || #}
 {# ================================================================== #}
 {%- macro add_flexible_cable_macro(name_prefix, parent_link, num_segments, segment_length, segment_radius, segment_mass, joint_damping, anchor_length) -%}
 
@@ -1124,7 +1124,7 @@
       <dynamics><damping>{{ joint_damping }}</damping></dynamics>
     </joint>
 
-    {# ================== ELO DO CABO (O SEGMENTO VISÍVEL) ================== #}
+    {# ================== ELO DO CABO ================== #}
     <link name="{{ name_prefix }}_link_{{ i }}">
       <pose>0 0 0 0 0 0</pose> {# Posição controlada pela junta pai (joint2). #}
       <inertial>
@@ -1145,7 +1145,7 @@
       <collision name="collision">
         <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
         <geometry><cylinder><length>{{ segment_length }}</length><radius>{{ segment_radius }}</radius></cylinder></geometry>
-        <self_collide>false</self_collide>
+        <self_collide>true</self_collide>
       </collision>
     </link>
 
