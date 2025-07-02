@@ -25,11 +25,11 @@
 
   {# Motor constants {--> #}
   {%- set rotor_velocity_slowdown_sim = 10 -%}
-  {%- set motor_constant = 8.54858e-06 -%} {# [kg.m/s^2] #}
+  {%- set motor_constant = 0.9235 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 1000 -%} {# [rad/s] #}
+  {%- set max_rot_velocity = 795.872 -%} {# [rad/s] #}
   {%- set rotor_drag_coefficient = 8.06428e-05 -%} 
   {%- set rolling_moment_coefficient = '1.0e-6' -%}
   {# <!--}--> #}
@@ -60,18 +60,11 @@
   {# <!--}--> #}
 
   {# Sensors and computers {--> #}
-  <!-- {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/x500/pixhawk6c_mesh_file.stl' -%} -->
-  <!-- {%- set gps_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_mount_mesh_file.stl' -%} -->
-  <!-- {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_board_mesh_file.stl' -%} -->
-  <!-- {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_cooler_mesh_file.stl' -%} -->
+  {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/x500/pixhawk6c_mesh_file.stl' -%} 
   {# <!--}--> #}
 
   {# Mounts {--> #} 
-  <!-- {%- set nuc_hex_posts_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_hex_posts_mesh_file.stl' -%} -->
-  <!-- {%- set gps_module_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_module_mesh_file.stl' -%} -->
-  <!-- {%- set garmin_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/garmin_mount_mesh_file.stl' -%} -->
-  <!-- {%- set lidar_mount_mesh_file = 'model:/meshes/meshes/x500/lidar_mount_mesh_file.stl' -%} -->
-  <!-- {%- set realsense_mount_mesh_file = 'model:/meshes/meshes/x500/realsense_mount_mesh_file.stl' -%} -->
+  
   {# <!--}--> #}
 
   {# <!--}--> #}
@@ -245,7 +238,7 @@
         color = 'DarkGrey',
         x = 0,
         y = 0,
-        z = 0,
+        z = -0.025,
         roll = 0,
         pitch = 0,
         yaw = components.rad(90))
