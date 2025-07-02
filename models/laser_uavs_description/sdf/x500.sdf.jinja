@@ -693,7 +693,41 @@
 
     {# ========================== LIDAR sensors ========================= #}
 
+    {# Livox placements {--> #}
 
+    {# livox {--> #}
+    {% if enable_livox %}
+    {{ components.livox_lidar_macro(
+      namespace = namespace,
+      parent_link = root,
+      sensor_name = 'livox',
+      rot_freq = 60,
+      noise = 0.01,
+      x = 0.072,
+      y = 0.0,
+      z = -0.016,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }} 
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'livox_imu',
+      parent_link = 'livox_link',
+      topic_name = 'livox/imu/data',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = -1.5708,
+      pitch = 0,
+      yaw = -1.5708)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+
+    {# <!--}--> #}
 
     {# ========================== camera sensors ======================== #}
 
