@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version=\"1.0\"?>\n
 {# math_constants_macro {--> #}
 {%- set pi = 3.14159265359 -%}
 
@@ -700,6 +699,128 @@
   </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
+
+{# ========================== lidar sensors ========================= #}   
+
+<!-- Macro to add an 3D Lidar {-->
+
+<!-- Macro to add an Generic 3D Lidar {-->
+{%- macro generic_3d_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, vfov_angle, x, y, z, roll, pitch, yaw) -%}
+    
+{# -- gazebo links -- #}
+{%- set sensor_link = sensor_name + "_sensor_link" -%}
+
+{# -- frame names -- #}
+{%- set frame_fcu = namespace + "/fcu" -%}
+{%- set frame_sensor = namespace + "/" + sensor_name + "_sensor" -%}
+{%- set frame_lidar = namespace + "/" + sensor_name + "_lidar"  -%}
+
+{# -- topics -- #}
+{%- set topic_lidar = "/" + namespace + "/" + sensor_name + "_cloud_nodelet/points" -%}
+
+{# -- tf from sensor to lidar -- #}
+{%- set lidar_x = 0 -%}
+{%- set lidar_y = 0 -%}
+{%- set lidar_z = 0.0344 -%}
+{%- set lidar_roll = 0 -%}
+{%- set lidar_pitch = 0 -%}
+{%- set lidar_yaw = 0 -%}
+
+{%- set livox_lidar_plugin_filename ="libgazebo_ros_velodyne_laser.so" -%}
+{%- set sensor_type = "ray"  -%}
+
+<link name="{{ sensor_link }}">
+  <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
+  {{ zero_inertial_macro() }}
+  <visual name="base_visual">
+    <pose>0 0 0 0 0 {{ rad90 }}</pose>
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/livox_mid_360.stl</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+    <material>
+      <script>
+        <name>Gazebo/White</name>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+      </script>
+    </material>
+  </visual> 
+  
+  {# LIDAR #}
+  <sensor name="{{ sensor_name }}_lidar_sensor" type="{{ sensor_type }}">
+    <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
+    {# <pose>0 0 0 0 0 0</pose> #}
+    <visualize>true</visualize>
+    <update_rate>{{ rot_freq }}</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>220</samples>
+          <resolution>0.002</resolution>
+          <min_angle>-3.142</min_angle>
+          <max_angle>3.142</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>{{ lasers }}</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.535</min_angle>
+          <max_angle>0.186</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.3</min>
+        <max>{{ max_range }}</max>
+        <resolution>0.03</resolution>
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.0</stddev>
+      </noise>
+    </ray>
+    <plugin name="{{ sensor_name }}_lidar_plugin" filename="{{ livox_lidar_plugin_filename }}">
+      <ros> 
+        <remapping>~/out:={{ topic_lidar }}</remapping>
+      </ros>       
+      <frame_name>{{ frame_sensor }}</frame_name>
+      <organize_cloud>false</organize_cloud>
+      <min_range>0.9</min_range>
+      <max_range>130.0</max_range>
+      <gaussian_noise>0.008</gaussian_noise>
+    </plugin> 
+  </sensor>
+</link>
+
+<joint name="{{ sensor_name }}_joint" type="fixed">
+  <parent>{{ parent_link }}</parent>
+  <child>{{ sensor_link }}</child>
+</joint>
+{%- endmacro -%}
+<!--}-->
+
+{%- macro livox_lidar_macro(namespace, parent_link, sensor_name, rot_freq, noise, x, y, z, roll, pitch, yaw) -%}
+
+{{ generic_3d_lidar_macro(
+  namespace = namespace,
+  parent_link = parent_link,
+  sensor_name = sensor_name,
+  rot_freq = rot_freq,
+  lasers = lasers,
+  vfov_angle = 90,
+  max_range = 55,
+  noise = 0.01,
+  x = x,
+  y = y,
+  z = z,
+  roll = roll,
+  pitch = pitch,
+  yaw = yaw)
+}}
+{%- endmacro -%}
+
+<!--}-->
 
 {# ========================== camera sensors ========================= #}
 

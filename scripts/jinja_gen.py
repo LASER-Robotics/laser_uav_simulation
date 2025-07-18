@@ -15,6 +15,7 @@ parser.add_argument('--enable_d435i_front', action='store_true')
 parser.add_argument('--enable_d435i_down', action='store_true')
 parser.add_argument('--enable_d435_down', action='store_true')
 parser.add_argument('--enable_vio', action='store_true')
+parser.add_argument('--enable_livox', action='store_true')
 
 args = parser.parse_args()
 
@@ -41,6 +42,7 @@ data = {
     'enable_d435i_down': args.enable_d435i_down, 
     'enable_d435_down': args.enable_d435_down, 
     'enable_vio': args.enable_vio, 
+    'enable_livox': args.enable_livox,
 }
 
 # Renderizar o template
