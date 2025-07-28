@@ -951,7 +951,7 @@
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
 
-                                                                                      <!-- visuals {-->
+                                                                                          <!-- visuals {-->
   <visual name="body_visual">
     <pose>0 0 0 {{ -1.5708 }} 0 {{ -1.5708 }}</pose>
     <geometry>
@@ -1016,7 +1016,7 @@
   <!--}-->
 
   <!-- infra stereo {-->
-  <sensor name="{{ namespace}}/{{ camera_name }}{{ camera_suffix }}_infra_stereo" type="multicamera">
+  <sensor name="{{ namespace}}/{{ camera_name }}{{ camera_suffix }}" type="multicamera">
     <update_rate>{{ update_rate }}</update_rate>
     <visualize>0</visualize>
     <camera name="infra1">
