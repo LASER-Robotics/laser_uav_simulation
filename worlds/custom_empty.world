@@ -10,7 +10,6 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <!--}-->
-    
     <!-- physics engine {-->
     <physics name="default_physics" default="0" type="ode">
       <gravity>0 0 -9.8066</gravity>
@@ -18,29 +17,27 @@
         <solver>
           <type>quick</type>
           <iters>50</iters>
-          <sor>1.0</sor>
+          <sor>1.3</sor>
           <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
         </solver>
         <constraints>
           <cfm>0</cfm>
           <erp>0.2</erp>
-          <contact_max_correcting_vel>1000</contact_max_correcting_vel>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
           <contact_surface_layer>0.001</contact_surface_layer>
         </constraints>
       </ode>
-      <max_step_size>0.004</max_step_size>
+      <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>250</real_time_update_rate>
+      <real_time_update_rate>1000</real_time_update_rate>
       <magnetic_field>6.0e-06 2.3e-05 -4.2e-05</magnetic_field>
     </physics>
     <!--}-->
-
     <!-- setup shadows {-->
     <scene>
       <shadows>false</shadows>
     </scene>
     <!--}-->
-
     <!-- sun {-->
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
@@ -54,9 +51,8 @@
         <quadratic>0.001</quadratic>
       </attenuation>
       <direction>0 0 -1</direction>
-    </light>    
+    </light>
     <!--}-->
-
     <!-- ground plane {-->
     <model name="ground_plane">
       <static>true</static>
@@ -78,24 +74,23 @@
             </friction>
           </surface>
         </collision>
-      <visual name="visual">
-        <cast_shadows>false</cast_shadows>
-        <geometry>
-          <plane>
-            <normal>0 0 1</normal>
-            <size>250 250</size>
-          </plane>
-        </geometry>
-        <material>
-          <script>
-            <name>Gazebo/Grass</name>
-            <uri>file://media/materials/scripts/gazebo.material</uri>
-          </script>
-        </material>
-      </visual>
+        <visual name="visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>250 250</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Grass</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
       </link>
     </model>
-  	<!--}-->	
- 	
+    <!--}-->
   </world>
 </sdf>
