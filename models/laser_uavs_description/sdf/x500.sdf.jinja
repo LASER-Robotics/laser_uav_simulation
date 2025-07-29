@@ -19,7 +19,7 @@
   {%- set rotor_z_offset = 0.057 -%} {# [m] #}
 
   {%- set root = 'base_link' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Motor constants {--> #}
   {%- set rotor_velocity_slowdown_sim = 10 -%}
@@ -30,19 +30,19 @@
   {%- set max_rot_velocity = 822 -%} {# [rad/s] #}
   {%- set rotor_drag_coefficient = 8.06428e-05 -%} 
   {%- set rolling_moment_coefficient = '1.0e-6' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Inertia constants {--> #}
   {%- set inertia_body_radius = 0.25 -%} {# [m] #}
   {%- set inertia_body_height = 0.05 -%} {# [m] #}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Scales {--> #}
   {%- set mesh_scale = '1 1 1' -%}
   {%- set mesh_scale_prop_ccw = '1 1 1' -%}
   {%- set mesh_scale_prop_cw = '-1 1 1' -%}
   {%- set mesh_scale_milimeters = '0.001 0.001 0.001' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Meshes {--> #}
 
@@ -54,21 +54,21 @@
   {%- set arm_plastic2_mesh_file = 'model://laser_uavs_description/meshes/x500/hand_mesh_file.stl' -%}
   {%- set arm_3d_print_mesh_file = 'model://laser_uavs_description/meshes/x500/arm_3d_print_mesh_file.stl' -%}
   {%- set leg_3d_print_mesh_file = 'model://laser_uavs_description/meshes/x500/leg_3d_print_mesh_file.stl' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Motors and props {--> #}
   {%- set motor_bottom_mesh_file = 'model://laser_uavs_description/meshes/x500/motor_bottom_mesh_file.stl' -%}
   {%- set motor_middle_mesh_file = 'model://laser_uavs_description/meshes/x500/motor_middle_mesh_file.stl' -%}
   {%- set motor_top_mesh_file = 'model://laser_uavs_description/meshes/x500/motor_top_mesh_file.stl' -%}
   {%- set prop_mesh_file = 'model://laser_uavs_description/meshes/x500/prop_mesh_file.dae' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Sensors and computers {--> #}
   {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/x500/pixhawk6c_mesh_file.stl' -%}
   {%- set gps_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_mount_mesh_file.stl' -%}
   {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_board_mesh_file.stl' -%}
   {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_cooler_mesh_file.stl' -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Mounts {--> #}
   {%- set battery_mesh_file = 'model://laser_uavs_description/meshes/x500/battery_mesh_file.stl' -%}
@@ -76,11 +76,11 @@
   {%- set nuc_hex_posts_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_hex_posts_mesh_file.stl' -%}
   {%- set gps_module_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_module_mesh_file.stl' -%}
   {%- set garmin_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/garmin_mount_mesh_file.stl' -%}
-                                                                    <!-- {%- set lidar_mount_mesh_file = 'model:/meshes/meshes/x500/lidar_mount_mesh_file.stl' -%} -->
+  <!-- {%- set lidar_mount_mesh_file = 'model:/meshes/meshes/x500/lidar_mount_mesh_file.stl' -%} -->
   <!-- {%- set realsense_mount_mesh_file = 'model:/meshes/meshes/x500/realsense_mount_mesh_file.stl' -%} -->
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   {# Inertias {--> #}
   {%- set body_ixx = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
@@ -96,7 +96,7 @@
   {%- set prop_iyy = 0.0001 -%}
   {%- set prop_iyz = 0 -%}
   {%- set prop_izz = 0.0001 -%}
-  {#                                                                   <!--}--> #}
+  {# <!--}--> #}
 
   <model name="{{  model_name  }}">
     <link name="{{  root  }}">
@@ -113,7 +113,7 @@
       iyz = body_iyz,
       izz = body_izz)
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       <!-- Body visuals {-->
 
@@ -141,7 +141,7 @@
         pitch = 0,
         yaw = components.rad(90))
       }}
-			                                                                                                                                                                                                      <!--}-->
+			<!--}-->
 
       <!-- Arms and legs {-->
       {%- for id in range(0, 4) -%}
@@ -283,7 +283,7 @@
         offset_y = -0.13,
         offset_z = -0.07)
       }}
-			                                                                                                                                                                                                      <!--}-->
+			<!--}-->
 
       <!-- Intel nuc {-->
       {{ components.visual_mesh_macro(
@@ -322,7 +322,7 @@
         pitch = 0,
         yaw = components.rad(90))
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       <!-- Pixhawk {-->
       {{ components.visual_mesh_macro(
@@ -337,7 +337,7 @@
         pitch = 0,
         yaw = components.rad(90))
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       <!-- Motors {-->
       {%- set affix = 'front_right' -%}
@@ -381,7 +381,7 @@
         }}
 
       {%- endfor -%}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       <!-- Battery mount and battery {-->
       {{ components.visual_mesh_macro(
@@ -408,11 +408,11 @@
         pitch = 0,
         yaw = components.rad(90))
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       {# GPS antenna and mount {--> #}
       {%- set gps_visuals -%}
-                                                                                                                                                                                                            <!-- GPS mount {-->
+      <!-- GPS mount {-->
       {{ components.visual_link_macro(
         name = 'gps_mount',
         mesh_file = gps_mount_mesh_file,
@@ -426,7 +426,7 @@
         yaw = components.rad(90),
         parent_link = root)
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
 
       <!-- GPS antenna {-->
       {{ components.visual_link_macro(
@@ -442,9 +442,9 @@
         yaw = components.rad(90),
         parent_link = root)
       }}
-                                                                                                                                                                                                            <!--}-->
+      <!--}-->
       {%- endset -%}
-      {#                                                                                                                                                                                                       <!--}--> #}
+      {# <!--}--> #}
 
       {# component mounts and holders (these must be passed as args into components, or must be called) {--> #}
 
@@ -464,7 +464,7 @@
           parent_link = root)
         }}
       {%- endset -%}
-      {#                                                                                                                                                                                                       <!--}--> #}
+      {# <!--}--> #}
 
       {# lidar mount {--> #}
       {%- set lidar_mount -%}
@@ -482,7 +482,7 @@
           parent_link = root)
         }}
       {%- endset -%}
-      {#                                                                                                                                                                                                       <!--}--> #}
+      {# <!--}--> #}
 
       {# realsense mount {--> #}
       {%- set realsense_mount -%}
@@ -500,10 +500,10 @@
           parent_link = root)
         }}
       {%- endset -%}
-      {#                                                                                                                                                                                                       <!--}--> #}
+      {# <!--}--> #}
 
-      {#                                                                                                                                                                                                       <!--}--> #}
-                                                                                                                                                                                                            <!--}-->
+      {# <!--}--> #}
+      <!--}-->
     </link>
 
   {# Propellers {--> #}
@@ -571,25 +571,25 @@
       prop_iyz = prop_iyz,
       prop_izz = prop_izz)
     }}
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
 
     {# ================================================================== #}
     {# ||                compulsory sensor definitions                 || #}
     {# ================================================================== #}
 
-                                                                                                                                        <!-- Pixhawk {-->
+    <!-- Pixhawk {-->
     {%- set imu_topic = '/imu' -%}
     {%- set mag_topic = '/mag' -%}
     {%- set baro_topic = '/baro' -%}
     {%- set lidar_topic = '/lidar' -%}
 
-                                                                                                                                        <!-- Gazebo ground truth {-->
+    <!-- Gazebo ground truth {-->
     {{ components.gazebo_groundtruth_macro(
       home_latitude = 0,
       home_longitude = 0,
       home_altitude = 0)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
 
     <!-- GPS {-->
     {{ components.gazebo_gps_macro(
@@ -610,7 +610,7 @@
       pitch = 0,
       yaw = 0)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
 
     <!-- Magnetometer {-->
     {{ components.gazebo_magnetometer_macro(
@@ -620,7 +620,7 @@
       bias_correlation_time = 600,
       mag_topic = mag_topic)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
 
     <!-- Barometer {-->
     {{ components.gazebo_barometer_macro(
@@ -628,7 +628,7 @@
       pub_rate = 50,
       baro_drift_pa_per_sec = 0)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
 
     <!-- Mavlink interface {-->
     {{ components.gazebo_mavlink_interface_macro(
@@ -638,7 +638,7 @@
       baro_topic = baro_topic,
       lidar_topic = lidar_topic)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
 
     <!-- IMU {-->
     <!-- NOTE: IMU has to be last, otherwise the simulation is extremely slow! -->
@@ -661,7 +661,7 @@
       pitch = 0,
       yaw = 0)
     }}
-                                                                                                                                        <!--}-->
+    <!--}-->
     <!--}-->
 
     {# ================================================================== #}
@@ -686,7 +686,7 @@
       yaw = 0)
     }}
     {% endif %}
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
 
     {# ======================= rangefinder sensors ====================== #}
 
@@ -707,7 +707,7 @@
       y = 0.0,
       z = 0.1,
       roll = 0,
-      pitch = 0,
+      pitch = 0.0,
       yaw = 0,
       lasers = 59)
     }} 
@@ -721,14 +721,46 @@
       x = 0,
       y = 0,
       z = 0,
-      roll = -1.5708,
+      roll = 0.0,
       pitch = 0.0,
-      yaw = -1.5708)
+      yaw = 0.0)
     }}
     {% endif %}
-    {#                                                                                                                                     <!--}--> #}
 
-    {#                                                                                                                                     <!--}--> #}
+    {% if enable_livox_45 %}
+    {{ components.livox_lidar_macro(
+      namespace = namespace,
+      parent_link = root,
+      sensor_name = 'livox',
+      rot_freq = 15,
+      noise = 0.01,
+      x = 0.0,
+      y = 0.0,
+      z = 0.1,
+      roll = 0,
+      pitch = 0.785398,
+      yaw = 0,
+      lasers = 59)
+    }} 
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'livox_imu',
+      parent_link = root,
+      topic_name = namespace + '/livox/imu',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0.0,
+      pitch = 0.785398,
+      yaw = 0.0)
+    }}
+    {% endif %}
+
+    {# <!--}--> #}
+
+    {# <!--}--> #}
 
     {# ========================== camera sensors ======================== #}
 
@@ -780,7 +812,7 @@
       yaw = -1.5708)
     }}
     {% endif %}
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
 
     {# realsense down {--> #}
     {% if enable_d435_down %}
@@ -828,9 +860,9 @@
       yaw = -1.5708)
     }}
     {% endif %}
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
 
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
 
@@ -850,6 +882,6 @@
       yaw = 0)
     }}
     {% endif %}
-    {#                                                                                                                                     <!--}--> #}
+    {# <!--}--> #}
   </model>
 </sdf>
