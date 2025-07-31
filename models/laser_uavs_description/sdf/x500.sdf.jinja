@@ -98,8 +98,8 @@
   {%- set prop_izz = 0.0001 -%}
   {# <!--}--> #}
 
-	<model name="{{  model_name  }}">
-		<link name="{{  root  }}">
+  <model name="{{  model_name  }}">
+    <link name="{{  root  }}">
       <!-- Body physics {-->
       {{ components.multirotor_physics_macro(
       mass = mass,
@@ -115,9 +115,9 @@
       }}
       <!--}-->
 
-			<!-- Body visuals {-->
+      <!-- Body visuals {-->
 
-			<!-- Boards {-->
+      <!-- Boards {-->
       {{ components.visual_mesh_textured_macro(
         name = 'top_board',
         mesh_file = top_board_mesh_file,
@@ -143,7 +143,7 @@
       }}
 			<!--}-->
 
-			<!-- Arms and legs {-->
+      <!-- Arms and legs {-->
       {%- for id in range(0, 4) -%}
 
         {%- set affix = 'front_right' -%}
@@ -701,30 +701,63 @@
       namespace = namespace,
       parent_link = root,
       sensor_name = 'livox',
-      rot_freq = 60,
+      rot_freq = 15,
       noise = 0.01,
       x = 0.0,
       y = 0.0,
       z = 0.1,
       roll = 0,
-      pitch = 0,
-      yaw = 0)
+      pitch = 0.0,
+      yaw = 0,
+      lasers = 59)
     }} 
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'livox_imu',
-      parent_link = 'livox_link',
-      topic_name = 'livox/imu/data',
+      parent_link = root,
+      topic_name = namespace + '/livox/imu',
       update_rate = 200,
       x = 0,
       y = 0,
       z = 0,
-      roll = -1.5708,
-      pitch = 0,
-      yaw = -1.5708)
+      roll = 0.0,
+      pitch = 0.0,
+      yaw = 0.0)
     }}
     {% endif %}
+
+    {% if enable_livox_45 %}
+    {{ components.livox_lidar_macro(
+      namespace = namespace,
+      parent_link = root,
+      sensor_name = 'livox',
+      rot_freq = 15,
+      noise = 0.01,
+      x = 0.0,
+      y = 0.0,
+      z = 0.1,
+      roll = 0,
+      pitch = 0.785398,
+      yaw = 0,
+      lasers = 59)
+    }} 
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'livox_imu',
+      parent_link = root,
+      topic_name = namespace + '/livox/imu',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0.0,
+      pitch = 0.785398,
+      yaw = 0.0)
+    }}
+    {% endif %}
+
     {# <!--}--> #}
 
     {# <!--}--> #}
@@ -737,8 +770,7 @@
     {% if enable_d435_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd',
-      camera_suffix='',
+      camera_name = 'front_rgbd', camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -754,8 +786,7 @@
     {% if enable_d435i_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd',
-      camera_suffix='',
+      camera_name = 'front_rgbd', camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -771,7 +802,7 @@
       namespace = namespace,
       sensor_name = 'front_rgbd_imu',
       parent_link = 'front_rgbd_link',
-      topic_name =  namespace + '/front_rgbd/imu/data',
+      topic_name = namespace + '/front_rgbd/imu/data',
       update_rate = 200,
       x = 0,
       y = 0,
@@ -787,8 +818,7 @@
     {% if enable_d435_down %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'down_rgbd',
-      camera_suffix='',
+      camera_name = 'down_rgbd', camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -804,8 +834,7 @@
     {% if enable_d435i_down %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'down_rgbd',
-      camera_suffix='',
+      camera_name = 'down_rgbd', camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -821,7 +850,7 @@
       namespace = namespace,
       sensor_name = 'down_rgbd_imu',
       parent_link = 'down_rgbd_link',
-      topic_name = 'down_rgbd/imu/data',
+      topic_name = namespace + '/down_rgbd/imu/data',
       update_rate = 200,
       x = 0,
       y = 0,
