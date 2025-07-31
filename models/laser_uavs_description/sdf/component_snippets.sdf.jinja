@@ -653,15 +653,15 @@
       </imu>
       <plugin name="{{namespace}}_{{sensor_name}}_plugin" filename="libgazebo_ros_imu_sensor.so">
         <ros>
-          <remapping>~/out:={{topic_name}}</remapping>
+          <remapping>~/out:={{ topic_name }}</remapping>
         </ros>
       </plugin>
     </sensor>
   </link>
 
-  <joint name="{{namespace}}_{{ sensor_name }}_joint" type="fixed">
+  <joint name="{{ namespace }}_{{ sensor_name }}_joint" type="fixed">
     <parent>{{ parent_link }}</parent>
-    <child>{{namespace}}_{{ sensor_name }}_link</child>
+    <child>{{ namespace }}_{{ sensor_name }}_link</child>
   </joint>
 {%- endmacro -%}
 {# <!--}--> #}
@@ -877,8 +877,8 @@
 
 {# fisheye_camera_macro {--> #}
 {%- macro fisheye_camera_macro(namespace, parent_link, camera_name, topic_ns_prefix, camera_frame_name, sensor_base_frame_name, frame_rate, parent_frame_name, horizontal_fov, image_width, image_height, min_distance, max_distance, lens_type, lens_c1, lens_c2, lens_f, lens_fun, lens_scale, lens_cutoff_angle, lens_texture_size, noise_mean, noise_stddev, mesh_file, mesh_scale, color, visual_x, visual_y, visual_z, visual_roll, visual_pitch, visual_yaw, x, y, z, roll, pitch, yaw) -%}
-
-<link name="{{namespace}}_{{ camera_name }}_link">
+{# -- topics -- #}
+<link name="{{ namespace }}_{{ camera_name }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
     {{ visual_mesh_macro(
@@ -893,7 +893,7 @@
       pitch = visual_pitch,
       yaw = visual_yaw)
     }}
-    <sensor name="{{namespace}}/{{ camera_name }}_sensor" type="wideanglecamera">
+    <sensor name="{{ namespace }}/{{ camera_name }}_sensor" type="wideanglecamera">
       <update_rate>{{ frame_rate }}</update_rate>
       <camera>
         <horizontal_fov>{{ horizontal_fov }}</horizontal_fov>
@@ -926,14 +926,14 @@
           <env_texture_size>{{ lens_texture_size }}</env_texture_size>
         </lens>
       </camera>
-      <plugin name="{{namespace}}_{{ camera_name }}_plugin" filename="libgazebo_ros_camera.so">
+      <plugin name="{{ namespace }}_{{ camera_name }}_plugin" filename="libgazebo_ros_camera.so">
       </plugin>
     </sensor>
   </link>
 
-  <joint name="{{namespace}}_{{ camera_name }}_joint" type="fixed">
+  <joint name="{{ namespace }}_{{ camera_name }}_joint" type="fixed">
     <parent>{{ parent_link }}</parent>
-    <child>{{namespace}}_{{ camera_name }}_link</child>
+    <child>{{ namespace }}_{{ camera_name }}_link</child>
   </joint>
   {%- endmacro -%}
   <!--}-->
@@ -1150,9 +1150,9 @@
     {{ imu_sensor_macro(
       namespace = namespace,
       sensor_name = sensor_name + '_imu',
-      parent_link = sensor_name + '_link',
+      parent_link = namespace + '_' + sensor_name +'_link',
       update_rate = imu_rate,
-      topic_name = namespace + '/' + sensor_name + '_sensor/imu/data',
+      topic_name = namespace + '/' + sensor_name + '_sensor/imu',
       noise_mean = 0,
       x = 0,
       y = 0,
