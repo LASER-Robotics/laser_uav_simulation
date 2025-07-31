@@ -697,7 +697,7 @@
     <update_rate>{{ update_rate }}</update_rate>
     <gaussian_noise>{{ noise }}</gaussian_noise>
     <frame_name>{{ frame_name }}</frame_name>
-    <xyz_offset>-3 3 0</xyz_offset>
+    <xyz_offset>{{ x }} {{ y }} {{ z }}</xyz_offset>
     <rpy_offset>{{ roll }} {{ pitch }} {{ yaw }}</rpy_offset>
   </plugin>
 {%- endmacro -%}
