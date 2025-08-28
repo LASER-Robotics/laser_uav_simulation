@@ -153,7 +153,7 @@ fi
 # GROUP: Quadrotor +
 
 #
-# Generic 10" Quad + geometry
+# Generic Quad + geometry
 if param compare SYS_AUTOSTART 5001
 then
 	set AIRFRAME 5001_quad_+
@@ -161,13 +161,6 @@ fi
 
 
 # GROUP: Quadrotor H
-
-#
-# Reaper 500 Quad
-if param compare SYS_AUTOSTART 4040
-then
-	set AIRFRAME 4040_reaper
-fi
 
 #
 # BetaFPV Beta75X 2S Brushless Whoop
@@ -278,10 +271,10 @@ then
 fi
 
 #
-# Crazyflie 2
-if param compare SYS_AUTOSTART 4900
+# Droneblocks DEXI 5
+if param compare SYS_AUTOSTART 4601
 then
-	set AIRFRAME 4900_crazyflie
+	set AIRFRAME 4601_droneblocks_dexi_5
 fi
 
 #
