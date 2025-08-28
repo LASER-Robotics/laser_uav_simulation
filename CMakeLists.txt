@@ -14,8 +14,8 @@ install(PROGRAMS
 
 install(DIRECTORY
   scripts
-	worlds
 	models
+  launch
 	DESTINATION share/${PROJECT_NAME}
 )
 
