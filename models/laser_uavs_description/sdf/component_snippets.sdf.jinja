@@ -668,8 +668,8 @@
 {# <!--}--> #}
 
 
-{# gazebo_ground_thruth_macro {--> #}
-{%- macro gazebo_ground_truth_macro(namespace, odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw) -%}
+{# gazebo_ground_truth_macro {--> #}
+{%- macro gazebo_ground_truth_macro(namespace, odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw, x_offset, y_offset, z_offset, roll_offset, pitch_offset, yaw_offset) -%}
   <link name="{{ namespace }}_{{ odometry_sensor_name }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
@@ -697,8 +697,8 @@
     <update_rate>{{ update_rate }}</update_rate>
     <gaussian_noise>{{ noise }}</gaussian_noise>
     <frame_name>{{ frame_name }}</frame_name>
-    <xyz_offset>{{ x }} {{ y }} {{ z }}</xyz_offset>
-    <rpy_offset>{{ roll }} {{ pitch }} {{ yaw }}</rpy_offset>
+    <xyz_offset>{{ x_offset }} {{ y_offset }} {{ z_offset }}</xyz_offset>
+    <rpy_offset>{{ roll_offset }} {{ pitch_offset }} {{ yaw_offset }}</rpy_offset>
   </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
@@ -761,7 +761,7 @@
     <ray>
       <scan>
         <horizontal>
-          <samples>110</samples>
+          <samples>55</samples>
           <resolution>1</resolution>
           <min_angle>-3.142</min_angle>
           <max_angle>3.142</max_angle>

@@ -16,7 +16,7 @@ fi
 instance=$(echo "$UAV_NAME" | sed -n 's/^uav\([0-9]\+\)$/\1/p')
 instance=$((instance - 1))
 
-~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py --namespace $UAV_NAME --uav_model $UAV_TYPE --instance $instance $UAV_SENSORS
+~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py --namespace $UAV_NAME --uav_model $UAV_TYPE --instance $instance --x $1 --y $2 --z $3 --yaw $4 $UAV_SENSORS
 
 echo "Waiting for gazebo run."
 while ! pgrep -x "gzserver" > /dev/null; do
