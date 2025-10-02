@@ -22,14 +22,14 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 10 -%}
-  {%- set motor_constant = 27.6e-6 -%} {# [kg.m/s^2] #}
+  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
+  {%- set motor_constant = 17.4 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 822 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient = 8.06428e-05 -%} 
-  {%- set rolling_moment_coefficient = '1.0e-6' -%}
+  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
 
   {# Inertia constants {--> #}
