@@ -1,56 +1,102 @@
-from launch import LaunchContext, LaunchDescription
+import launch
 
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution, LaunchConfiguration, TextSubstitution
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, TextSubstitution
 
 from launch_ros.substitutions import FindPackageShare
 
 
-def launch_setup(context: LaunchContext):
-    # Initialize arguments
+def launch_setup(context: launch.LaunchContext, ld):
+
+    # #{ world
+
     world = LaunchConfiguration('world')
-    use_sim_time = LaunchConfiguration('use_sim_time')
+    _world = world.perform(context) + '.world'
+
+    # #}
+
+    # #{ verbose
+
     verbose = LaunchConfiguration('verbose')
 
-    world_name = world.perform(context) + '.world'
+    ld.add_action(DeclareLaunchArgument(
+        'verbose',
+        default_value='true',
+        description='Increase messages written to terminal.'
+    ))
 
-    gzserver_launcher = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([FindPackageShare('gazebo_ros'), 'launch', 'gzserver.launch.py'])),
-        launch_arguments={'use_sim_time': use_sim_time,
-                          'world': PathJoinSubstitution([FindPackageShare('laser_gazebo_resources'),
-                                                    'worlds', TextSubstitution(text=world_name)]),
-                          'verbose': verbose}.items())
+    # #}
 
-    gzclient_launcher = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([FindPackageShare('gazebo_ros'), 'launch', 'gzclient.launch.py'])),
-        launch_arguments={'use_sim_time': use_sim_time}.items())
+    # #{ gazebo_config
 
-    return [gzserver_launcher, gzclient_launcher]
+    gazebo_config = LaunchConfiguration('gazebo_config')
+
+    ld.add_action(DeclareLaunchArgument(
+        'gazebo_config',
+        default_value=PathJoinSubstitution([
+            FindPackageShare('laser_uav_simulation'),
+            'config',
+            'gazebo.yaml'
+        ]),
+        description='Path to the Gazebo configuration file.'
+    ))
+
+    # #}
+
+    # #{ gazebo server launcher
+
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                FindPackageShare('gazebo_ros'), '/launch/gzserver.launch.py'
+            ]),
+            launch_arguments={
+                'verbose': verbose,
+                'world': PathJoinSubstitution([
+                    FindPackageShare('laser_gazebo_resources'),
+                    'worlds',
+                    TextSubstitution(text=_world)
+                ]),
+                'params_file': gazebo_config,
+            }.items()
+        )
+    )
+
+    # #}
+
+    # #{ gazebo client launcher
+
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                FindPackageShare('gazebo_ros'), '/launch/gzclient.launch.py'
+            ])
+        )
+    )
+
+    # #}
 
 
 def generate_launch_description():
-    # Declare arguments
-    declared_arguments = []
+    ld = launch.LaunchDescription()
 
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            'world',
-            default_value='custom_empty',
-            description='Name of the world file.'))
+    # #{ world
 
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='true',
-            description='Use simulation Gazebo clock.'))
+    ld.add_action(DeclareLaunchArgument(
+        'world',
+        default_value='custom_empty',
+        description='Name of the world file.'
+    ))
 
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            'verbose',
-            default_value='true',
-            description='Increase messages written to terminal.'))
+    # #}
 
-    return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
+    # #{ opaque function
+
+    ld.add_action(
+        OpaqueFunction(function=launch_setup, args=[ld])
+    )
+
+    # #}
+
+    return ld

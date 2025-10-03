@@ -8,16 +8,17 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(PROGRAMS
-	scripts/jinja_gen.py
-	DESTINATION lib/${PROJECT_NAME}
-)
+  scripts/jinja_gen.py
+  DESTINATION lib/${PROJECT_NAME}
+  )
 
 install(DIRECTORY
   scripts
-	models
+  models
+  config
   launch
-	DESTINATION share/${PROJECT_NAME}
-)
+  DESTINATION share/${PROJECT_NAME}
+  )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
