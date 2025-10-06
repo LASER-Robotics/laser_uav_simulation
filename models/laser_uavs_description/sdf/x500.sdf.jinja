@@ -505,6 +505,57 @@
       {# <!--}--> #}
       <!--}-->
     </link>
+    
+    {{ components.add_fixed_segment(
+        name='segmento_fixo_1',
+        parent_link='base_link',
+        joint_pose='0 0 -0.01 0 0 0',
+        length=0.05,
+        radius=0.005,
+        mass=0.01
+        ) }}
+
+    {# ================================================================== #}
+    {# ||                   Adicionando o cabo flexível                || #}
+    {# ================================================================== #}
+    {%- set num_segmentos_cabo = 20 -%} <!--Segmentos que defini para o meu cabo-->
+
+    {{ components.add_flexible_cable_macro(
+        name_prefix='meu_cabo_flexivel',
+        parent_link='segmento_fixo_1_link',
+        anchor_length=0.0,
+        num_segments=num_segmentos_cabo,
+        segment_length=0.03,
+        segment_radius=0.002,
+        segment_mass=0.001,
+        joint_damping=0.5
+      )
+    }}
+
+<link name="caixa_final_link">
+      <pose>0 0 0 0 0 0</pose> 
+      <inertial>
+        <mass>0.3</mass> 
+        <inertia> 
+          <ixx>0.0000417</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.0000417</iyy><iyz>0</iyz><izz>0.0000417</izz>
+        </inertia>
+      </inertial>
+      <visual name="visual_caixa">
+        <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+        <material><script><name>Gazebo/Red</name></script></material>
+      </visual>
+      <collision name="colisao_caixa">
+        <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+      </collision>
+    </link>
+
+    <joint name="junta_esferica_caixa_final" type="ball">
+        <parent>meu_cabo_flexivel_link_{{ num_segmentos_cabo }}</parent>
+        <child>caixa_final_link</child>
+        <pose>0 0 -0.03 0 0 0</pose>
+    </joint>
+
 
   {# Propellers {--> #}
     {%- set prop_list = [
