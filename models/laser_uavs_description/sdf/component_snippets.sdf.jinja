@@ -1201,119 +1201,135 @@
 {%- endmacro -%}
 {# <!--}--> #}
 
-{# ================================================================== #}
-{# ||       MACRO PARA ADICIONAR UM SEGMENTO FIXO                  || #}
-{# ================================================================== #}
-{%- macro add_fixed_segment(name, parent_link, joint_pose, length, radius, mass) -%}
+{# ========================== research items ========================= #}
 
+<!-- load_pendulum {-->
+{%- macro load_pendulum(name, parent_link, attach_linker_pose, attach_linker_mass, rope_num_segments, rope_segment_length, rope_segment_radius, rope_segment_mass, load_mass) -%}
+  <!-- rope_attacher {-->
   <link name="{{ name }}_link">
     <pose>0 0 0 0 0 0</pose> 
     <inertial>
-      <mass>{{ mass }}</mass>
+      <mass>{{ attach_linker_mass }}</mass>
       <inertia>
         <ixx>0.0001</ixx> <ixy>0</ixy> <ixz>0</ixz>
         <iyy>0.0001</iyy> <iyz>0</iyz> <izz>0.0001</izz>
       </inertia>
     </inertial>
     <visual name="visual">
-      <pose>0 0 {{ -length / 2.0 }} 0 0 0</pose>
+      <pose>0 0 -0.025 0 0 0</pose>
       <geometry>
         <cylinder>
-          <length>{{ length }}</length>
-          <radius>{{ radius }}</radius>
+          <length>0.05</length>
+          <radius>0.005</radius>
         </cylinder>
       </geometry>
-      <material><script><name>Gazebo/Green</name></script></material>
+      <material><script><name>Gazebo/Gray</name></script></material>
     </visual>
     <collision name="collision">
-      <pose>0 0 {{ -length / 2.0 }} 0 0 0</pose>
+      <pose>0 0 -0.025 0 0 0</pose>
       <geometry>
         <cylinder>
-          <length>{{ length }}</length>
-          <radius>{{ radius }}</radius>
+          <length>0.05</length>
+          <radius>0.005</radius>
         </cylinder>
       </geometry>
     </collision>
   </link>
 
- <joint name="{{ name }}_joint" type="fixed">
+  <joint name="{{ name }}_joint" type="fixed">
     <parent>{{ parent_link }}</parent>
     <child>{{ name }}_link</child>
     <pose>{{ joint_pose }}</pose>
   </joint>
+  <!--}-->
 
-{%- endmacro -%}
+  <!-- rope {-->
+  {%- set joint_damping = 0.5 -%}
+  {%- for i in range(1, rope_num_segments + 1) -%}
 
-{# ================================================================== #}
-{# ||   MACRO P/ CABO FLEXÍVEL                                     || #}
-{# ================================================================== #}
-{%- macro add_flexible_cable_macro(name_prefix, parent_link, num_segments, segment_length, segment_radius, segment_mass, joint_damping, anchor_length) -%}
-
-  {%- for i in range(1, num_segments + 1) -%}
-
-    {# Lógica para determinar o pai do próximo segmento. #}
     {%- if i == 1 -%}
-      {%- set current_parent = parent_link -%}
-      {# A primeira junta conecta-se à ponta da âncora. #}
-      {%- set joint_to_parent_pose = '0 0 ' ~ (-anchor_length) ~ ' 0 0 0' -%}
+    {%- set current_parent =  name ~ '_link' -%}
+      {%- set joint_to_parent_pose = '0 0 ' ~ 0.0 ~ ' 0 0 0' -%}
     {%- else -%}
-      {%- set current_parent = name_prefix ~ '_link_' ~ (i-1) -%}
-      {# As juntas seguintes conectam-se na ponta do segmento anterior. #}
-      {%- set joint_to_parent_pose = '0 0 ' ~ (-segment_length) ~ ' 0 0 0' -%}
+      {%- set current_parent = 'stretch_rope_link_' ~ (i-1) -%}
+      {%- set joint_to_parent_pose = '0 0 ' ~ (-rope_segment_length) ~ ' 0 0 0' -%}
     {%- endif -%}
 
-    {# ================== ELO INTERMEDIÁRIO (A "RÓTULA" INVISÍVEL) ================== #}
-    <link name="{{ name_prefix }}_intermediate_link_{{ i }}">
-      {# Este link é apenas um ponto de articulação. Não tem visual nem colisão. #}
-      <pose>0 0 0 0 0 0</pose> {# Posição controlada pela junta pai. #}
+    <link name="stretch_rope_intermediate_link_{{ i }}">
+      <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <mass>{{ segment_mass / 100.0 }}</mass> {# Massa quase nula #}
+        <mass>{{ rope_segment_mass / 100.0 }}</mass>
         <inertia><ixx>1e-8</ixx><iyy>1e-8</iyy><izz>1e-8</izz></inertia>
       </inertial>
     </link>
 
-    {# JUNTA 1 (Eixo X): Conecta o PAI ao ELO INTERMEDIÁRIO. #}
-    <joint name="{{ name_prefix }}_joint1_{{ i }}" type="revolute">
+    <joint name="stretch_rope_joint1_{{ i }}" type="revolute">
       <pose>{{ joint_to_parent_pose }}</pose>
       <parent>{{ current_parent }}</parent>
-      <child>{{ name_prefix }}_intermediate_link_{{ i }}</child>
+      <child>stretch_rope_intermediate_link_{{ i }}</child>
       <axis><xyz>1 0 0</xyz></axis>
       <dynamics><damping>{{ joint_damping }}</damping></dynamics>
     </joint>
 
-    {# ================== ELO DO CABO ================== #}
-    <link name="{{ name_prefix }}_link_{{ i }}">
-      <pose>0 0 0 0 0 0</pose> {# Posição controlada pela junta pai (joint2). #}
+    <link name="stretch_rope_link_{{ i }}">
+      <pose>0 0 0 0 0 0</pose> 
       <inertial>
-        <mass>{{ segment_mass }}</mass>
-        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
+        <mass>{{ rope_segment_mass }}</mass>
+        <pose>0 0 {{ -rope_segment_length / 2.0 }} 0 0 0</pose>
         <inertia>
-          <ixx>{{ (segment_mass / 12.0) * (3 * segment_radius * segment_radius + segment_length * segment_length) }}</ixx>
-          <iyy>{{ (segment_mass / 12.0) * (3 * segment_radius * segment_radius + segment_length * segment_length) }}</iyy>
-          <izz>{{ (segment_mass / 2.0) * (segment_radius * segment_radius) }}</izz>
+          <ixx>{{ (rope_segment_mass / 12.0) * (3 * rope_segment_radius * rope_segment_radius + rope_segment_length * rope_segment_length) }}</ixx>
+          <iyy>{{ (rope_segment_mass / 12.0) * (3 * rope_segment_radius * rope_segment_radius + rope_segment_length * rope_segment_length) }}</iyy>
+          <izz>{{ (rope_segment_mass / 2.0) * (rope_segment_radius * rope_segment_radius) }}</izz>
           <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
         </inertia>
       </inertial>
       <visual name="visual">
-        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
-        <geometry><cylinder><length>{{ segment_length }}</length><radius>{{ segment_radius }}</radius></cylinder></geometry>
+        <pose>0 0 {{ -rope_segment_length / 2.0 }} 0 0 0</pose>
+        <geometry><cylinder><length>{{ rope_segment_length }}</length><radius>{{ rope_segment_radius }}</radius></cylinder></geometry>
         <material><script><name>Gazebo/Blue</name></script></material>
       </visual>
       <collision name="collision">
-        <pose>0 0 {{ -segment_length / 2.0 }} 0 0 0</pose>
-        <geometry><cylinder><length>{{ segment_length }}</length><radius>{{ segment_radius }}</radius></cylinder></geometry>
+        <pose>0 0 {{ -rope_segment_length / 2.0 }} 0 0 0</pose>
+        <geometry><cylinder><length>{{ rope_segment_length }}</length><radius>{{ rope_segment_radius }}</radius></cylinder></geometry>
         <self_collide>true</self_collide>
       </collision>
     </link>
 
-    {# JUNTA 2 (Eixo Y): Conecta o ELO INTERMEDIÁRIO ao ELO DO CABO. #}
-    <joint name="{{ name_prefix }}_joint2_{{ i }}" type="revolute">
-      <pose>0 0 0 0 0 0</pose> {# Conecta no mesmo ponto que a junta 1. #}
-      <parent>{{ name_prefix }}_intermediate_link_{{ i }}</parent>
-      <child>{{ name_prefix }}_link_{{ i }}</child>
+    <joint name="stretch_rope_joint2_{{ i }}" type="revolute">
+      <pose>0 0 0 0 0 0</pose> 
+      <parent>stretch_rope_intermediate_link_{{ i }}</parent>
+      <child>stretch_rope_link_{{ i }}</child>
       <axis><xyz>0 1 0</xyz></axis>
       <dynamics><damping>{{ joint_damping }}</damping></dynamics>
     </joint>
-
   {%- endfor -%}
+  <!--}-->
+
+  <!-- load {-->
+  <link name="load_link">
+    <pose>0 0 0 0 0 0</pose> 
+    <inertial>
+      <mass>{{ load_mass }}</mass> 
+      <inertia> 
+        <ixx>0.0000417</ixx><ixy>0</ixy><ixz>0</ixz>
+        <iyy>0.0000417</iyy><iyz>0</iyz><izz>0.0000417</izz>
+      </inertia>
+    </inertial>
+    <visual name="load_visual">
+      <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+      <material><script><name>Gazebo/Blue</name></script></material>
+    </visual>
+    <collision name="load_collision">
+      <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+    </collision>
+  </link>
+
+  <joint name="load_joint" type="ball">
+    <parent>stretch_rope_link_{{ rope_num_segments }}</parent>
+    <child>load_link</child>
+    <pose>0 0 -0.03 0 0 0</pose>
+  </joint>
+  <!--}-->
 {%- endmacro -%}
+<!--}-->
+      
