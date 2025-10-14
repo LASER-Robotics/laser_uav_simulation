@@ -6,7 +6,7 @@ if [[ -z "$1" || -z "$2" || -z "$3" || -z "$4" ]]; then
     exit 1
 fi
 
-uavs_available=("x500" "zmr250")
+uavs_available=("x500" "lr7pro")
 
 if [[ ! " ${uavs_available[@]} " =~ " $UAV_TYPE " ]]; then
     echo "The UAV type '$UAV_TYPE' is not available."

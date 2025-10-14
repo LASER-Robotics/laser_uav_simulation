@@ -64,17 +64,17 @@
   {# <!--}--> #}
 
   {# Sensors and computers {--> #}
-  {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/x500/pixhawk6c_mesh_file.stl' -%}
-  {%- set gps_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_mount_mesh_file.stl' -%}
-  {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_board_mesh_file.stl' -%}
-  {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_cooler_mesh_file.stl' -%}
+  {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/boards/pixhawk.stl' -%}
+  {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_board_mesh_file.stl' -%}
+  {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_cooler_mesh_file.stl' -%}
+  {%- set gps_module_mesh_file = 'model://laser_uavs_description/meshes/sensors/gps.stl' -%}
   {# <!--}--> #}
 
   {# Mounts {--> #}
   {%- set battery_mesh_file = 'model://laser_uavs_description/meshes/x500/battery_mesh_file.stl' -%}
   {%- set battery_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/battery_mount_mesh_file.stl' -%}
   {%- set nuc_hex_posts_mesh_file = 'model://laser_uavs_description/meshes/x500/nuc_hex_posts_mesh_file.stl' -%}
-  {%- set gps_module_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_module_mesh_file.stl' -%}
+  {%- set gps_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/gps_mount_mesh_file.stl' -%}
   {%- set garmin_mount_mesh_file = 'model://laser_uavs_description/meshes/x500/garmin_mount_mesh_file.stl' -%}
   <!-- {%- set lidar_mount_mesh_file = 'model:/meshes/meshes/x500/lidar_mount_mesh_file.stl' -%} -->
   <!-- {%- set realsense_mount_mesh_file = 'model:/meshes/meshes/x500/realsense_mount_mesh_file.stl' -%} -->
@@ -700,7 +700,6 @@
     {# ========================== LIDAR sensors ========================= #}
 
     {# Livox placements {--> #}
-
     {# livox {--> #}
     {% if enable_livox %}
     {{ components.livox_lidar_macro(
@@ -765,7 +764,6 @@
     {% endif %}
 
     {# <!--}--> #}
-
     {# <!--}--> #}
 
     {# ========================== camera sensors ======================== #}
