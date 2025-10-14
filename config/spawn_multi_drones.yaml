@@ -1,0 +1,11 @@
+/**:
+  ros__parameters:
+    - id: 1
+      type: "lr7pro"
+      pose_spawn: [0.0,0.0,0.2,0.0]
+      sensors: []
+
+    - id: 2
+      type: "x500"
+      pose_spawn: [1.0,0.0,0.2,0.0]
+      sensors: []
