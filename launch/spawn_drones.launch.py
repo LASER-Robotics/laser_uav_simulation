@@ -66,7 +66,7 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     # #{ start uxrce protocol
         uxrce_script_cmd = ExecuteProcess(
-            cmd=[uxrce_script_path],
+            cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
             name="uxrce_protocol",
             output='screen'
         )
