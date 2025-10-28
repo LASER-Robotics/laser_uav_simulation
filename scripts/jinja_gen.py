@@ -18,6 +18,7 @@ parser.add_argument('--enable_d435_down', action='store_true')
 parser.add_argument('--enable_vio', action='store_true')
 parser.add_argument('--enable_livox', action='store_true')
 parser.add_argument('--enable_livox_45', action='store_true')
+parser.add_argument('--enable_livox_down', action='store_true')
 parser.add_argument('--x', type=float, default=0.0)
 parser.add_argument('--y', type=float, default=0.0)
 parser.add_argument('--z', type=float, default=0.0)
@@ -53,6 +54,7 @@ data = {
     'enable_vio': args.enable_vio, 
     'enable_livox': args.enable_livox,
     'enable_livox_45': args.enable_livox_45,
+    'enable_livox_down': args.enable_livox_down,
     'x_offset': -float(args.x),
     'y_offset': -float(args.y),
     'z_offset': -float(args.z),
