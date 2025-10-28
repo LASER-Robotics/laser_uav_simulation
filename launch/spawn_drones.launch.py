@@ -22,12 +22,12 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     try:
         with open(config_file_path, 'r') as file:
-            config_data = yaml.safe_load(file)['/**']
+            config_data = yaml.safe_load(file)['/**/**']
     except EnvironmentError:
         print(f"Error: Can't find the config file in '{config_file_path}'")
         return None
     except KeyError:
-        print(f"Error: The key '/**' don't exist in YAML.")
+        print(f"Error: The key '/**/**' don't exist in YAML.")
         return None
 
     uavs = config_data.get('ros__parameters', {})
