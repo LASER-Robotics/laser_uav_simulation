@@ -1,7 +1,7 @@
 name: simulation
 root: ./
 startup_window: control
-pre_window: export UAV_NAME=uav1; export UAV_TYPE=lr7pro; export UAV_ESTIMATION_SOURCE="GNSS"
+pre_window: export UAV_NAME=uav1; export UAV_TYPE=lr7pro
 windows:
   - spawn:
       layout: even-horizontal
@@ -12,11 +12,11 @@ windows:
       layout: even-horizontal
       panes:
         - sleep 1; ros2 launch laser_uav_px4_api api.launch.py api_file:="./configs/api.yaml"
-  - estimator:
+  - estimation_manager:
       layout: tiled
       panes:
           - sleep 1; ros2 launch laser_uav_managers estimation_manager.launch.py
-  - control:
+  - control_manager:
       layout: tiled
       panes:
         - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py
@@ -205,5 +205,4 @@ windows:
       layout: even-horizontal
       panes:
         - sleep 9; ros2 topic echo /$UAV_NAME/estimation_manager/estimation --no-arr
-        - sleep 9; ros2 topic echo /$UAV_NAME/px4_api/odometry --no-arr
 
