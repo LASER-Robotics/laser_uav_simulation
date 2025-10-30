@@ -837,17 +837,147 @@
 {%- endmacro -%}
 <!--}-->
 
+{%- macro livox_sensor_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, vfov_angle, x, y, z, roll, pitch, yaw) -%}
+    
+{# -- gazebo links -- #}
+{%- set sensor_link = sensor_name + "_sensor_link" -%}
+
+{# -- frame names -- #}
+{%- set frame_fcu = "fcu" -%}
+{%- set frame_sensor = sensor_name + "_sensor" -%}
+{%- set frame_lidar = sensor_name + "_lidar"  -%}
+
+{# -- topics -- #}
+{%- set topic_lidar = sensor_name + "/lidar" -%}
+
+{# -- tf from sensor to lidar -- #}
+{%- set lidar_x = 0 -%}
+{%- set lidar_y = 0 -%}
+{%- set lidar_z = 0.05 -%}
+{%- set lidar_roll = 0 -%}
+{%- set lidar_pitch = 0 -%}
+{%- set lidar_yaw = 0 -%}
+
+<link name="{{ sensor_link }}">
+  <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
+  
+  <inertial>
+    <mass>0.1</mass>
+    <inertia>
+      <ixx>0.0001</ixx>
+      <ixy>0.0</ixy>
+      <ixz>0.0</ixz>
+      <iyy>0.0001</iyy>
+      <iyz>0.0</iyz>
+      <izz>0.0001</izz>
+    </inertia>
+  </inertial>
+  
+  <collision name="lidar_collision">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/livox_mid_360.stl</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </collision>
+  
+  <visual name="lidar_visual">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/livox_mid_360.stl</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </visual>
+
+  {# LIDAR LIVOX #}
+  <sensor name="{{ sensor_name }}_lidar_sensor" type="ray">
+    <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
+    <visualize>false</visualize>
+    <always_on>true</always_on>
+    <update_rate>{{ rot_freq }}</update_rate>
+    
+    <plugin name="{{ sensor_name }}_lidar_plugin" filename="libLivoxPluginGazebo.so">
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>{{lasers}}</samples> 
+            <resolution>1</resolution>
+            <min_angle>-3.1415926535897931</min_angle>
+            <max_angle>3.1415926535897931</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>{{lasers}}</samples> 
+            <resolution>1</resolution>
+            <min_angle>-0.785398</min_angle>
+            <max_angle>1.5708</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>{{ max_range }}</max>
+          <resolution>1</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>{{ noise }}</stddev>
+        </noise>
+      </ray>
+      
+      <visualize>false</visualize>
+      <samples>16000</samples>
+      <downsample>40</downsample>
+      <csv_file_name>mid360-real-centr.csv</csv_file_name>
+      <publish_pointcloud_type>2</publish_pointcloud_type>
+      <robot_namespace>{{ namespace }}</robot_namespace>
+      <parent_frame_name>fcu</parent_frame_name>
+      <sensor_frame_name>{{ sensor_name }}</sensor_frame_name>
+      <sensor_x>{{ x }}</sensor_x>
+      <sensor_y>{{ y }}</sensor_y>
+      <sensor_z>{{ z }}</sensor_z>
+      <sensor_roll>{{ roll }}</sensor_roll>
+      <sensor_pitch>{{ pitch }}</sensor_pitch>
+      <sensor_yaw>{{ yaw }}</sensor_yaw>
+      <lidar_frame_name>{{ sensor_name }}_lidar</lidar_frame_name>
+      <topic_lidar_name>{{ topic_lidar }}</topic_lidar_name>
+      <lidar_x>{{ lidar_x }}</lidar_x>
+      <lidar_y>{{ lidar_y }}</lidar_y>
+      <lidar_z>{{ lidar_z }}</lidar_z>
+      <lidar_roll>{{ lidar_roll }}</lidar_roll>
+      <lidar_pitch>{{ lidar_pitch }}</lidar_pitch>
+      <lidar_yaw>{{ lidar_yaw }}</lidar_yaw>
+      <imu_frame_name>{{ sensor_name }}_imu</imu_frame_name>
+      <imu_x>0</imu_x>
+      <imu_y>0</imu_y>
+      <imu_z>0</imu_z>
+      <imu_roll>0</imu_roll>
+      <imu_pitch>0</imu_pitch>
+      <imu_yaw>0</imu_yaw>
+    </plugin>
+  </sensor>
+</link>
+
+<joint name="{{ sensor_name }}_joint" type="fixed">
+  <parent>{{ parent_link }}</parent>
+  <child>{{ sensor_link }}</child>
+</joint>
+{%- endmacro -%}
+<!--}-->
+
+
 {%- macro livox_lidar_macro(namespace, parent_link, sensor_name, rot_freq, noise, x, y, z, roll, pitch, yaw, lasers) -%}
 
-{{ generic_3d_lidar_macro(
+{{ livox_sensor_lidar_macro(
   namespace = namespace,
   parent_link = parent_link,
-  sensor_name = sensor_name,
+  sensor_name = 'livox',
   rot_freq = rot_freq,
   lasers = lasers,
-  vfov_angle = 90,
-  max_range = 55,
-  noise = 0.01,
+  max_range = 40,
+  noise = noise,
+  vfov_angle = 1.5708,
   x = x,
   y = y,
   z = z,
@@ -855,6 +985,7 @@
   pitch = pitch,
   yaw = yaw)
 }}
+
 {%- endmacro -%}
 
 <!--}-->
