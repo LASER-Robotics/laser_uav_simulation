@@ -230,7 +230,7 @@
 
 {# motor_plugin_macro {--> #}
 {%- macro motor_plugin_macro(id, rotor_direction, time_constant_up, time_constant_down, max_rotation_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim) -%}
-<plugin name='{{id}}_motor_model' filename='libgazebo_motor_model.so'>
+<plugin name='{{id}}_motor_model' filename='libMotorPluginGazebo.so'>
   <robotNamespace/>
   <jointName>prop_{{id}}_joint</jointName>
   <linkName>prop_{{id}}_link</linkName>
@@ -737,10 +737,7 @@
 
 {# ========================== lidar sensors ========================= #}   
 
-<!-- Macro to add an 3D Lidar {-->
-
-<!-- Macro to add an Generic 3D Lidar {-->
-
+{# generic_3d_lidar_macro {--> #}
 {%- macro generic_3d_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, vfov_angle, x, y, z, roll, pitch, yaw) -%}
     
 {# -- gazebo links -- #}
@@ -835,9 +832,10 @@
   <child>{{ sensor_link }}</child>
 </joint>
 {%- endmacro -%}
-<!--}-->
+{# <!--}--> #}
 
-{%- macro livox_sensor_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, vfov_angle, x, y, z, roll, pitch, yaw) -%}
+{# livox_lidar_macro {--> #}
+{%- macro livox_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, x, y, z, roll, pitch, yaw) -%}
     
 {# -- gazebo links -- #}
 {%- set sensor_link = sensor_name + "_sensor_link" -%}
@@ -964,31 +962,7 @@
   <child>{{ sensor_link }}</child>
 </joint>
 {%- endmacro -%}
-<!--}-->
-
-
-{%- macro livox_lidar_macro(namespace, parent_link, sensor_name, rot_freq, noise, x, y, z, roll, pitch, yaw, lasers) -%}
-
-{{ livox_sensor_lidar_macro(
-  namespace = namespace,
-  parent_link = parent_link,
-  sensor_name = 'livox',
-  rot_freq = rot_freq,
-  lasers = lasers,
-  max_range = 40,
-  noise = noise,
-  vfov_angle = 1.5708,
-  x = x,
-  y = y,
-  z = z,
-  roll = roll,
-  pitch = pitch,
-  yaw = yaw)
-}}
-
-{%- endmacro -%}
-
-<!--}-->
+{# <!--}--> #}
 
 {# ========================== camera sensors ========================= #}
 
@@ -1039,7 +1013,6 @@
   <parent>{{ parent_link }}</parent>
   <child>{{ camera_name }}_link</child>
 </joint>
-
 {%- endmacro -%}
 {# <!--}--> #}
 

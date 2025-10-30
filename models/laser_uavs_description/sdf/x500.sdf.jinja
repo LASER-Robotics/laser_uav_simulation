@@ -708,6 +708,7 @@
       sensor_name = 'livox',
       rot_freq = 10,
       noise = 0.01,
+      max_range = 40,
       x = 0.0,
       y = 0.0,
       z = 0.1,
@@ -731,7 +732,9 @@
       yaw = 0.0)
     }}
     {% endif %}
+    {# <!--}--> #}
 
+    {# livox_45 {--> #}
     {% if enable_livox_45 %}
     {{ components.livox_lidar_macro(
       namespace = namespace,
@@ -739,6 +742,7 @@
       sensor_name = 'livox',
       rot_freq = 15,
       noise = 0.01,
+      max_range = 40,
       x = 0.0,
       y = 0.0,
       z = 0.1,
@@ -762,9 +766,9 @@
       yaw = 0.0)
     }}
     {% endif %}
-
     {# <!--}--> #}
 
+    {# livox_down {--> #}
     {% if enable_livox_down %}
     {{ components.livox_lidar_macro(
       namespace = namespace,
@@ -772,6 +776,7 @@
       sensor_name = 'livox',
       rot_freq = 15,
       noise = 0.01,
+      max_range = 40,
       x = -0.05,
       y = 0.0,
       z = -0.05,
@@ -795,13 +800,12 @@
       yaw = 0.0)
     }}
     {% endif %}
-
+    {# <!--}--> #}
     {# <!--}--> #}
 
     {# ========================== camera sensors ======================== #}
 
     {# Realsense placements {--> #}
-
     {# realsense front {--> #}
     {% if enable_d435_front %}
     {{ components.realsense_d435_macro(
@@ -897,7 +901,6 @@
     }}
     {% endif %}
     {# <!--}--> #}
-
     {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
