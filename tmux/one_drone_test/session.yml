@@ -205,4 +205,7 @@ windows:
       layout: even-horizontal
       panes:
         - sleep 9; ros2 topic echo /$UAV_NAME/estimation_manager/estimation --no-arr
-
+  - plotjuggler:
+      layout: even-horizontal
+      panes:
+        - 'history -s ros2 launch laser_uav_managers plotjuggler.launch.py'
