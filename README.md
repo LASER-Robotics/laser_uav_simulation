@@ -32,71 +32,91 @@ The primary role of this agent is to act as a **communication bridge** between t
 
 In short, this script must be running for any ROS 2 node to communicate with the simulated UAVs. Without it, there is no way to receive sensor data from the drone or send commands to it.
 
-### `spawn_drone.sh`
+## Spawning UAVs
 
-This is the primary script for launching a single, complete UAV agent into the simulation for the **LUS** project. It orchestrates the entire process, from model creation to launching the flight control software.
+The spawning process in the **LUS** simulation is now orchestrated by a ROS 2 launch file that reads a YAML configuration. This allows for easily defining multiple drones with different configurations (types, sensors, positions) in a single file.
 
-The script is designed to be configured through command-line arguments (for position) and environment variables (for drone type and sensors), making it highly flexible and reusable in complex, multi-drone scenarios.
+### 1. Configuration File (`.yaml`)
+
+To spawn drones, you must define them in a YAML file. The launch file iterates through this list and spawns each drone in sequence.
+
+**Example Configuration:**
+```yaml
+/**:
+  ros__parameters:
+    - id: 1
+      type: "lr7pro"                 # Options: "x500", "lr7pro"
+      pose_spawn: [0.0, 0.0, 0.2, 0.0] # [X, Y, Z, Yaw]
+      sensors: ["--enable_ground_truth"] 
+
+    - id: 2
+      type: "x500"
+      pose_spawn: [1.0, 0.0, 0.2, 0.0]
+      sensors: []
+````
+
+**Available Sensors:**
+
+The `sensors` list allows you to attach specific hardware or enable data streams for each drone. You can combine multiple sensors by adding them to the list (e.g., `["--enable_livox", "--enable_d435i_front"]`).
+
+| Flag | Description |
+| :--- | :--- |
+| `--enable_d435_front` | Adds a Realsense D435 depth camera facing **forward**. |
+| `--enable_d435i_front`| Adds a Realsense D435i (with IMU) depth camera facing **forward**. |
+| `--enable_d435_down` | Adds a Realsense D435 depth camera facing **downward**. |
+| `--enable_d435i_down` | Adds a Realsense D435i (with IMU) depth camera facing **downward**. |
+| `--enable_livox` | Adds a Livox Mid360 LiDAR sensor. |
+| `--enable_vio` | Enables Visual Inertial Odometry sensor simulation. |
+| `--enable_ground_truth` | Publishes the exact ground truth pose (useful for validation/debugging). |
+
+**Parameters:**
+
+  * **`id`**: A unique integer identifier. This defines the namespace (e.g., `1` becomes `uav1`).
+  * **`type`**: The airframe model name.
+  * **`pose_spawn`**: The initial position and orientation `[x, y, z, yaw]`.
+  * **`sensors`**: A list of sensor flags to pass to the model generator (e.g., `"--enable_livox"`).
+
+### 2\. Launching the Simulation
+
+Use the `spawn_drones.launch.py` file to spawn the agents defined in your config file. This launch file also automatically starts the `MicroXRCEAgent` required for PX4 communication.
+
+**Command:**
+
+```bash
+ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=<path_to_your_yaml>
+```
+
+**Example:**
+
+```bash
+ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=$(ros2 pkg prefix --share laser_uav_simulation)/config/spawn_multi_drones.yaml
+```
+
+-----
+
+### Backend Script: `spawn_drone.sh`
+
+This script is the low-level worker called by the Python launch file for each drone entry in the YAML. It handles the specific sequence of generating the SDF, spawning it in Gazebo, and launching the PX4 SITL instance.
 
 #### Core Workflow
 
-The script executes three main stages in sequence:
+1.  **Generate Model:** Calls `jinja_gen.py` with the arguments provided by the launch file to generate a custom SDF.
+2.  **Spawn in Gazebo:** Waits for the Gazebo server and spawns the model using `gz model`.
+3.  **Launch PX4 SITL:** Starts the PX4 instance with the correct instance ID (`-i`) and namespace (`PX4_UXRCE_DDS_NS`), ensuring unique communication channels for each drone.
 
-1.  **Generate Model:** First, it calls the `jinja_gen.py` script. Using environment variables like `$UAV_TYPE` and `$UAV_SENSORS`, it generates a custom SDF model file for the specific drone configuration required.
+#### Arguments (Internal Use)
 
-2.  **Spawn in Gazebo:** After waiting for the Gazebo server (`gzserver`) to be running, it uses the `gz model` command to spawn the newly generated SDF model into the simulation at the position and orientation passed as arguments (`x, y, z, yaw`).
+While mostly used by the launch file, the script accepts the following order of arguments:
 
-3.  **Launch PX4 SITL:** Finally, it starts a dedicated PX4 Software-In-The-Loop instance for the spawned drone. It correctly configures the ROS 2 namespace and instance ID, ensuring the flight stack connects to the correct model in Gazebo and communicates properly on the ROS 2 network.
+  * `$1`: Namespace (e.g., `uav1`)
+  * `$2`: UAV Model (e.g., `x500`)
+  * `$3`: X Position
+  * `$4`: Y Position
+  * `$5`: Z Position
+  * `$6`: Yaw Orientation
+  * `$7...`: Sensor flags
 
-#### How to Use
-
-This script is typically not run manually but is called by a ROS 2 launch file. It requires position/orientation as arguments and several environment variables to be set.
-
-**Arguments:**
-* `$1`: Initial X position.
-* `$2`: Initial Y position.
-* `$3`: Initial Z position.
-* `$4`: Initial Yaw orientation (in radians).
-
-**Environment Variables:**
-* `$UAV_TYPE`: The base model of the drone (e.g., `x500`).
-* `$UAV_NAME`: The unique name for the drone instance (e.g., `uav1`).
-* `$UAV_SENSORS`: Command-line flags to pass to the generator script (e.g., `'--enable_livox --enable_d435i_front'`).
-
-## Spawning a Single UAV
-
-Follow the steps below to launch a single UAV into the **LUS (Laser UAV System)** simulation environment.
-
-### 1. Start the Simulation
-
-First, ensure a Gazebo simulation is open and running. The spawn script will wait for an active Gazebo process before proceeding.
-
-*You can start an empty world or any other simulation environment required for your test.*
-
-### 2. Configure and Spawn the Drone
-
-In a **new terminal**, you will first configure the drone's specifications using environment variables and then execute the `spawn_drone.sh` script.
-
-**First, set the variables:**
-```bash
-export UAV_NAME=uav1
-export UAV_TYPE=x500
-export UAV_SENSORS="--enable_vio"
-export UAV_ESTIMATION_SOURCE="GNSS"
-```
-* **`UAV_NAME`**: The unique name and namespace for the drone (e.g., `uav1`).
-* **`UAV_TYPE`**: The base airframe model to use (e.g., `x500`).
-* **`UAV_SENSORS`**: A string of flags passed to the model generator to enable specific sensors.
-* **`UAV_ESTIMATION_SOURCE`**: Used to configure the PX4 EKF2 estimator's primary data source (e.g., `GNSS`, `VIO`).
-
-**Now, in the same terminal, execute the spawn script** with the desired position (x, y, z), orientation (yaw), and a unique ID:
-```bash
-~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/spawn_drone.sh 0.0 0.0 0.2 1.57 3
-```
-This script will automatically:
-1.  Generate the custom SDF model file.
-2.  Spawn the drone into Gazebo.
-3.  **Launch the PX4 SITL software instance**, which will begin searching for the communication bridge.
+<!-- end list -->
 
 ### 3. Start the Communication Bridge
 
