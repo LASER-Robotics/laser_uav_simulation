@@ -46,18 +46,15 @@ The `sensors` list allows you to attach specific hardware or enable data streams
   * **`pose_spawn`**: The initial position and orientation `[x, y, z, yaw]`.
   * **`sensors`**: A list of sensor flags to pass to the model generator (e.g., `"--enable_livox"`).
 
-### 2\. Launching the Simulation
+### 2. Launching the Simulation
 
-Use the `spawn_drones.launch.py` file to spawn the agents defined in your config file. This launch file also automatically starts the `MicroXRCEAgent` required for PX4 communication.
+Use the `spawn_drones.launch.py` file to spawn the agents defined in your configuration file. 
+
+**Important:** This command only spawns the UAV models. The simulation world must be launched beforehand using a separate launch file.
+
+This launch file also automatically starts the `MicroXRCEAgent` required for PX4 communication.
 
 **Command:**
 
 ```bash
 ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=<path_to_your_yaml>
-```
-
-**Example:**
-
-```bash
-ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=$(ros2 pkg prefix --share laser_uav_simulation)/config/spawn_multi_drones.yaml
-```
