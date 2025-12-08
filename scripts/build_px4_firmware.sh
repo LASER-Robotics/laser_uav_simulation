@@ -5,7 +5,7 @@ set -e
 if [ "${GITHUB_ACTIONS}" == "true" ]; then
     BASE_DIR="$GITHUB_WORKSPACE"
 else
-    BASE_DIR="$(pwd)"
+    BASE_DIR="$HOME"
 fi
 
 cd $BASE_DIR/git/laser_uav_system/ros_packages/px4_firmware
