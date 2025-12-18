@@ -17,6 +17,10 @@
   {%- set motor_mesh_z_offset = -0.0086 -%} {# [m] #}
   {%- set rotor_xy_offset = 0.1812 -%} {# [m] #}
   {%- set rotor_z_offset = 0.057 -%} {# [m] #}
+  
+  {%- set load_x_offset = 0 -%} {# [m] #}
+  {%- set load_y_offset = 0 -%} {# [m] #}
+  {%- set load_z_offset = 0 -%} {# [m] #}
 
   {%- set root = 'base_link' -%}
   {# <!--}--> #}
@@ -936,9 +940,39 @@
       rope_segment_length=0.03,
       rope_segment_radius=0.002,
       rope_segment_mass=0.001,
-      load_mass=0.3)
+      load_mass=0.3,
+      load_x_offset=load_x_offset,
+      load_y_offset=load_y_offset,
+      load_z_offset=load_z_offset)
     }}
     {% endif %}
     {# <!--}--> #}
+  
+    {# load ground truth {--> #}
+    {% if enable_ground_truth %}
+    {{ components.gazebo_ground_truth_macro(
+      namespace = namespace,
+      odometry_sensor_name = 'load_ground_truth',
+      parent_link = 'load_link',
+      topic_name = 'load_ground_truth',
+      noise = 0,
+      frame_name = 'world',
+      update_rate = 100,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0,
+      pitch = 0,
+      yaw = 0,
+      x_offset = load_x_offset,
+      y_offset = load_y_offset,
+      z_offset = load_z_offset,
+      roll_offset = roll_offset,
+      pitch_offset = pitch_offset,
+      yaw_offset = yaw_offset)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+
   </model>
 </sdf>

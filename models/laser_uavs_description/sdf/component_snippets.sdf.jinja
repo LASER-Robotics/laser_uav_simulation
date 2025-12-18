@@ -1308,7 +1308,7 @@
 {# ========================== research items ========================= #}
 
 <!-- load_pendulum {-->
-{%- macro load_pendulum(name, parent_link, attach_linker_pose, attach_linker_mass, rope_num_segments, rope_segment_length, rope_segment_radius, rope_segment_mass, load_mass) -%}
+{%- macro load_pendulum(name, parent_link, attach_linker_pose, attach_linker_mass, rope_num_segments, rope_segment_length, rope_segment_radius, rope_segment_mass, load_mass, load_x_offset, load_y_offset, load_z_offset) -%}
   <!-- rope_attacher {-->
   <link name="{{ name }}_link">
     <pose>0 0 0 0 0 0</pose> 
@@ -1409,9 +1409,11 @@
   {%- endfor -%}
   <!--}-->
 
+  {%- set box_size = 0.05 -%} 
+
   <!-- load {-->
   <link name="load_link">
-    <pose>0 0 0 0 0 0</pose> 
+    <pose>{{ load_x_offset }} {{ load_y_offset }} {{ load_z_offset }} 0 0 0</pose> 
     <inertial>
       <mass>{{ load_mass }}</mass> 
       <inertia> 
@@ -1420,8 +1422,9 @@
       </inertia>
     </inertial>
     <visual name="load_visual">
-      <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+      <geometry><box><size>{{ box_size }} {{ box_size }} {{ box_size }}</size></box></geometry>
       <material><script><name>Gazebo/Blue</name></script></material>
+      <transparency>0.5</transparency>
     </visual>
     <collision name="load_collision">
       <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
@@ -1435,5 +1438,4 @@
   </joint>
   <!--}-->
 {%- endmacro -%}
-<!--}-->
-      
+<!--}-->  
