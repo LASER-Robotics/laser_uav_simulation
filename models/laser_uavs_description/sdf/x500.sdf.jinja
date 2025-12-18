@@ -10,7 +10,7 @@
   {# Robot parameters and arguments {--> #}
   {%- set mass = 2.0 -%} {# [kg] #}
   {%- set body_radius = 0.1 -%} {# [m] #}
-  {%- set body_height = 0.1 -%} {# [m] #}
+  {%- set body_height = 0.01 -%} {# [m] #}
   {%- set mass_prop = 0.005 -%} {# [kg] #}
   {%- set radius_rotor = 0.1651 -%} {# [m] #}
 
@@ -20,8 +20,10 @@
   
   {%- set load_x_offset = 0 -%} {# [m] #}
   {%- set load_y_offset = 0 -%} {# [m] #}
-  {%- set load_z_offset = 0 -%} {# [m] #}
+  {%- set load_z_offset = -0.07 -%} {# [m] #}
 
+  {% set ball = '0 0 -0.07 0 0 0' %}
+  
   {%- set root = 'base_link' -%}
   {# <!--}--> #}
 
@@ -940,7 +942,26 @@
       rope_segment_length=0.03,
       rope_segment_radius=0.002,
       rope_segment_mass=0.001,
-      load_mass=0.3,
+      load_mass=0.1,
+      load_x_offset=load_x_offset,
+      load_y_offset=load_y_offset,
+      load_z_offset=load_z_offset)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+      
+    {# hollow_load_pendulum {--> #}
+    {% if enable_hollow_load_pendulum %}
+    {{ components.hollow_load_pendulum(
+      name='load_attacher',
+      parent_link='base_link',
+      attach_linker_pose='0 0 -0.01 0 0 0',
+      attach_linker_mass=0.01,
+      rope_num_segments=20,
+      rope_segment_length=0.03,
+      rope_segment_radius=0.002,
+      rope_segment_mass=0.001,
+      load_mass=0.1,
       load_x_offset=load_x_offset,
       load_y_offset=load_y_offset,
       load_z_offset=load_z_offset)
@@ -974,5 +995,21 @@
     {% endif %}
     {# <!--}--> #}
 
+    {# ball_load {--> #}
+    {% if enable_hollow_load_pendulum %}
+      {% set poses = [ball] %}
+
+      {% for i in range(poses | length) %}
+        {% for j in range(1) %}
+        {{ components.spawn_passive_ball(
+            name='ball_passiva_' ~ i ~ '_' ~ j, 
+            pose=poses[i],
+            mass=0.2,
+            radius=0.02)
+        }}
+        {% endfor %} 
+      {% endfor %}
+    {% endif %}
+    {# <!--}--> #}
   </model>
 </sdf>

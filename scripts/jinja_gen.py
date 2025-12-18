@@ -11,6 +11,7 @@ parser.add_argument('--uav_model', type=str, required=True)
 parser.add_argument('--instance', type=int, required=True)
 parser.add_argument('--enable_ground_truth', action='store_true')
 parser.add_argument('--enable_load_pendulum', action='store_true')
+parser.add_argument('--enable_hollow_load_pendulum', action='store_true')
 parser.add_argument('--enable_d435_front', action='store_true')
 parser.add_argument('--enable_d435i_front', action='store_true')
 parser.add_argument('--enable_d435i_down', action='store_true')
@@ -46,6 +47,7 @@ data = {
     'model_name': str(args.uav_model),
     'instance': int(args.instance),
     'enable_load_pendulum': args.enable_load_pendulum, 
+    'enable_hollow_load_pendulum': args.enable_hollow_load_pendulum, 
     'enable_ground_truth': args.enable_ground_truth, 
     'enable_d435_front': args.enable_d435_front, 
     'enable_d435i_front': args.enable_d435i_front, 
