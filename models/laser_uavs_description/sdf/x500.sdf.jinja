@@ -970,7 +970,7 @@
     {# <!--}--> #}
   
     {# load ground truth {--> #}
-    {% if enable_ground_truth %}
+    {% if enable_ground_truth and (enable_hollow_load_pendulum or enable_load_pendulum) %}
     {{ components.gazebo_ground_truth_macro(
       namespace = namespace,
       odometry_sensor_name = 'load_ground_truth',
