@@ -964,6 +964,143 @@
 {%- endmacro -%}
 {# <!--}--> #}
 
+{# velodyne_lidar_macro {--> #}
+{%- macro velodyne_lidar_macro(namespace, parent_link, sensor_name, x, y, z, roll, pitch, yaw) -%}
+    
+{# -- gazebo links -- #}
+{%- set sensor_link = sensor_name + "_sensor_link" -%}
+
+{# -- frame names -- #}
+{%- set frame_sensor = sensor_name + "_sensor" -%}
+{%- set frame_lidar = sensor_name + "_lidar"  -%}
+
+{# -- topics -- #}
+{%- set topic_lidar = namespace + "/" + sensor_name + "/lidar" -%}
+
+{# -- tf from sensor to lidar -- #}
+{%- set lidar_x = 0 -%}
+{%- set lidar_y = 0 -%}
+{%- set lidar_z = 0.0 -%}
+{%- set lidar_roll = 0 -%}
+{%- set lidar_pitch = 0 -%}
+{%- set lidar_yaw = 0 -%}
+
+<link name="{{ sensor_link }}">
+  <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
+  
+  <inertial>
+    <mass>0.1</mass>
+    <inertia>
+      <ixx>0.0001</ixx>
+      <ixy>0.0</ixy>
+      <ixz>0.0</ixz>
+      <iyy>0.0001</iyy>
+      <iyz>0.0</iyz>
+      <izz>0.0001</izz>
+    </inertia>
+  </inertial>
+
+  <collision name="lidar_collision_1">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_1.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </collision>
+  <visual name="lidar_visual_1">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_1.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </visual>
+
+  <collision name="lidar_collision_2">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_2.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </collision>
+  <visual name="lidar_visual_2">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_2.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </visual>
+
+  <collision name="lidar_collision_3">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_scan.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </collision>
+  <visual name="lidar_visual_3">
+    <geometry>
+      <mesh>
+        <uri>model://laser_uavs_description/meshes/sensors/VLP16_scan.dae</uri>
+        <scale>1 1 1</scale>
+      </mesh>
+    </geometry>
+  </visual>
+{#
+  {# LIDAR velodyne #}
+  <sensor name="{{ sensor_name }}_lidar_sensor" type="ray">
+    <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
+    <visualize>false</visualize>
+    <always_on>true</always_on>
+    <update_rate>10</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>440</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14159</min_angle>
+          <max_angle>3.14159</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>16</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.261799</min_angle>
+          <max_angle>0.261799</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.9</min>
+        <max>130.0</max>
+        <resolution>0.005</resolution>
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0</mean>
+        <stddev>0</stddev>
+      </noise>
+    </ray>
+    <plugin name="{{ sensor_name }}_lidar_plugin" filename='libgazebo_ros_velodyne_laser.so'>
+      <topicName>{{ topic_lidar }}</topicName>
+      <frameName>{{ frame_sensor }}</frameName>
+      <min_range>0.9</min_range>
+      <max_range>130.0</max_range>
+      <gaussianNoise>0.008</gaussianNoise>
+    </plugin>
+  </sensor>
+</link>
+  #}
+
+<joint name="{{ sensor_name }}_joint" type="fixed">
+  <parent>{{ parent_link }}</parent>
+  <child>{{ sensor_link }}</child>
+</joint>
+{%- endmacro -%}
+{# <!--}--> #}
+
 {# ========================== camera sensors ========================= #}
 
 {# camera_macro {--> #}
