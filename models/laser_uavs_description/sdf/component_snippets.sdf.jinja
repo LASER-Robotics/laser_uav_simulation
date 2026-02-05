@@ -229,7 +229,7 @@
 {# ========================== motor plugins ========================= #}
 
 {# motor_plugin_macro {--> #}
-{%- macro motor_plugin_macro(id, rotor_direction, time_constant_up, time_constant_down, max_rotation_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim) -%}
+{%- macro motor_plugin_macro(id, rotor_direction, time_constant_up, time_constant_down, max_rotation_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) -%}
 <plugin name='{{id}}_motor_model' filename='libMotorPluginGazebo.so'>
   <robotNamespace/>
   <jointName>prop_{{id}}_joint</jointName>
@@ -242,6 +242,8 @@
   <momentConstant>{{moment_constant}}</momentConstant>
   <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
   <motorNumber>{{id}}</motorNumber>
+  <motorQuadraticA>{{motor_quadratic_a}}</motorQuadraticA>
+  <motorQuadraticB>{{motor_quadratic_b}}</motorQuadraticB>
   <rotorDragCoefficient>{{rotor_drag_coefficient}}</rotorDragCoefficient>
   <rollingMomentCoefficient>{{rolling_moment_coefficient}}</rollingMomentCoefficient>
   <motorSpeedPubTopic>/motor_speed/{{id}}</motorSpeedPubTopic>
@@ -251,7 +253,7 @@
 {# <!--}--> #}
 
 {# prop_macro {--> #}
-{%- macro prop_macro(direction, rotor_velocity_slowdown_sim, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
+{%- macro prop_macro(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
 <link name="prop_{{ motor_number }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   <inertial>
@@ -278,7 +280,7 @@
       yaw = 0)
     }}
 </link>
-  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim) }}
+  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) }}
 <joint name="prop_{{ motor_number }}_joint" type="revolute">
   <parent>{{ parent }}</parent>
   <child>prop_{{ motor_number }}_link</child>
@@ -299,7 +301,7 @@
 {# <!--}--> #}
 
 {# prop_macro_2_meshes {--> #}
-{%- macro prop_macro_2_meshes(direction, rotor_velocity_slowdown_sim, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file_1, mesh_file_2, meshes_z_offset, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
+{%- macro prop_macro_2_meshes(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file_1, mesh_file_2, meshes_z_offset, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
 <link name="prop_{{ motor_number }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   <inertial>
@@ -327,7 +329,7 @@
       yaw = 0)
     }}
 </link>
-  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim) }}
+  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) }}
 <joint name="prop_{{ motor_number }}_joint" type="revolute">
   <parent>{{ parent }}</parent>
   <child>prop_{{ motor_number }}_link</child>
@@ -348,7 +350,7 @@
 <!--}-->
 
 {# propellers_macro {--> #}
-{%- macro propellers_macro(prop_list, rotor_velocity_slowdown_sim, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, rotor_drag_coefficient, rolling_moment_coefficient, meshes_z_offset, prop_ixx, prop_ixy, prop_ixz, prop_iyy, prop_iyz, prop_izz) -%}
+{%- macro propellers_macro(prop_list, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, rotor_drag_coefficient, rolling_moment_coefficient, meshes_z_offset, prop_ixx, prop_ixy, prop_ixz, prop_iyy, prop_iyz, prop_izz) -%}
 
   <!-- Propellers {-->
   {%- for prop_params in prop_list -%}
@@ -358,6 +360,8 @@
       {{ prop_macro(
         direction = prop_params['direction'],
         rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
+        motor_quadratic_a = motor_quadratic_a,
+        motor_quadratic_b = motor_quadratic_b,
         motor_constant = motor_constant,
         moment_constant = moment_constant,
         parent = parent,
@@ -391,6 +395,8 @@
       {{ prop_macro_2_meshes(
         direction = prop_params['direction'],
         rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
+        motor_quadratic_a = motor_quadratic_a,
+        motor_quadratic_b = motor_quadratic_b,
         motor_constant = motor_constant,
         moment_constant = moment_constant,
         parent = parent,
@@ -537,7 +543,7 @@
 
 {# gazebo_mavlink_interface_macro {--> #}
 {%- macro gazebo_mavlink_interface_macro(instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
-<plugin name="mavlink_interface_plugin" filename="libgazebo_mavlink_interface.so">
+<plugin name="mavlink_interface_plugin" filename="libMavlinkPluginGazebo.so">
   <robotNamespace/>
   <imuSubTopic>{{ imu_topic }}</imuSubTopic>
   <magSubTopic>{{ mag_topic }}</magSubTopic>
@@ -566,7 +572,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor2">
@@ -574,7 +580,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor3">
@@ -582,7 +588,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor4">
@@ -590,7 +596,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor5">
@@ -598,7 +604,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor6">
@@ -606,7 +612,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor7">
@@ -614,7 +620,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
     <channel name="rotor8">
@@ -622,7 +628,7 @@
       <input_offset>0</input_offset>
       <input_scaling>1</input_scaling>
       <zero_position_disarmed>0</zero_position_disarmed>
-      <zero_position_armed>0.15</zero_position_armed>
+      <zero_position_armed>0.001</zero_position_armed>
       <joint_control_type>velocity</joint_control_type>
     </channel>
   </control_channels>

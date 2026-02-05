@@ -22,13 +22,15 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
-  {%- set motor_constant = 17.4 -%} {# [kg.m/s^2] #}
+  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
+  {%- set motor_quadratic_a = 0.240572 -%}
+  {%- set motor_quadratic_b = -0.135153 -%}
+  {%- set motor_constant = 27.6e-6 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set max_rot_velocity = 880 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient =  8.06428e-04 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
 
@@ -552,6 +554,8 @@
     -%}
     {{ components.propellers_macro(
       prop_list = prop_list,
+      motor_quadratic_a = motor_quadratic_a,
+      motor_quadratic_b = motor_quadratic_b,
       rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
       motor_constant = motor_constant,
       moment_constant = moment_constant,
@@ -801,6 +805,136 @@
     }}
     {% endif %}
     {# <!--}--> #}
+    {# <!--}--> #}
+
+    {# velodyne {--> #}
+    {% if enable_velodyne %}
+
+  <link name="velodyne_sensor_link">
+    <pose>0 0 0.1 0 0 0</pose>
+  
+    <inertial>
+      <mass>0.1</mass>
+      <inertia>
+        <ixx>0.0001</ixx>
+        <ixy>0.0</ixy>
+        <ixz>0.0</ixz>
+        <iyy>0.0001</iyy>
+        <iyz>0.0</iyz>
+        <izz>0.0001</izz>
+      </inertia>
+    </inertial>
+  
+    <collision name="lidar_collision_1">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_1.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </collision>
+    <visual name="lidar_visual_1">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_1.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </visual>
+
+    <collision name="lidar_collision_2">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_2.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </collision>
+    <visual name="lidar_visual_2">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_base_2.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </visual>
+
+    <collision name="lidar_collision_3">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_scan.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </collision>
+    <visual name="lidar_visual_3">
+      <geometry>
+        <mesh>
+          <uri>model://laser_uavs_description/meshes/sensors/VLP16_scan.dae</uri>
+          <scale>1 1 1</scale>
+        </mesh>
+      </geometry>
+    </visual>
+
+      <sensor name='velodyne-VLP16' type='ray'>
+        <visualize>0</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>440</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.261799</min_angle>
+              <max_angle>0.261799</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.3</min>
+            <max>131</max>
+            <resolution>0.001</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0</stddev>
+          </noise>
+        </ray>
+        <plugin name='gazebo_ros_laser_controller' filename='libgazebo_ros_velodyne_laser.so'>
+          <topicName>/points_raw</topicName>
+          <frameName>velodyne</frameName>
+          <min_range>0.9</min_range>
+          <max_range>130.0</max_range>
+          <gaussianNoise>0.008</gaussianNoise>
+        </plugin>
+        <pose>0 0 -0.4377 3.14159 0 3.14159</pose>
+      </sensor>
+  </link>
+
+  <joint name="velodyne_joint" type="fixed">
+    <parent>base_link</parent>
+    <child>velodyne_sensor_link</child>
+  </joint>
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'velodyne_imu',
+      parent_link = root,
+      topic_name = namespace + '/velodyne/imu',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0.0,
+      pitch = 0.0,
+      yaw = 0.0)
+    }}
+    {% endif %}
     {# <!--}--> #}
 
     {# ========================== camera sensors ======================== #}
