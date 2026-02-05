@@ -48,7 +48,7 @@ def launch_setup(context: launch.LaunchContext, ld):
             continue
         sensors = uav.get('sensors', [])
 
-        cmd_line = [spawn_script_path, namespace, uav_type]
+        cmd_line = ['bash', spawn_script_path, namespace, uav_type]
         for i in pose_spawn:
             cmd_line.append(i)
         for i in sensors:

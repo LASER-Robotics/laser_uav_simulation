@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 instance=$(echo "$1" | sed -n 's/^uav\([0-9]\+\)$/\1/p')
 instance=$((instance - 1))
