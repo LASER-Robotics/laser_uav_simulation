@@ -542,9 +542,10 @@
 {# <!--}--> #}
 
 {# gazebo_mavlink_interface_macro {--> #}
-{%- macro gazebo_mavlink_interface_macro(instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
+{%- macro gazebo_mavlink_interface_macro(namespace, instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
 <plugin name="mavlink_interface_plugin" filename="libMavlinkPluginGazebo.so">
   <robotNamespace/>
+  <namespace>{{namespace}}</namespace>
   <imuSubTopic>{{ imu_topic }}</imuSubTopic>
   <magSubTopic>{{ mag_topic }}</magSubTopic>
   <baroSubTopic>{{ baro_topic }}</baroSubTopic>
