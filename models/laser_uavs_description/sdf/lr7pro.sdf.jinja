@@ -31,7 +31,7 @@
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 2.038 -%} {# [rad/s] #}
+  {%- set max_rot_velocity = 2038 -%} {# [rad/s] #}
   {%- set rotor_drag_coefficient =  8.06428e-04 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
@@ -76,9 +76,9 @@
   {# <!--}--> #}
 
   {# Inertias {--> #}
-  {%- set body_ixx = 0.01455 -%}
+  {%- set body_ixx = 0.01355 -%}
   {%- set body_ixy = 0 -%}
-  {%- set body_iyy = 0.01211 -%}
+  {%- set body_iyy = 0.01111 -%}
   {%- set body_ixz = 0 -%}
   {%- set body_izz = 0.01847 -%}
   {%- set body_iyz = 0 -%}
