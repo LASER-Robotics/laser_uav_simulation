@@ -22,13 +22,15 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
-  {%- set motor_constant = 17.4 -%} {# [kg.m/s^2] #}
+  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
+  {%- set motor_quadratic_a = 0.240572 -%}
+  {%- set motor_quadratic_b = -0.135153 -%}
+  {%- set motor_constant = 27.6e-6 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set max_rot_velocity = 880 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient =  8.06428e-04 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
 
@@ -552,6 +554,8 @@
     -%}
     {{ components.propellers_macro(
       prop_list = prop_list,
+      motor_quadratic_a = motor_quadratic_a,
+      motor_quadratic_b = motor_quadratic_b,
       rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
       motor_constant = motor_constant,
       moment_constant = moment_constant,
@@ -632,6 +636,7 @@
 
     <!-- Mavlink interface {-->
     {{ components.gazebo_mavlink_interface_macro(
+      namespace = namespace,
       instance = instance,
       imu_topic = imu_topic,
       mag_topic = mag_topic,
