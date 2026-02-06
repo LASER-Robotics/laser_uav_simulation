@@ -972,7 +972,7 @@
 {# <!--}--> #}
 
 {# velodyne_lidar_macro {--> #}
-{%- macro velodyne_lidar_macro(namespace, parent_link, sensor_name, x, y, z, roll, pitch, yaw) -%}
+{%- macro velodyne_lidar_macro(namespace, parent_link, sensor_name, x, y, z, roll, pitch, yaw, min_range, max_range, h_samples, v_samples) -%}
     
 {# -- gazebo links -- #}
 {%- set sensor_link = sensor_name + "_sensor_link" -%}
@@ -1057,7 +1057,6 @@
       </mesh>
     </geometry>
   </visual>
-{#
   {# LIDAR velodyne #}
   <sensor name="{{ sensor_name }}_lidar_sensor" type="ray">
     <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
@@ -1067,22 +1066,22 @@
     <ray>
       <scan>
         <horizontal>
-          <samples>440</samples>
+          <samples>{{ h_samples }}</samples>
           <resolution>1</resolution>
           <min_angle>-3.14159</min_angle>
           <max_angle>3.14159</max_angle>
         </horizontal>
         <vertical>
-          <samples>16</samples>
+          <samples>{{ v_samples }}</samples>
           <resolution>1</resolution>
           <min_angle>-0.261799</min_angle>
           <max_angle>0.261799</max_angle>
         </vertical>
       </scan>
       <range>
-        <min>0.9</min>
-        <max>130.0</max>
-        <resolution>0.005</resolution>
+        <min>{{ min_range }}</min>
+        <max>{{ max_range }}</max>
+        <resolution>0.001</resolution>
       </range>
       <noise>
         <type>gaussian</type>
@@ -1090,16 +1089,15 @@
         <stddev>0</stddev>
       </noise>
     </ray>
-    <plugin name="{{ sensor_name }}_lidar_plugin" filename='libgazebo_ros_velodyne_laser.so'>
+    <plugin name="{{ sensor_name }}_lidar_plugin" filename='libVelodynePluginGazebo.so'>
       <topicName>{{ topic_lidar }}</topicName>
       <frameName>{{ frame_sensor }}</frameName>
-      <min_range>0.9</min_range>
-      <max_range>130.0</max_range>
+      <min_range>{{ min_range }}</min_range>
+      <max_range>{{ max_range }}</max_range>
       <gaussianNoise>0.008</gaussianNoise>
     </plugin>
   </sensor>
 </link>
-  #}
 
 <joint name="{{ sensor_name }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
