@@ -541,9 +541,9 @@
 {%- endmacro -%}
 {# <!--}--> #}
 
-{# gazebo_mavlink_interface_macro {--> #}
-{%- macro gazebo_mavlink_interface_macro(namespace, instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
-<plugin name="mavlink_interface_plugin" filename="libMavlinkPluginGazebo.so">
+{# px4_mavlink_interface_macro {--> #}
+{%- macro px4_mavlink_interface_macro(namespace, instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
+<plugin name="mavlink_interface_plugin" filename="libPx4PluginGazebo.so">
   <robotNamespace/>
   <namespace>{{namespace}}</namespace>
   <imuSubTopic>{{ imu_topic }}</imuSubTopic>
@@ -634,6 +634,48 @@
     </channel>
   </control_channels>
 </plugin>
+{%- endmacro -%}
+{# <!--}--> #}
+
+{# ap_mavlink_interface_macro {--> #}
+{%- macro ap_mavlink_interface_macro(namespace, instance, imu_topic, mag_topic, baro_topic, lidar_topic) -%}
+<plugin name="mavlink_interface_plugin" filename="libArdupilotPluginGazebo.so">
+      <fdm_addr>127.0.0.1</fdm_addr>
+      <fdm_port_in>9002</fdm_port_in>
+      <fdm_port_out>9003</fdm_port_out>
+      <modelXYZToAirplaneXForwardZDown>0 0 0 3.141593 0 0</modelXYZToAirplaneXForwardZDown>
+      <gazeboXYZToNED>0 0 0 3.141593 0 0</gazeboXYZToNED>
+      <imuName>iris_demo::iris::iris/imu_link::imu_sensor</imuName>
+      <connectionTimeoutMaxCount>5</connectionTimeoutMaxCount>
+      <control channel="0">
+        <type>VELOCITY</type>
+        <offset>0</offset>
+        <multiplier>1</multiplier>
+        <jointName>iris::rotor_0_joint</jointName>
+        <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
+      </control>
+      <control channel="1">
+        <type>VELOCITY</type>
+        <offset>0</offset>
+        <multiplier>1</multiplier>
+        <jointName>iris::rotor_1_joint</jointName>
+        <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
+      </control>
+      <control channel="2">
+        <type>VELOCITY</type>
+        <offset>0</offset>
+        <multiplier>1</multiplier>
+        <jointName>iris::rotor_2_joint</jointName>
+        <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
+      </control>
+      <control channel="3">
+        <type>VELOCITY</type>
+        <offset>0</offset>
+        <multiplier>1</multiplier>
+        <jointName>iris::rotor_3_joint</jointName>
+        <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
+      </control>
+    </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
 
