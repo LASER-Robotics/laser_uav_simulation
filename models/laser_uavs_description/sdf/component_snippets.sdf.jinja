@@ -641,7 +641,7 @@
 
 {# imu_sensor_macro {--> #}
 {%- macro imu_sensor_macro(namespace, sensor_name, parent_link, update_rate, topic_name, noise_mean, x, y, z, roll, pitch, yaw) -%}
-  <link name="{{ namespace }}_{{ sensor_name }}_link">
+  <link name="{{ namespace }}/{{ sensor_name }}">
     <pose relative_to = "{{ parent_link }}">{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
     <sensor name="{{ namespace }}_{{ sensor_name }}_sensor" type="imu">
@@ -701,7 +701,7 @@
 
   <joint name="{{ namespace }}_{{ sensor_name }}_joint" type="fixed">
     <parent>{{ parent_link }}</parent>
-    <child>{{ namespace }}_{{ sensor_name }}_link</child>
+    <child>{{ namespace }}/{{ sensor_name }}</child>
   </joint>
 {%- endmacro -%}
 {# <!--}--> #}
