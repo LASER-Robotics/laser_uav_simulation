@@ -635,13 +635,10 @@
     <!--}-->
 
     <!-- Mavlink interface {-->
-    {{ components.px4_mavlink_interface_macro(
+    {{ components.ap_mavlink_interface_macro(
       namespace = namespace,
       instance = instance,
-      imu_topic = imu_topic,
-      mag_topic = mag_topic,
-      baro_topic = baro_topic,
-      lidar_topic = lidar_topic)
+      imu_name = imu_topic)
     }}
     <!--}-->
 

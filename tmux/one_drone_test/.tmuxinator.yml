@@ -1,7 +1,7 @@
 name: simulation
 root: ./
 startup_window: control
-pre_window: export UAV_NAME=uav1; export UAV_TYPE=lr7pro
+pre_window: export UAV_NAME=uav1; export UAV_TYPE=x500
 windows:
   - spawn:
       layout: even-horizontal
