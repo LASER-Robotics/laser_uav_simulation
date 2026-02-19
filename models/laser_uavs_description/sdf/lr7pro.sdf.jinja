@@ -64,7 +64,6 @@
 
   {# Sensors and computers {--> #}
   {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/boards/pixhawk.stl' -%} 
-  {%- set garmin_mesh_file = 'model://laser_uavs_description/meshes/sensors/garmin.stl' -%} 
   {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_board_mesh_file.stl' -%}
   {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_cooler_mesh_file.stl' -%}
   {# <!--}--> #}
@@ -241,21 +240,6 @@
       }}
       <!--}-->
       
-      <!-- Garmin {-->
-      {{ components.visual_mesh_macro(
-        name = 'garmin',
-        mesh_file = garmin_mesh_file,
-        mesh_scale = mesh_scale_milimeters,
-        color = 'DarkGrey',
-        x = 0.09,
-        y = 0,
-        z = 0,
-        roll = components.rad(-90),
-        pitch = 0,
-        yaw = components.rad(180))
-      }}
-      <!--}-->
-      
       <!-- Motors {-->
       {%- set affix = 'front_right' -%}
 
@@ -425,6 +409,23 @@
     }}
     <!--}-->
 
+    <!-- Garmin {-->
+    {% if enable_garmin %}
+    {{ components.gazebo_garmin_macro(
+      garmin_name = 'lidar0',
+      parent_link = root,
+      update_rate = 100,
+      lidar_topic = lidar_topic,
+      x = -0.09,
+      y = 0,
+      z = 0.04,
+      yaw = 0.0,
+      max_distance = 15.0,
+      min_distance = 0.05)
+    }}
+    {% endif %}
+    <!--}-->
+
     <!-- Magnetometer {-->
     {{ components.gazebo_magnetometer_macro(
       pub_rate = 100,
@@ -459,7 +460,7 @@
     {{ components.gazebo_imu_macro(
       imu_name = 'imu',
       parent_link = root,
-      imu_topic = '/imu',
+      imu_topic = imu_topic,
       gyroscope_noise_density = 0.00018665,
       gyroscope_random_walk = 0.000038785,
       gyroscope_bias_correlation_time = 1000.0,
@@ -543,6 +544,55 @@
 
     {# ========================== camera sensors ======================== #}
 
+    {# Realsense placements {--> #}
+    {# realsense front {--> #}
+    {% if enable_d435_front %}
+    {{ components.realsense_d435_macro(
+      namespace = namespace,
+      camera_name = 'front_rgbd', camera_suffix='',
+      parent_link = root,
+      realistic = 1,
+      update_rate = 60,
+      x = 0.073,
+      y = 0.0,
+      z = -0.016,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+    {% endif %}
+
+    {% if enable_d435i_front %}
+    {{ components.realsense_d435_macro(
+      namespace = namespace,
+      camera_name = 'front_rgbd', camera_suffix='',
+      parent_link = root,
+      realistic = 1,
+      update_rate = 60,
+      x = 0.0,
+      y = 0.0,
+      z = 0.15,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'front_rgbd_imu',
+      parent_link = 'front_rgbd_link',
+      topic_name = namespace + '/front_rgbd/imu/data',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = -1.5708,
+      pitch = 0,
+      yaw = -1.5708)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+    {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
 

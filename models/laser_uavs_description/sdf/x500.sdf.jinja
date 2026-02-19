@@ -616,6 +616,23 @@
     }}
     <!--}-->
 
+    <!-- Garmin {-->
+    {% if enable_garmin %}
+    {{ components.gazebo_garmin_macro(
+      garmin_name = 'lidar0',
+      parent_link = root,
+      update_rate = 100,
+      lidar_topic = lidar_topic,
+      x = 0,
+      y = 0.04,
+      z = 0.034,
+      yaw = -1.57,
+      max_distance = 15.0,
+      min_distance = 0.05)
+    }}
+    {% endif %}
+    <!--}-->
+
     <!-- Magnetometer {-->
     {{ components.gazebo_magnetometer_macro(
       pub_rate = 100,
@@ -650,7 +667,7 @@
     {{ components.gazebo_imu_macro(
       imu_name = 'imu',
       parent_link = root,
-      imu_topic = '/imu',
+      imu_topic = imu_topic,
       gyroscope_noise_density = 0.00018665,
       gyroscope_random_walk = 0.000038785,
       gyroscope_bias_correlation_time = 1000.0,
