@@ -20,7 +20,7 @@ windows:
   - tui:
       layout: even-horizontal
       panes:
-        - sleep 1; ros2 run laser_uav_tui tui 
+        - sleep 1; ros2 run laser_uav_tui tui --config ./configs/topics.yaml
   - control_manager:
       layout: tiled
       panes:
