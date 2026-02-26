@@ -17,12 +17,12 @@ To spawn drones, you must define them in a YAML file. The launch file iterates t
     - id: 1
       type: "lr7pro"                 # Options: "x500", "lr7pro"
       pose_spawn: [0.0, 0.0, 0.2, 0.0] # [X, Y, Z, Yaw]
-      sensors: ["--enable_ground_truth"] 
+      sensors: "--enable_ground_truth"
 
     - id: 2
       type: "x500"
       pose_spawn: [1.0, 0.0, 0.2, 0.0]
-      sensors: []
+      sensors: ""
 ````
 
 **Available Sensors:**
@@ -37,6 +37,7 @@ The `sensors` list allows you to attach specific hardware or enable data streams
 | `--enable_d435i_down` | Adds a Realsense D435i (with IMU) depth camera facing **downward**. |
 | `--enable_livox` | Adds a Livox Mid360 LiDAR sensor. |
 | `--enable_vio` | Enables Visual Inertial Odometry sensor simulation. |
+| `--enable_garmin` | Enables rangefinder sensor simulation. |
 | `--enable_ground_truth` | Publishes the exact ground truth pose (useful for validation/debugging). |
 
 **Parameters:**
