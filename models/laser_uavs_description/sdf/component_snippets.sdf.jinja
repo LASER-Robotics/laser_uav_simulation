@@ -825,7 +825,7 @@
 {%- set lidar_pitch = 0 -%}
 {%- set lidar_yaw = 0 -%}
 
-<link name="{{ sensor_name }}_link">
+  <link name="{{namespace}}_{{ sensor_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   
   <inertial>
@@ -927,7 +927,7 @@
 
 <joint name="{{ sensor_name }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
-  <child>{{ sensor_name }}_link</child>
+  <child>{{namespace}}_{{ sensor_name }}_link</child>
 </joint>
 {%- endmacro -%}
 {# <!--}--> #}
