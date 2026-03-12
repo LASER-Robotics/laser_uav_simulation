@@ -704,7 +704,7 @@
 {# imu_sensor_macro {--> #}
 {%- macro imu_sensor_macro(namespace, sensor_name, parent_link, update_rate, topic_name, noise_mean, x, y, z, roll, pitch, yaw) -%}
   <link name="{{ namespace }}_{{ sensor_name }}_link">
-    <pose relative_to = "{{ parent_link }}">{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
+    <pose relative_to = "{{ namespace }}_{{ parent_link }}_link">{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
     <sensor name="{{ namespace }}/{{ sensor_name }}_sensor" type="imu">
       <always_on>true</always_on>
@@ -753,16 +753,18 @@
           </z>
         </linear_acceleration>
       </imu>
-      <plugin name="{{ namespace }}_{{ sensor_name }}_plugin" filename="libgazebo_ros_imu_sensor.so">
+      <plugin name="{{ namespace }}_{{ sensor_name }}_plugin" filename="libImuPluginGazebo.so">
         <ros>
           <remapping>~/out:={{ topic_name }}</remapping>
         </ros>
+        <robot_namespace>{{ namespace }}</robot_namespace>
+        <parent_frame_name>{{ parent_link }}</parent_frame_name>
       </plugin>
     </sensor>
   </link>
 
   <joint name="{{ namespace }}_{{ sensor_name }}_joint" type="fixed">
-    <parent>{{ parent_link }}</parent>
+    <parent>{{ namespace }}_{{ parent_link }}_link</parent>
     <child>{{ namespace }}_{{ sensor_name }}_link</child>
   </joint>
 {%- endmacro -%}
@@ -901,14 +903,14 @@
       <publish_pointcloud_type>2</publish_pointcloud_type>
       <robot_namespace>{{ namespace }}</robot_namespace>
       <parent_frame_name>fcu</parent_frame_name>
-      <sensor_frame_name>{{ sensor_name }}</sensor_frame_name>
+      <sensor_frame_name>{{ sensor_name }}/link</sensor_frame_name>
       <sensor_x>{{ x }}</sensor_x>
       <sensor_y>{{ y }}</sensor_y>
       <sensor_z>{{ z }}</sensor_z>
       <sensor_roll>{{ roll }}</sensor_roll>
       <sensor_pitch>{{ pitch }}</sensor_pitch>
       <sensor_yaw>{{ yaw }}</sensor_yaw>
-      <lidar_frame_name>{{ sensor_name }}_lidar</lidar_frame_name>
+      <lidar_frame_name>{{ sensor_name }}/lidar</lidar_frame_name>
       <topic_lidar_name>{{ topic_lidar }}</topic_lidar_name>
       <lidar_x>{{ lidar_x }}</lidar_x>
       <lidar_y>{{ lidar_y }}</lidar_y>
@@ -916,7 +918,7 @@
       <lidar_roll>{{ lidar_roll }}</lidar_roll>
       <lidar_pitch>{{ lidar_pitch }}</lidar_pitch>
       <lidar_yaw>{{ lidar_yaw }}</lidar_yaw>
-      <imu_frame_name>{{ sensor_name }}_imu</imu_frame_name>
+      <imu_frame_name>{{ sensor_name }}/imu</imu_frame_name>
       <imu_x>0</imu_x>
       <imu_y>0</imu_y>
       <imu_z>0</imu_z>
@@ -1173,7 +1175,7 @@
 
   <joint name="{{namespace}}_{{ camera_name }}{{ camera_suffix }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
-  <child>{{ camera_name }}{{ camera_suffix }}_link</child>
+  <child>{{namespace}}_{{ camera_name }}{{ camera_suffix }}_link</child>
 </joint>
 {%- endmacro -%}
 <!--}-->
