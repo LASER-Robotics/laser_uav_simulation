@@ -809,10 +809,6 @@
 
 {# livox_lidar_macro {--> #}
 {%- macro livox_lidar_macro(namespace, parent_link, sensor_name, rot_freq, lasers, max_range, noise, x, y, z, roll, pitch, yaw) -%}
-    
-{# -- gazebo links -- #}
-{%- set sensor_link = sensor_name + "_link" -%}
-
 {# -- frame names -- #}
 {%- set frame_fcu = "fcu" -%}
 {%- set frame_sensor = sensor_name + "_sensor" -%}
@@ -829,7 +825,7 @@
 {%- set lidar_pitch = 0 -%}
 {%- set lidar_yaw = 0 -%}
 
-<link name="{{namespace}}_{{ sensor_link }}">
+<link name="{{ sensor_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   
   <inertial>
@@ -929,9 +925,9 @@
   </sensor>
 </link>
 
-<joint name="{{namespace}}_{{ sensor_name }}_joint" type="fixed">
+<joint name="{{ sensor_name }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
-  <child>{{namespace}}_{{ sensor_link }}</child>
+  <child>{{ sensor_name }}_link</child>
 </joint>
 {%- endmacro -%}
 {# <!--}--> #}
@@ -1005,7 +1001,7 @@
   {# -- frame names -- #}
   {%- set frame_fcu = namespace + "/fcu" -%}
 
-  <link name="{{ namespace }}_{{ camera_name }}{{ camera_suffix }}_link">
+  <link name="{{ camera_name }}{{ camera_suffix }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
 
@@ -1173,7 +1169,7 @@
   </plugin>
   <!--}-->
 
-  <joint name="{{namespace}}_{{ camera_name }}{{ camera_suffix }}_joint" type="fixed">
+  <joint name="{{ camera_name }}{{ camera_suffix }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
   <child>{{namespace}}_{{ camera_name }}{{ camera_suffix }}_link</child>
 </joint>
