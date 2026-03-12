@@ -869,7 +869,8 @@
     {% if enable_d435_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd', camera_suffix='',
+      camera_name = 'front_rgbd', 
+      camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -885,7 +886,8 @@
     {% if enable_d435i_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd', camera_suffix='',
+      camera_name = 'front_rgbd', 
+      camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,

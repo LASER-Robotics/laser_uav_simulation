@@ -32,11 +32,21 @@ windows:
       layout: tiled
       panes:
         - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/goto laser_msgs/msg/PoseWithHeading \"{position: {x: 0.0, y: 0.0, z: 1.5}, heading: 0.0}\"'
+  - trajectory_with_stop:
+      layout: tiled
+      panes:
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: true, speed: 0.7, waypoints: [
+          {position: {x: 0.0, y: 0.0, z: 1.5}, heading: 1.0},
+          {position: {x: 2.0, y: 0.0, z: 1.5}, heading: 1.8},
+          {position: {x: 2.0, y: 2.0, z: 1.5}, heading: 2.5},
+          {position: {x: 0.0, y: 2.0, z: 1.5}, heading: 3.14},
+          {position: {x: 0.0, y: 0.0, z: 1.5}, heading: 0.0},
+        ]}\"'
   - trajectories_6ms:
       layout: tiled
       panes:
         # Cuboid
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 6.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 10.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 10.0, z: 13.0}, heading: 0.0},
@@ -45,7 +55,7 @@ windows:
           {position: {x: 5.0, y: 5.0, z: 10.5}, heading: 0.0}
         ]}\"'
         # Eight
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 6.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 15.0, y: -15.0, z: 8.0}, heading: 0.0},
           {position: {x: 20.0, y: 0.0, z: 8.0}, heading: 0.0},
@@ -57,7 +67,7 @@ windows:
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0}
         ]}\"'
         # Hypotrochoid
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 6.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: -8.91373940939495, y: -12.064213598133927, z: 8.0}, heading: 0.0},
           {position: {x: -16.989356881873896, y: -12.343490298141937, z: 8.0}, heading: 0.0},
@@ -82,7 +92,7 @@ windows:
           {position: {x: 8.719251995549119, y: 12.205516975454705, z: 8.0}, heading: 0.0}
         ]}\"'
         # Race
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 6.0, waypoints: [
           {position: {x: -5.0, y: 4.5, z: 4.2}, heading: 0.0},
           {position: {x: -0.90, y: -1.27, z: 7.48}, heading: 0.0},
           {position: {x: 9.09, y: 6.26, z: 4.08}, heading: 0.0},
@@ -104,7 +114,7 @@ windows:
           {position: {x: -2.5, y: -6.0, z: 8.0}, heading: 0.0}
         ]}\"'
         # Slalom
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 6.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 6.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 4.0, y: 4.0, z: 8.0}, heading: 0.0},
           {position: {x: -4.0, y: 8.0, z: 8.0}, heading: 0.0},
@@ -123,7 +133,7 @@ windows:
       layout: tiled
       panes:
         # Cuboid
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 10.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 10.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 10.0, z: 13.0}, heading: 0.0},
@@ -132,7 +142,7 @@ windows:
           {position: {x: 5.0, y: 5.0, z: 10.5}, heading: 0.0}
         ]}\"'
         # Eight
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 10.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 15.0, y: -15.0, z: 8.0}, heading: 0.0},
           {position: {x: 20.0, y: 0.0, z: 8.0}, heading: 0.0},
@@ -144,7 +154,7 @@ windows:
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0}
         ]}\"'
         # Hypotrochoid
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 10.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: -8.91373940939495, y: -12.064213598133927, z: 8.0}, heading: 0.0},
           {position: {x: -16.989356881873896, y: -12.343490298141937, z: 8.0}, heading: 0.0},
@@ -169,7 +179,7 @@ windows:
           {position: {x: 8.719251995549119, y: 12.205516975454705, z: 8.0}, heading: 0.0}
         ]}\"'
         # Race
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 10.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: -5.0, y: 4.5, z: 9.2}, heading: 0.0},
           {position: {x: -0.90, y: -1.27, z: 12.48}, heading: 0.0},
           {position: {x: 9.09, y: 6.26, z: 9.08}, heading: 0.0},
@@ -191,7 +201,7 @@ windows:
           {position: {x: -2.5, y: -6.0, z: 13.0}, heading: 0.0}
         ]}\"'
         # Slalom
-        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{speed: 10.0, waypoints: [
+        - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 4.0, y: 4.0, z: 8.0}, heading: 0.0},
           {position: {x: -4.0, y: 8.0, z: 8.0}, heading: 0.0},
