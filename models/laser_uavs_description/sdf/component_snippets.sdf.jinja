@@ -492,18 +492,7 @@
 {%- macro gazebo_garmin_macro(garmin_name, lidar_topic, parent_link, max_distance, min_distance, update_rate, x, y, z, yaw) -%}
 <link name="{{ garmin_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} 0 0 0</pose>
-  <inertial>
-    <pose>0 0 0 0 0 0</pose>
-    <mass>0.01</mass>
-    <inertia>
-      <ixx>2.1733e-6</ixx>
-      <ixy>0</ixy>
-      <ixz>0</ixz>
-      <iyy>2.1733e-6</iyy>
-      <iyz>0</iyz>
-      <izz>1.8e-7</izz>
-    </inertia>
-  </inertial>
+  {{ zero_inertial_macro() }}
     {{ visual_mesh_macro("{{ garmin_name }}_visual", "model://laser_uavs_description/meshes/sensors/garmin.stl", '0.001 0.001 0.001', "Black", 0, 0, -0.05, yaw, 1.57, 0) }}
   <sensor name="{{garmin_name}}_laser" type="ray">
     <pose>0 0 0 0 1.57079633 0</pose>
