@@ -827,19 +827,8 @@
 
   <link name="{{namespace}}_{{ sensor_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
-  
-  <inertial>
-    <mass>0.1</mass>
-    <inertia>
-      <ixx>0.0001</ixx>
-      <ixy>0.0</ixy>
-      <ixz>0.0</ixz>
-      <iyy>0.0001</iyy>
-      <iyz>0.0</iyz>
-      <izz>0.0001</izz>
-    </inertia>
-  </inertial>
-  
+  {{ zero_inertial_macro() }}
+
   <collision name="lidar_collision">
     <geometry>
       <mesh>
