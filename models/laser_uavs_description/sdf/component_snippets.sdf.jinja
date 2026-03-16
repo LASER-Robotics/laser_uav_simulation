@@ -1205,7 +1205,7 @@
     {{ imu_sensor_macro(
       namespace = namespace,
       sensor_name = sensor_name + '_imu',
-      parent_link = namespace + '_' + sensor_name',
+      parent_link = sensor_name,
       update_rate = imu_rate,
       topic_name = namespace + '/' + sensor_name + '_sensor/imu',
       noise_mean = 0,
