@@ -6,6 +6,7 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Text
 
 from launch_ros.substitutions import FindPackageShare
 
+import os
 
 def launch_setup(context: launch.LaunchContext, ld):
 
@@ -13,6 +14,13 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     world = LaunchConfiguration('world')
     _world = world.perform(context) + '.world'
+
+    # #}
+
+    # #{ real_time
+
+    real_time = LaunchConfiguration('real_time')
+    os.environ['PX4_SIM_SPEED_FACTOR'] = real_time.perform(context)
 
     # #}
 
@@ -87,6 +95,16 @@ def generate_launch_description():
         'world',
         default_value='custom_empty',
         description='Name of the world file.'
+    ))
+
+    # #}
+
+    # #{ real_time
+
+    ld.add_action(DeclareLaunchArgument(
+        'real_time',
+        default_value='1.0',
+        description='Real time param for running simulator.'
     ))
 
     # #}

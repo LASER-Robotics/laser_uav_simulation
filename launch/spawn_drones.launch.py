@@ -46,13 +46,13 @@ def launch_setup(context: launch.LaunchContext, ld):
         pose_spawn = [str(i) for i in pose_spawn]
         if len(pose_spawn) != 4:
             continue
-        sensors = uav.get('sensors', [])
+        sensors = uav.get('sensors', '')
 
         cmd_line = ['bash', spawn_script_path, namespace, uav_type]
         for i in pose_spawn:
             cmd_line.append(i)
-        for i in sensors:
-            cmd_line.append(i)
+
+        cmd_line.append(sensors)
 
         spawn_script_cmd = ExecuteProcess(
             cmd=cmd_line,
@@ -65,12 +65,12 @@ def launch_setup(context: launch.LaunchContext, ld):
     # #}
 
     # #{ start uxrce protocol
-        uxrce_script_cmd = ExecuteProcess(
-            cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
-            name="uxrce_protocol",
-            output='screen'
-        )
-        process_actions.append(uxrce_script_cmd)
+        # uxrce_script_cmd = ExecuteProcess(
+        #     cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
+        #     name="uxrce_protocol",
+        #     output='screen'
+        # )
+        # process_actions.append(uxrce_script_cmd)
     # #}
 
     for action in process_actions:
