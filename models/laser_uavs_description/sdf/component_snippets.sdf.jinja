@@ -836,7 +836,7 @@
     </geometry>
   </visual>
 
-  <sensor name="{{namespace}}_{{ sensor_name }}_lidar_sensor" type="ray">
+  <sensor name="{{namespace}}/{{ sensor_name }}_lidar_sensor" type="ray">
     <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
     <visualize>false</visualize>
     <always_on>true</always_on>
@@ -979,7 +979,7 @@
   {# -- frame names -- #}
   {%- set frame_fcu = namespace + "/fcu" -%}
 
-  <link name="{{ camera_name }}{{ camera_suffix }}_link">
+  <link name="{{ namespace }}_{{ camera_name }}{{ camera_suffix }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
 
@@ -1147,7 +1147,7 @@
   </plugin>
   <!--}-->
 
-  <joint name="{{ camera_name }}{{ camera_suffix }}_joint" type="fixed">
+  <joint name="{{ camera_name }}_{{ camera_suffix }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
   <child>{{namespace}}_{{ camera_name }}{{ camera_suffix }}_link</child>
 </joint>
@@ -1205,7 +1205,7 @@
     {{ imu_sensor_macro(
       namespace = namespace,
       sensor_name = sensor_name + '_imu',
-      parent_link = namespace + '_' + sensor_name +'_link',
+      parent_link = namespace + '_' + sensor_name',
       update_rate = imu_rate,
       topic_name = namespace + '/' + sensor_name + '_sensor/imu',
       noise_mean = 0,
