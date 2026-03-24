@@ -3,4 +3,4 @@
     - id: 1
       type: "x500"
       pose_spawn: [0.0,0.0,0.2,0.0] # x y z yaw
-      sensors: "--enable_ground_truth"
+      sensors: "--enable_ground_truth --enable_livox"
