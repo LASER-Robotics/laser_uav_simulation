@@ -529,15 +529,15 @@
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'livox_imu',
-      parent_link = root,
+      parent_link = 'livox',
       topic_name = namespace + '/livox/imu',
       update_rate = 200,
       x = 0,
       y = 0,
       z = 0,
       roll = 0.0,
-      pitch = components.rad(40),
-      yaw = components.rad(180))
+      pitch = 0.0,
+      yaw = 0.0)
     }}
     {% endif %}
     {# <!--}--> #}
@@ -569,9 +569,9 @@
       parent_link = root,
       realistic = 1,
       update_rate = 60,
-      x = 0.0,
+      x = 0.073,
       y = 0.0,
-      z = 0.15,
+      z = -0.016,
       roll = 0,
       pitch = 0,
       yaw = 0)
@@ -580,7 +580,7 @@
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'front_rgbd_imu',
-      parent_link = 'front_rgbd_link',
+      parent_link = 'front_rgbd',
       topic_name = namespace + '/front_rgbd/imu/data',
       update_rate = 200,
       x = 0,

@@ -492,18 +492,7 @@
 {%- macro gazebo_garmin_macro(garmin_name, lidar_topic, parent_link, max_distance, min_distance, update_rate, x, y, z, yaw) -%}
 <link name="{{ garmin_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} 0 0 0</pose>
-  <inertial>
-    <pose>0 0 0 0 0 0</pose>
-    <mass>0.01</mass>
-    <inertia>
-      <ixx>2.1733e-6</ixx>
-      <ixy>0</ixy>
-      <ixz>0</ixz>
-      <iyy>2.1733e-6</iyy>
-      <iyz>0</iyz>
-      <izz>1.8e-7</izz>
-    </inertia>
-  </inertial>
+  {{ zero_inertial_macro() }}
     {{ visual_mesh_macro("{{ garmin_name }}_visual", "model://laser_uavs_description/meshes/sensors/garmin.stl", '0.001 0.001 0.001', "Black", 0, 0, -0.05, yaw, 1.57, 0) }}
   <sensor name="{{garmin_name}}_laser" type="ray">
     <pose>0 0 0 0 1.57079633 0</pose>
@@ -704,7 +693,7 @@
 {# imu_sensor_macro {--> #}
 {%- macro imu_sensor_macro(namespace, sensor_name, parent_link, update_rate, topic_name, noise_mean, x, y, z, roll, pitch, yaw) -%}
   <link name="{{ namespace }}_{{ sensor_name }}_link">
-    <pose relative_to = "{{ parent_link }}">{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
+    <pose relative_to = "{{ namespace }}_{{ parent_link }}_link">{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
     <sensor name="{{ namespace }}/{{ sensor_name }}_sensor" type="imu">
       <always_on>true</always_on>
@@ -753,16 +742,18 @@
           </z>
         </linear_acceleration>
       </imu>
-      <plugin name="{{ namespace }}_{{ sensor_name }}_plugin" filename="libgazebo_ros_imu_sensor.so">
+      <plugin name="{{ namespace }}_{{ sensor_name }}_plugin" filename="libImuPluginGazebo.so">
         <ros>
           <remapping>~/out:={{ topic_name }}</remapping>
         </ros>
+        <robot_namespace>{{ namespace }}</robot_namespace>
+        <parent_frame_name>{{ parent_link }}</parent_frame_name>
       </plugin>
     </sensor>
   </link>
 
   <joint name="{{ namespace }}_{{ sensor_name }}_joint" type="fixed">
-    <parent>{{ parent_link }}</parent>
+    <parent>{{ namespace }}_{{ parent_link }}_link</parent>
     <child>{{ namespace }}_{{ sensor_name }}_link</child>
   </joint>
 {%- endmacro -%}
@@ -823,21 +814,10 @@
 {%- set lidar_pitch = 0 -%}
 {%- set lidar_yaw = 0 -%}
 
-<link name="{{ sensor_name }}_link">
+  <link name="{{namespace}}_{{ sensor_name }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
-  
-  <inertial>
-    <mass>0.1</mass>
-    <inertia>
-      <ixx>0.0001</ixx>
-      <ixy>0.0</ixy>
-      <ixz>0.0</ixz>
-      <iyy>0.0001</iyy>
-      <iyz>0.0</iyz>
-      <izz>0.0001</izz>
-    </inertia>
-  </inertial>
-  
+  {{ zero_inertial_macro() }}
+
   <collision name="lidar_collision">
     <geometry>
       <mesh>
@@ -856,7 +836,7 @@
     </geometry>
   </visual>
 
-  <sensor name="{{namespace}}_{{ sensor_name }}_lidar_sensor" type="ray">
+  <sensor name="{{namespace}}/{{ sensor_name }}_lidar_sensor" type="ray">
     <pose>{{ lidar_x }} {{ lidar_y }} {{ lidar_z }} {{ lidar_roll }} {{ lidar_pitch }} {{ lidar_yaw }}</pose>
     <visualize>false</visualize>
     <always_on>true</always_on>
@@ -897,14 +877,14 @@
       <publish_pointcloud_type>2</publish_pointcloud_type>
       <robot_namespace>{{ namespace }}</robot_namespace>
       <parent_frame_name>fcu</parent_frame_name>
-      <sensor_frame_name>{{ sensor_name }}</sensor_frame_name>
+      <sensor_frame_name>{{ sensor_name }}/link</sensor_frame_name>
       <sensor_x>{{ x }}</sensor_x>
       <sensor_y>{{ y }}</sensor_y>
       <sensor_z>{{ z }}</sensor_z>
       <sensor_roll>{{ roll }}</sensor_roll>
       <sensor_pitch>{{ pitch }}</sensor_pitch>
       <sensor_yaw>{{ yaw }}</sensor_yaw>
-      <lidar_frame_name>{{ sensor_name }}_lidar</lidar_frame_name>
+      <lidar_frame_name>{{ sensor_name }}/lidar</lidar_frame_name>
       <topic_lidar_name>{{ topic_lidar }}</topic_lidar_name>
       <lidar_x>{{ lidar_x }}</lidar_x>
       <lidar_y>{{ lidar_y }}</lidar_y>
@@ -912,7 +892,7 @@
       <lidar_roll>{{ lidar_roll }}</lidar_roll>
       <lidar_pitch>{{ lidar_pitch }}</lidar_pitch>
       <lidar_yaw>{{ lidar_yaw }}</lidar_yaw>
-      <imu_frame_name>{{ sensor_name }}_imu</imu_frame_name>
+      <imu_frame_name>{{ sensor_name }}/imu</imu_frame_name>
       <imu_x>0</imu_x>
       <imu_y>0</imu_y>
       <imu_z>0</imu_z>
@@ -925,7 +905,7 @@
 
 <joint name="{{ sensor_name }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
-  <child>{{ sensor_name }}_link</child>
+  <child>{{namespace}}_{{ sensor_name }}_link</child>
 </joint>
 {%- endmacro -%}
 {# <!--}--> #}
@@ -1164,7 +1144,7 @@
   {# -- frame names -- #}
   {%- set frame_fcu = namespace + "/fcu" -%}
 
-  <link name="{{ camera_name }}{{ camera_suffix }}_link">
+  <link name="{{ namespace }}_{{ camera_name }}{{ camera_suffix }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
 
@@ -1332,9 +1312,9 @@
   </plugin>
   <!--}-->
 
-  <joint name="{{ camera_name }}{{ camera_suffix }}_joint" type="fixed">
+  <joint name="{{ camera_name }}_{{ camera_suffix }}_joint" type="fixed">
   <parent>{{ parent_link }}</parent>
-  <child>{{ camera_name }}{{ camera_suffix }}_link</child>
+  <child>{{namespace}}_{{ camera_name }}{{ camera_suffix }}_link</child>
 </joint>
 {%- endmacro -%}
 <!--}-->
@@ -1390,7 +1370,7 @@
     {{ imu_sensor_macro(
       namespace = namespace,
       sensor_name = sensor_name + '_imu',
-      parent_link = namespace + '_' + sensor_name +'_link',
+      parent_link = sensor_name,
       update_rate = imu_rate,
       topic_name = namespace + '/' + sensor_name + '_sensor/imu',
       noise_mean = 0,
