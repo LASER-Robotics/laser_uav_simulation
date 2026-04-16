@@ -6,8 +6,13 @@ windows:
   - spawn:
       layout: even-horizontal
       panes:
+        # - ros2 launch laser_uav_simulation gazebo.launch.py real_time:=1.0 world:=forest
         - ros2 launch laser_uav_simulation gazebo.launch.py real_time:=1.0
         - ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=./configs/spawn.yaml
+  - fast_lio:
+      layout: tiled
+      panes:
+        - ros2 launch laser_fast_lio_core fast_lio.launch.py topic_imu:=/$UAV_NAME/livox_up/imu topic_pcl:=/$UAV_NAME/livox_up/lidar fast_lio_config_file_path:=./configs/fast_lio.yaml
   - api:
       layout: even-horizontal
       panes:

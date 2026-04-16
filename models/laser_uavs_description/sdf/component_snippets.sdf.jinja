@@ -242,12 +242,14 @@
   <momentConstant>{{moment_constant}}</momentConstant>
   <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
   <motorNumber>{{id}}</motorNumber>
+  <useMultirotorModel>true</useMultirotorModel>
   <motorQuadraticA>{{motor_quadratic_a}}</motorQuadraticA>
   <motorQuadraticB>{{motor_quadratic_b}}</motorQuadraticB>
   <rotorDragCoefficient>{{rotor_drag_coefficient}}</rotorDragCoefficient>
   <rollingMomentCoefficient>{{rolling_moment_coefficient}}</rollingMomentCoefficient>
   <motorSpeedPubTopic>/motor_speed/{{id}}</motorSpeedPubTopic>
   <rotorVelocitySlowdownSim>{{rotor_velocity_slowdown_sim}}</rotorVelocitySlowdownSim>
+  <jointControlPid></jointControlPid>
 </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
