@@ -28,13 +28,15 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
-  {%- set motor_constant = 17.4 -%} {# [kg.m/s^2] #}
+  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
+  {%- set motor_quadratic_a = 0.240572 -%}
+  {%- set motor_quadratic_b = -0.135153 -%}
+  {%- set motor_constant = 27.6e-6 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set max_rot_velocity = 800 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient =  8.06428e-04 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
 
@@ -558,6 +560,8 @@
     -%}
     {{ components.propellers_macro(
       prop_list = prop_list,
+      motor_quadratic_a = motor_quadratic_a,
+      motor_quadratic_b = motor_quadratic_b,
       rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
       motor_constant = motor_constant,
       moment_constant = moment_constant,
@@ -618,6 +622,23 @@
     }}
     <!--}-->
 
+    <!-- Garmin {-->
+    {% if enable_garmin %}
+    {{ components.gazebo_garmin_macro(
+      garmin_name = 'lidar0',
+      parent_link = root,
+      update_rate = 100,
+      lidar_topic = lidar_topic,
+      x = 0,
+      y = 0.04,
+      z = 0.034,
+      yaw = -1.57,
+      max_distance = 15.0,
+      min_distance = 0.05)
+    }}
+    {% endif %}
+    <!--}-->
+
     <!-- Magnetometer {-->
     {{ components.gazebo_magnetometer_macro(
       pub_rate = 100,
@@ -638,6 +659,7 @@
 
     <!-- Mavlink interface {-->
     {{ components.gazebo_mavlink_interface_macro(
+      namespace = namespace,
       instance = instance,
       imu_topic = imu_topic,
       mag_topic = mag_topic,
@@ -651,7 +673,7 @@
     {{ components.gazebo_imu_macro(
       imu_name = 'imu',
       parent_link = root,
-      imu_topic = '/imu',
+      imu_topic = imu_topic,
       gyroscope_noise_density = 0.00018665,
       gyroscope_random_walk = 0.000038785,
       gyroscope_bias_correlation_time = 1000.0,
@@ -711,7 +733,7 @@
     {{ components.livox_lidar_macro(
       namespace = namespace,
       parent_link = root,
-      sensor_name = 'livox',
+      sensor_name = 'livox_up',
       rot_freq = 10,
       noise = 0.01,
       max_range = 40,
@@ -726,9 +748,9 @@
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
-      sensor_name = 'livox_imu',
-      parent_link = root,
-      topic_name = namespace + '/livox/imu',
+      sensor_name = 'livox_up_imu',
+      parent_link = 'livox_up',
+      topic_name = namespace + '/livox_up/imu',
       update_rate = 200,
       x = 0,
       y = 0,
@@ -745,7 +767,7 @@
     {{ components.livox_lidar_macro(
       namespace = namespace,
       parent_link = root,
-      sensor_name = 'livox',
+      sensor_name = 'livox_inclined',
       rot_freq = 15,
       noise = 0.01,
       max_range = 40,
@@ -760,15 +782,15 @@
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
-      sensor_name = 'livox_imu',
-      parent_link = root,
-      topic_name = namespace + '/livox/imu',
+      sensor_name = 'livox_inclined_imu',
+      parent_link = 'livox_inclined',
+      topic_name = namespace + '/livox_inclined/imu',
       update_rate = 200,
       x = 0,
       y = 0,
       z = 0,
       roll = 0.0,
-      pitch = 0.785398,
+      pitch = 0.0,
       yaw = 0.0)
     }}
     {% endif %}
@@ -779,7 +801,7 @@
     {{ components.livox_lidar_macro(
       namespace = namespace,
       parent_link = root,
-      sensor_name = 'livox',
+      sensor_name = 'livox_down',
       rot_freq = 15,
       noise = 0.01,
       max_range = 40,
@@ -794,15 +816,15 @@
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
-      sensor_name = 'livox_imu',
-      parent_link = root,
-      topic_name = namespace + '/livox/imu',
+      sensor_name = 'livox_down_imu',
+      parent_link = 'livox_down',
+      topic_name = namespace + '/livox_down/imu',
       update_rate = 200,
-      x = -0.05,
+      x = 0.00,
       y = 0.0,
-      z = -0.05,
-      roll = 3.141592,
-      pitch = 0.785398,
+      z = 0.00,
+      roll = 0.0,
+      pitch = 0.0,
       yaw = 0.0)
     }}
     {% endif %}
@@ -816,7 +838,8 @@
     {% if enable_d435_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd', camera_suffix='',
+      camera_name = 'front_rgbd', 
+      camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -832,7 +855,8 @@
     {% if enable_d435i_front %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
-      camera_name = 'front_rgbd', camera_suffix='',
+      camera_name = 'front_rgbd', 
+      camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
@@ -847,7 +871,7 @@
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'front_rgbd_imu',
-      parent_link = 'front_rgbd_link',
+      parent_link = 'front_rgbd',
       topic_name = namespace + '/front_rgbd/imu/data',
       update_rate = 200,
       x = 0,
@@ -895,7 +919,7 @@
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'down_rgbd_imu',
-      parent_link = 'down_rgbd_link',
+      parent_link = 'down_rgbd',
       topic_name = namespace + '/down_rgbd/imu/data',
       update_rate = 200,
       x = 0,

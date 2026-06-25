@@ -24,19 +24,21 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
-  {%- set motor_constant = 23.6 -%} {# [kg.m/s^2] #}
+  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
+  {%- set motor_quadratic_a = 0.243975 -%}
+  {%- set motor_quadratic_b = -0.232754 -%}
+  {%- set motor_constant = 5.68e-6 -%} {# [kg.m/s^2] #}
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set max_rot_velocity = 2038 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient =  8.06428e-06 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
   {# <!--}--> #}
 
   {# Inertia constants {--> #}
-  {%- set inertia_body_radius = 0.145 -%} {# [m] #}
-  {%- set inertia_body_height = 0.16 -%} {# [m] #}
+  {%- set inertia_body_radius = 0.25 -%} {# [m] #}
+  {%- set inertia_body_height = 0.05 -%} {# [m] #}
   {# <!--}--> #}
 
   {# Scales {--> #}
@@ -62,7 +64,6 @@
 
   {# Sensors and computers {--> #}
   {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/boards/pixhawk.stl' -%} 
-  {%- set garmin_mesh_file = 'model://laser_uavs_description/meshes/sensors/garmin.stl' -%} 
   {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_board_mesh_file.stl' -%}
   {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_cooler_mesh_file.stl' -%}
   {# <!--}--> #}
@@ -74,20 +75,20 @@
   {# <!--}--> #}
 
   {# Inertias {--> #}
-  {%- set body_ixx = 0.01455 -%}
+  {%- set body_ixx = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
   {%- set body_ixy = 0 -%}
-  {%- set body_iyy = 0.01211 -%}
   {%- set body_ixz = 0 -%}
-  {%- set body_izz = 0.01847 -%}
+  {%- set body_iyy = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
   {%- set body_iyz = 0 -%}
+  {%- set body_izz = (mass * inertia_body_radius * inertia_body_radius) / 2 -%}
 
 
-  {%- set prop_ixx = 0.0001 -%}
+  {%- set prop_ixx = 0.00002 -%}
   {%- set prop_ixy = 0 -%}
   {%- set prop_ixz = 0 -%}
-  {%- set prop_iyy = 0.0001 -%}
+  {%- set prop_iyy = 0.00002 -%}
   {%- set prop_iyz = 0 -%}
-  {%- set prop_izz = 0.0001 -%}
+  {%- set prop_izz = 0.00002 -%}
   {# <!--}--> #}
 
 	<model name="{{  model_name  }}">
@@ -239,21 +240,6 @@
       }}
       <!--}-->
       
-      <!-- Garmin {-->
-      {{ components.visual_mesh_macro(
-        name = 'garmin',
-        mesh_file = garmin_mesh_file,
-        mesh_scale = mesh_scale_milimeters,
-        color = 'DarkGrey',
-        x = 0.09,
-        y = 0,
-        z = 0,
-        roll = components.rad(-90),
-        pitch = 0,
-        yaw = components.rad(180))
-      }}
-      <!--}-->
-      
       <!-- Motors {-->
       {%- set affix = 'front_right' -%}
 
@@ -362,6 +348,8 @@
     {{ components.propellers_macro(
       prop_list = prop_list,
       rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
+      motor_quadratic_a = motor_quadratic_a,
+      motor_quadratic_b = motor_quadratic_b,
       motor_constant = motor_constant,
       moment_constant = moment_constant,
       parent = root,
@@ -421,6 +409,23 @@
     }}
     <!--}-->
 
+    <!-- Garmin {-->
+    {% if enable_garmin %}
+    {{ components.gazebo_garmin_macro(
+      garmin_name = 'lidar0',
+      parent_link = root,
+      update_rate = 100,
+      lidar_topic = lidar_topic,
+      x = -0.09,
+      y = 0,
+      z = 0.04,
+      yaw = 0.0,
+      max_distance = 15.0,
+      min_distance = 0.05)
+    }}
+    {% endif %}
+    <!--}-->
+
     <!-- Magnetometer {-->
     {{ components.gazebo_magnetometer_macro(
       pub_rate = 100,
@@ -441,6 +446,7 @@
 
     <!-- Mavlink interface {-->
     {{ components.gazebo_mavlink_interface_macro(
+      namespace = namespace,
       instance = instance,
       imu_topic = imu_topic,
       mag_topic = mag_topic,
@@ -454,7 +460,7 @@
     {{ components.gazebo_imu_macro(
       imu_name = 'imu',
       parent_link = root,
-      imu_topic = '/imu',
+      imu_topic = imu_topic,
       gyroscope_noise_density = 0.00018665,
       gyroscope_random_walk = 0.000038785,
       gyroscope_bias_correlation_time = 1000.0,
@@ -523,7 +529,7 @@
     {{ components.imu_sensor_macro(
       namespace = namespace,
       sensor_name = 'livox_imu',
-      parent_link = root,
+      parent_link = 'livox',
       topic_name = namespace + '/livox/imu',
       update_rate = 200,
       x = 0,
@@ -538,6 +544,55 @@
 
     {# ========================== camera sensors ======================== #}
 
+    {# Realsense placements {--> #}
+    {# realsense front {--> #}
+    {% if enable_d435_front %}
+    {{ components.realsense_d435_macro(
+      namespace = namespace,
+      camera_name = 'front_rgbd', camera_suffix='',
+      parent_link = root,
+      realistic = 1,
+      update_rate = 60,
+      x = 0.073,
+      y = 0.0,
+      z = -0.016,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+    {% endif %}
+
+    {% if enable_d435i_front %}
+    {{ components.realsense_d435_macro(
+      namespace = namespace,
+      camera_name = 'front_rgbd', camera_suffix='',
+      parent_link = root,
+      realistic = 1,
+      update_rate = 60,
+      x = 0.073,
+      y = 0.0,
+      z = -0.016,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'front_rgbd_imu',
+      parent_link = 'front_rgbd',
+      topic_name = namespace + '/front_rgbd/imu/data',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = -1.5708,
+      pitch = 0,
+      yaw = -1.5708)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+    {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
 

@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 
 install(PROGRAMS
   scripts/jinja_gen.py
+  scripts/autostart.py
   DESTINATION lib/${PROJECT_NAME}
   )
 
