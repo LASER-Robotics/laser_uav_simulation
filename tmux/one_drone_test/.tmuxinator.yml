@@ -145,11 +145,11 @@ windows:
         - 'history -s ros2 topic pub -1 /$UAV_NAME/control_manager/trajectory_path laser_msgs/msg/TrajectoryPath \"{stop_on_waypoints: false, speed: 10.0, waypoints: [
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 15.0, y: -15.0, z: 8.0}, heading: 0.0},
-          {position: {x: 20.0, y: 0.0, z: 8.0}, heading: 0.0},
+          {position: {x: 22.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: 15.0, y: 15.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: -15.0, y: -15.0, z: 8.0}, heading: 0.0},
-          {position: {x: -20.0, y: 0.0, z: 8.0}, heading: 0.0},
+          {position: {x: -22.0, y: 0.0, z: 8.0}, heading: 0.0},
           {position: {x: -15.0, y: 15.0, z: 8.0}, heading: 0.0},
           {position: {x: 0.0, y: 0.0, z: 8.0}, heading: 0.0}
         ]}\"'
