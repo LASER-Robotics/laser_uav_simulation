@@ -602,11 +602,11 @@
       update_rate = 10,
       gps_noise = true,
       gps_xy_random_walk = 50.0,
-      gps_z_random_walk = 100.0,
+      gps_z_random_walk = 50.0,
       gps_xy_noise_density = '1.5e-2',
-      gps_z_noise_density = '3.0e-2',
+      gps_z_noise_density = '1.5e-2',
       gps_vxy_noise_density = 0.5,
-      gps_vz_noise_density = 1.0,
+      gps_vz_noise_density = 0.5,
       x = 0,
       y = 0,
       z = 0,
@@ -706,6 +706,7 @@
       roll = 0,
       pitch = 0,
       yaw = 0,
+      enable_offset = enable_offset,
       x_offset = x_offset,
       y_offset = y_offset,
       z_offset = z_offset,
@@ -873,6 +874,38 @@
       z = 0,
       roll = -1.5708,
       pitch = 0,
+      yaw = -1.5708)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+
+    {% if enable_d435i_front_inclined %}
+    {{ components.realsense_d435_macro(
+      namespace = namespace,
+      camera_name = 'front_rgbd_inclined', 
+      camera_suffix='',
+      parent_link = root,
+      realistic = 0,
+      update_rate = 60,
+      x = 0.09,
+      y = 0.0,
+      z = -0.025,
+      roll = 0,
+      pitch = 0.7854,
+      yaw = 0)
+    }}
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'front_rgbd_inclined_imu',
+      parent_link = 'front_rgbd_inclined',
+      topic_name = namespace + '/front_rgbd_inclined/imu/data',
+      update_rate = 200,
+      x = 0.09,
+      y = 0,
+      z = -0.025,
+      roll = -1.5708,
+      pitch = 0.7854,
       yaw = -1.5708)
     }}
     {% endif %}

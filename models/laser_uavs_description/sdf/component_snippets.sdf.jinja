@@ -760,7 +760,7 @@
 {# <!--}--> #}
 
 {# gazebo_ground_truth_macro {--> #}
-{%- macro gazebo_ground_truth_macro(namespace, odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw, x_offset, y_offset, z_offset, roll_offset, pitch_offset, yaw_offset) -%}
+{%- macro gazebo_ground_truth_macro(namespace, odometry_sensor_name, parent_link, topic_name, noise, frame_name, update_rate, x, y, z, roll, pitch, yaw, enable_offset, x_offset, y_offset, z_offset, roll_offset, pitch_offset, yaw_offset) -%}
   <link name="{{ namespace }}_{{ odometry_sensor_name }}_link">
     <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
     {{ zero_inertial_macro() }}
@@ -788,8 +788,14 @@
     <update_rate>{{ update_rate }}</update_rate>
     <gaussian_noise>{{ noise }}</gaussian_noise>
     <frame_name>{{ frame_name }}</frame_name>
-    <xyz_offset>{{ x_offset }} {{ y_offset }} {{ z_offset }}</xyz_offset>
-    <rpy_offset>{{ roll_offset }} {{ pitch_offset }} {{ yaw_offset }}</rpy_offset>
+    {% if enable_offset %}
+        <xyz_offset>{{ x_offset }} {{ y_offset }} {{ z_offset }}</xyz_offset>
+        <rpy_offset>{{ roll_offset }} {{ pitch_offset }} {{ yaw_offset }}</rpy_offset>
+    {% else %}
+        <xyz_offset>0 0 0</xyz_offset>
+        <rpy_offset>0 0 0</rpy_offset>
+    {% endif %}
+    
   </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
@@ -1019,19 +1025,20 @@
   <!-- sensors {-->
     <!-- rgb camera {-->
     <sensor name="{{ namespace}}/{{ camera_name }}{{ camera_suffix }}_color" type="camera">
-      {# <pose>0 -0.046 0.004 0 0 0</pose> #}
+      <always_on>1</always_on>
+      <update_rate>60</update_rate>
+      <visualize>0</visualize>
       <pose>0 0 -0.0115 0 0 0</pose>
       <camera name="{{ namespace}}/{{ camera_name }}{{ camera_suffix }}_color">
-        {# <horizontal_fov>1.211259</horizontal_fov> #}
         <horizontal_fov>1.211259</horizontal_fov>
         <image>
-          <width>1280</width>
-          <height>720</height>
+          <width>640</width>
+          <height>360</height>
           <format>RGB_INT8</format>
         </image>
         <clip>
           <near>0.1</near>
-          <far>100</far>
+          <far>250</far>
         </clip>
         <noise>
           <type>gaussian</type>
@@ -1039,9 +1046,6 @@
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <always_on>1</always_on>
-      <update_rate>30</update_rate>
-      <visualize>0</visualize>
     </sensor>
     <!--}-->
 
@@ -1060,7 +1064,7 @@
         </image>
         <clip>
           <near>0.1</near>
-          <far>50</far>
+          <far>250</far>
         </clip>
         <noise>
           <type>gaussian</type>
@@ -1079,7 +1083,7 @@
           </image>
           <clip>
             <near>0.1</near>
-            <far>50</far>
+            <far>250</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1106,7 +1110,7 @@
           </image>
           <clip>
             <near>0.3</near>
-            <far>12</far>
+            <far>4</far>
           </clip>
           <noise>
             <type>gaussian</type>
@@ -1115,7 +1119,7 @@
           </noise>
         </camera>
         <always_on>1</always_on>
-        <update_rate>60</update_rate>
+        <update_rate>15</update_rate>
         <visualize>0</visualize>
       </sensor>
 
