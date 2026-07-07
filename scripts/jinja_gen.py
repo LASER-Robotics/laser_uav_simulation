@@ -13,6 +13,7 @@ parser.add_argument('--enable_ground_truth', action='store_true')
 parser.add_argument('--enable_load_pendulum', action='store_true')
 parser.add_argument('--enable_d435_front', action='store_true')
 parser.add_argument('--enable_d435i_front', action='store_true')
+parser.add_argument('--enable_d435i_front_inclined', action='store_true')
 parser.add_argument('--enable_d435i_down', action='store_true')
 parser.add_argument('--enable_d435_down', action='store_true')
 parser.add_argument('--enable_vio', action='store_true')
@@ -20,6 +21,7 @@ parser.add_argument('--enable_garmin', action='store_true')
 parser.add_argument('--enable_livox', action='store_true')
 parser.add_argument('--enable_livox_45', action='store_true')
 parser.add_argument('--enable_livox_down', action='store_true')
+parser.add_argument('--enable_offset', action='store_true')
 parser.add_argument('--x', type=float, default=0.0)
 parser.add_argument('--y', type=float, default=0.0)
 parser.add_argument('--z', type=float, default=0.0)
@@ -50,6 +52,7 @@ data = {
     'enable_ground_truth': args.enable_ground_truth, 
     'enable_d435_front': args.enable_d435_front, 
     'enable_d435i_front': args.enable_d435i_front, 
+    'enable_d435i_front_inclined': args.enable_d435i_front_inclined,
     'enable_d435i_down': args.enable_d435i_down, 
     'enable_d435_down': args.enable_d435_down, 
     'enable_vio': args.enable_vio, 
@@ -57,6 +60,7 @@ data = {
     'enable_garmin': args.enable_garmin,
     'enable_livox_45': args.enable_livox_45,
     'enable_livox_down': args.enable_livox_down,
+    'enable_offset': args.enable_offset,
     'x_offset': -float(args.x),
     'y_offset': -float(args.y),
     'z_offset': -float(args.z),
