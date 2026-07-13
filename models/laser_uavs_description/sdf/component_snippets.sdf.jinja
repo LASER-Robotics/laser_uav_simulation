@@ -780,14 +780,15 @@
       <use_parent_model_frame>1</use_parent_model_frame>
     </axis>
   </joint>
-  <plugin name="{{ namespace }}_{{ odometry_sensor_name }}_plugin" filename="libgazebo_ros_p3d.so">
+  <plugin name="{{ namespace }}_{{ odometry_sensor_name }}_plugin" filename="libP3dPluginGazebo.so">
     <ros>
       <remapping>odom:={{ namespace }}/{{ topic_name }}</remapping>
     </ros>
+    <!-- <body_name>{{ namespace }}_{{ odometry_sensor_name }}_link</body_name> -->
     <body_name>{{ namespace }}_{{ odometry_sensor_name }}_link</body_name>
     <update_rate>{{ update_rate }}</update_rate>
-    <gaussian_noise>{{ noise }}</gaussian_noise>
-    <frame_name>{{ frame_name }}</frame_name>
+    <!-- <gaussian_noise>{{ noise }}</gaussian_noise> -->
+    <local_twist>true</local_twist>
     <xyz_offset>{{ x_offset }} {{ y_offset }} {{ z_offset }}</xyz_offset>
     <rpy_offset>{{ roll_offset }} {{ pitch_offset }} {{ yaw_offset }}</rpy_offset>
   </plugin>
@@ -871,8 +872,8 @@
       </ray>
       
       <visualize>false</visualize>
-      <samples>16000</samples>
-      <downsample>40</downsample>
+      <samples>20000</samples>
+      <downsample>30</downsample>
       <csv_file_name>mid360-real-centr.csv</csv_file_name>
       <publish_pointcloud_type>2</publish_pointcloud_type>
       <robot_namespace>{{ namespace }}</robot_namespace>
