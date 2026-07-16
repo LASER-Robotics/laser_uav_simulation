@@ -799,6 +799,40 @@
       rot_freq = 15,
       noise = 0.01,
       max_range = 40,
+      x = 0.0,
+      y = 0.0,
+      z = -0.05,
+      roll = 0,
+      pitch = 3.141592,
+      yaw = 0,
+      lasers = 20)
+    }} 
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'livox_down_imu',
+      parent_link = 'livox_down',
+      topic_name = namespace + '/livox_down/imu',
+      update_rate = 200,
+      x = 0.00,
+      y = 0.0,
+      z = 0.00,
+      roll = 0.0,
+      pitch = 0.0,
+      yaw = 0.0)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+
+    {# livox_45_down {--> #}
+    {% if enable_livox_45_down %}
+    {{ components.livox_lidar_macro(
+      namespace = namespace,
+      parent_link = root,
+      sensor_name = 'livox_45_down',
+      rot_freq = 15,
+      noise = 0.01,
+      max_range = 40,
       x = -0.05,
       y = 0.0,
       z = -0.05,
@@ -810,9 +844,9 @@
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
-      sensor_name = 'livox_down_imu',
-      parent_link = 'livox_down',
-      topic_name = namespace + '/livox_down/imu',
+      sensor_name = 'livox_45_down_imu',
+      parent_link = 'livox_45_down',
+      topic_name = namespace + '/livox_45_down/imu',
       update_rate = 200,
       x = 0.00,
       y = 0.0,
