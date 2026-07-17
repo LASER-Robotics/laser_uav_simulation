@@ -40,6 +40,7 @@ def launch_setup(context: launch.LaunchContext, ld):
             continue
         namespace = "uav" + str(id)
         uav_type = uav.get('type', '')
+        fcu_type = uav.get('fcu', '')
         if not uav_type in uavs_available:
             continue
         pose_spawn = uav.get('pose_spawn', [])
@@ -48,7 +49,7 @@ def launch_setup(context: launch.LaunchContext, ld):
             continue
         sensors = uav.get('sensors', '')
 
-        cmd_line = ['bash', spawn_script_path, namespace, uav_type]
+        cmd_line = ['bash', spawn_script_path, namespace, uav_type, fcu_type]
         for i in pose_spawn:
             cmd_line.append(i)
 
@@ -64,14 +65,15 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     # #}
 
-    # #{ start uxrce protocol
-        # uxrce_script_cmd = ExecuteProcess(
-        #     cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
-        #     name="uxrce_protocol",
-        #     output='screen'
-        # )
-        # process_actions.append(uxrce_script_cmd)
-    # #}
+    if fcu_type == "px4":
+        #{ start uxrce protocol
+            uxrce_script_cmd = ExecuteProcess(
+                cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
+                name="uxrce_protocol",
+                output='screen'
+            )
+            process_actions.append(uxrce_script_cmd)
+        #}
 
     for action in process_actions:
         ld.add_action(action)

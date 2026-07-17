@@ -229,33 +229,56 @@
 {# ========================== motor plugins ========================= #}
 
 {# motor_plugin_macro {--> #}
-{%- macro motor_plugin_macro(id, rotor_direction, time_constant_up, time_constant_down, max_rotation_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) -%}
+{%- macro motor_plugin_macro(id, rotor_direction, time_constant_up, time_constant_down, max_rotation_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) -%}
 <plugin name='{{id}}_motor_model' filename='libMotorPluginGazebo.so'>
   <robotNamespace/>
   <jointName>prop_{{id}}_joint</jointName>
   <linkName>prop_{{id}}_link</linkName>
   <turningDirection>{{rotor_direction}}</turningDirection>
+  <motorNumber>{{id}}</motorNumber>
+
+  <!-- Control & Topics -->
+  <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
+  <motorSpeedPubTopic>/motor_speed/{{id}}</motorSpeedPubTopic>
+  <commandMode>throttle</commandMode>
+  <commandDeadband>0.001</commandDeadband>
+  <commandMax>1.0</commandMax>
+  <jointControlPid></jointControlPid>
+
+  <!-- Motor Dynamics -->
   <timeConstantUp>{{time_constant_up}}</timeConstantUp>
   <timeConstantDown>{{time_constant_down}}</timeConstantDown>
   <maxRotVelocity>{{max_rotation_velocity}}</maxRotVelocity>
+  <rotorVelocitySlowdownSim>{{rotor_velocity_slowdown_sim}}</rotorVelocitySlowdownSim>
+  
+  <!-- Aerodynamics / Quadratic Model -->
+  <useMultirotorModel>true</useMultirotorModel>
   <motorConstant>{{motor_constant}}</motorConstant>
   <momentConstant>{{moment_constant}}</momentConstant>
-  <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-  <motorNumber>{{id}}</motorNumber>
-  <useMultirotorModel>true</useMultirotorModel>
   <motorQuadraticA>{{motor_quadratic_a}}</motorQuadraticA>
   <motorQuadraticB>{{motor_quadratic_b}}</motorQuadraticB>
   <rotorDragCoefficient>{{rotor_drag_coefficient}}</rotorDragCoefficient>
   <rollingMomentCoefficient>{{rolling_moment_coefficient}}</rollingMomentCoefficient>
-  <motorSpeedPubTopic>/motor_speed/{{id}}</motorSpeedPubTopic>
-  <rotorVelocitySlowdownSim>{{rotor_velocity_slowdown_sim}}</rotorVelocitySlowdownSim>
-  <jointControlPid></jointControlPid>
+  
+  <!-- BEM (Blade Element Momentum) Model -->
+  <useBem>{{use_bem_model}}</useBem>
+  <bemRho>{{bem_rho}}</bemRho>
+  <propDiameterInches>{{prop_diameter_inches}}</propDiameterInches>
+  <propPitchInches>{{prop_pitch_inches}}</propPitchInches>
+  <propChordM>{{prop_chord_m}}</propChordM>
+  <propNb>{{prop_qty_blades}}</propNb>
+  <bemA>{{bem_alpha}}</bemA>
+  <bemCd0>{{bem_cd0}}</bemCd0>
+  <bemXRoot>0.2</bemXRoot>
+  <bemRadialStations>6</bemRadialStations>
+  <bemAzimuthStations>12</bemAzimuthStations>
+  <bemCorrectPitchInterpolation>false</bemCorrectPitchInterpolation>
 </plugin>
 {%- endmacro -%}
 {# <!--}--> #}
 
 {# prop_macro {--> #}
-{%- macro prop_macro(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
+{%- macro prop_macro(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) -%}
 <link name="prop_{{ motor_number }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   <inertial>
@@ -282,7 +305,7 @@
       yaw = 0)
     }}
 </link>
-  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) }}
+  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) }}
 <joint name="prop_{{ motor_number }}_joint" type="revolute">
   <parent>{{ parent }}</parent>
   <child>prop_{{ motor_number }}_link</child>
@@ -303,7 +326,7 @@
 {# <!--}--> #}
 
 {# prop_macro_2_meshes {--> #}
-{%- macro prop_macro_2_meshes(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file_1, mesh_file_2, meshes_z_offset, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz) -%}
+{%- macro prop_macro_2_meshes(direction, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, motor_number, rotor_drag_coefficient, rolling_moment_coefficient, color, mesh_file_1, mesh_file_2, meshes_z_offset, mesh_scale, x, y, z, roll, pitch, yaw, ixx, ixy, ixz, iyy, iyz, izz, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) -%}
 <link name="prop_{{ motor_number }}_link">
   <pose>{{ x }} {{ y }} {{ z }} {{ roll }} {{ pitch }} {{ yaw }}</pose>
   <inertial>
@@ -331,7 +354,7 @@
       yaw = 0)
     }}
 </link>
-  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b) }}
+  {{ motor_plugin_macro(motor_number, direction, time_constant_up, time_constant_down, max_rot_velocity, motor_constant, moment_constant, rotor_drag_coefficient, rolling_moment_coefficient, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) }}
 <joint name="prop_{{ motor_number }}_joint" type="revolute">
   <parent>{{ parent }}</parent>
   <child>prop_{{ motor_number }}_link</child>
@@ -352,7 +375,7 @@
 <!--}-->
 
 {# propellers_macro {--> #}
-{%- macro propellers_macro(prop_list, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, rotor_drag_coefficient, rolling_moment_coefficient, meshes_z_offset, prop_ixx, prop_ixy, prop_ixz, prop_iyy, prop_iyz, prop_izz) -%}
+{%- macro propellers_macro(prop_list, rotor_velocity_slowdown_sim, motor_quadratic_a, motor_quadratic_b, motor_constant, moment_constant, parent, mass, radius, time_constant_up, time_constant_down, max_rot_velocity, rotor_drag_coefficient, rolling_moment_coefficient, meshes_z_offset, prop_ixx, prop_ixy, prop_ixz, prop_iyy, prop_iyz, prop_izz, use_bem_model, bem_rho, prop_diameter_inches, prop_pitch_inches, prop_chord_m, prop_qty_blades, bem_alpha, bem_cd0) -%}
 
   <!-- Propellers {-->
   {%- for prop_params in prop_list -%}
@@ -389,7 +412,15 @@
         ixz = prop_ixz,
         iyy = prop_iyy,
         iyz = prop_iyz,
-        izz = prop_izz)
+        izz = prop_izz,
+        use_bem_model = use_bem_model,
+        bem_rho = bem_rho,
+        prop_diameter_inches = prop_diameter_inches,
+        prop_pitch_inches = prop_pitch_inches,
+        prop_chord_m = prop_chord_m,
+        prop_qty_blades = prop_qty_blades,
+        bem_alpha = bem_alpha,
+        bem_cd0 = bem_cd0)
       }}
       <!--}-->
     {%- elif prop_params['mesh_files'] | length == 2 -%}
@@ -426,7 +457,15 @@
         ixz = prop_ixz,
         iyy = prop_iyy,
         iyz = prop_iyz,
-        izz = prop_izz)
+        izz = prop_izz,
+        use_bem_model = use_bem_model,
+        bem_rho = bem_rho,
+        prop_diameter_inches = prop_diameter_inches,
+        prop_pitch_inches = prop_pitch_inches,
+        prop_chord_m = prop_chord_m,
+        prop_qty_blades = prop_qty_blades,
+        bem_alpha = bem_alpha,
+        bem_cd0 = bem_cd0)
       }}
       <!--}-->
     {%- endif -%}

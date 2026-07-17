@@ -11,7 +11,7 @@ windows:
   - api:
       layout: even-horizontal
       panes:
-        - sleep 1; ros2 launch laser_uav_px4_api api.launch.py 
+        - sleep 1; ros2 launch laser_uav_hw_api px4_api.launch.py 
         - sleep 1; ros2 run laser_uav_simulation autostart.py 
   - estimation_manager:
       layout: tiled

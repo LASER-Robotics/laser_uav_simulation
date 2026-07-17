@@ -301,7 +301,7 @@
      <!--}-->
     </link>
 
-  {# Propellers {--> #}
+{# Propellers {--> #}
     {%- set prop_list = [
     {
     'motor_number': 0,
@@ -366,7 +366,15 @@
       prop_ixz = prop_ixz,
       prop_iyy = prop_iyy,
       prop_iyz = prop_iyz,
-      prop_izz = prop_izz)
+      prop_izz = prop_izz,
+      use_bem_model = false,
+      bem_rho = 0.0,
+      prop_diameter_inches = 0.0,
+      prop_pitch_inches = 0.0,
+      prop_chord_m = 0.0,
+      prop_qty_blades = 0,
+      bem_alpha = 0.0,
+      bem_cd0 = 0.0)
     }}
     {# <!--}--> #}
 
@@ -374,7 +382,7 @@
     {# ||                compulsory sensor definitions                 || #}
     {# ================================================================== #}
 
-    <!-- Pixhawk {-->
+    <!-- Flight Controller {-->
     {%- set imu_topic = '/imu' -%}
     {%- set mag_topic = '/mag' -%}
     {%- set baro_topic = '/baro' -%}
