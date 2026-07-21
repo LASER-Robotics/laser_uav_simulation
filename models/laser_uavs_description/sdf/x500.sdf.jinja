@@ -27,6 +27,8 @@
   {% set ball2 = '0 0 -0.09 0 0 0' %}
   {% set ball3 = '0 0 -0.09 0 0 0' %}
   {% set ball4 = '0 0 -0.09 0 0 0' %}
+  {% set ball5 = '0.03 0 -0.09 0 0 0' %}
+  {% set ball6 = '0.03 0 -0.09 0 0 0' %}
   
   {%- set root = 'base_link' -%}
   {# <!--}--> #}
@@ -959,6 +961,72 @@
 
     {# ========================== research itens ======================== #}
 
+    {# load_hollow_cylinder_pendulum {--> #}
+    {% if enable_hollow_load_cylinder_pendulum %}
+    {{components.hollow_cylinder_pendulum(
+      name='load_attacher',
+      parent_link='base_link',
+      attach_linker_pose='0 0 -0.01 0 0 0',
+      attach_linker_mass=0.01,
+      rope_num_segments=20,
+      rope_segment_length=0.03,
+      rope_segment_radius=0.002,
+      rope_segment_mass=0.001,
+      load_mass=0.1,
+      load_x_offset=load_x_offset,
+      load_y_offset=load_y_offset,
+      load_z_offset=load_z_offset,
+
+      cylinder_radius=0.02,
+      cylinder_height=0.08,
+      wall_thickness=0.001)
+    }}
+    {% endif %} 
+    {# <!--}--> #}
+      
+    {# load balls {--> #}
+    {% if enable_hollow_load_cylinder_pendulum %}
+    {{ components.spawn_passive_balls(
+      name='water_ball',
+      center_x=0.0,
+      center_y=0.0,
+      bottom_z=-0.07,
+      particle_mass=0.01,
+      particle_radius=0.003,
+      count_x=2,
+      count_y=5,
+      count_z=2,
+      particle_gap=0.001
+      ) }}
+    {% endif %}
+    {# <!--}--> #}
+   
+    {# load cylinder ground truth {--> #}
+    {% if enable_hollow_load_cylinder_pendulum %}
+    {{ components.gazebo_ground_truth_macro(
+      namespace = namespace,
+      odometry_sensor_name = 'load_ground_truth',
+      parent_link = 'load_attacher_load_link',
+      topic_name = 'load_ground_truth',
+      noise = 0,
+      frame_name = 'world',
+      update_rate = 100,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0,
+      pitch = 0,
+      yaw = 0,
+      x_offset = load_x_offset,
+      y_offset = load_y_offset,
+      z_offset = load_z_offset,
+      roll_offset = roll_offset,
+      pitch_offset = pitch_offset,
+      yaw_offset = yaw_offset)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+      
     {# load_pendulum {--> #}
     {% if enable_load_pendulum %}
     {{ components.load_pendulum(
@@ -1023,21 +1091,39 @@
     {% endif %}
     {# <!--}--> #}
 
-    {# ball_load {--> #}
-    {% if enable_hollow_load_pendulum %}
-      {% set poses = [ball, ball1, ball2, ball3, ball4] %}
+    {# water_particles {--> #}
+    {% if enable_water_particles %}
+    {{components.spawn_water_particles(
+      name='water_uav1',
+      center_x=0.0,
+      center_y=0.0,
+      bottom_z=-0.07,
 
-      {% for i in range(poses | length) %}
-        {% for j in range(1) %}
-        {{ components.spawn_passive_ball(
-            name='ball_passiva_' ~ i ~ '_' ~ j, 
-            pose=poses[i],
-            mass=0.002,
-            radius=0.0107)
-        }}
-        {% endfor %} 
-      {% endfor %}
+      particle_mass=0.00052,
+      particle_radius=0.005,
+
+      count_x=6,
+      count_y=5,
+      count_z=3,
+
+      particle_gap=0.0005,
+
+      restitution=0.0,
+      bounce_threshold=0.05,
+
+      friction=0.03,
+
+      linear_damping=0.002,
+      angular_damping=0.01,
+
+      contact_kp=500000.0,
+      contact_kd=40.0,
+
+      contact_max_vel=0.2,
+      contact_min_depth=0.0001)
+    }}
     {% endif %}
     {# <!--}--> #}
+       
   </model>
 </sdf>

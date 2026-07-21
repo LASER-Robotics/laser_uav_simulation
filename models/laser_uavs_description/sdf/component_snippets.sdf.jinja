@@ -1355,6 +1355,555 @@
 {%- endmacro -%}
 <!--}-->  
   
+<!-- hollow_cylinder_pendulum {-->
+{%- macro hollow_cylinder_pendulum(
+  name,
+  parent_link,
+  attach_linker_pose,
+  attach_linker_mass,
+  rope_num_segments,
+  rope_segment_length,
+  rope_segment_radius,
+  rope_segment_mass,
+  joint_damping,
+  load_mass,
+  load_x_offset,
+  load_y_offset,
+  load_z_offset,
+  cylinder_radius,
+  cylinder_height,
+  wall_thickness
+) -%}
+
+  <!-- ========================================================== -->
+  <!-- Parâmetros derivados                                      -->
+  <!-- ========================================================== -->
+
+  {%- set inner_radius =
+    cylinder_radius - wall_thickness
+  -%}
+
+  {%- set wall_center_radius =
+    cylinder_radius - wall_thickness / 2.0
+  -%}
+
+  {%- set lateral_wall_height =
+    cylinder_height - 2.0 * wall_thickness
+  -%}
+  
+  {%- set wall_segment_width =
+    0.40 * wall_center_radius
+  -%}
+
+  {%- set cylinder_segments = [
+    ( 1.0000000000,  0.0000000000, 0.0000000000),
+    ( 0.9238795325,  0.3826834324, 0.3926990817),
+    ( 0.7071067812,  0.7071067812, 0.7853981634),
+    ( 0.3826834324,  0.9238795325, 1.1780972451),
+    ( 0.0000000000,  1.0000000000, 1.5707963268),
+    (-0.3826834324,  0.9238795325, 1.9634954085),
+    (-0.7071067812,  0.7071067812, 2.3561944902),
+    (-0.9238795325,  0.3826834324, 2.7488935719),
+    (-1.0000000000,  0.0000000000, 3.1415926536),
+    (-0.9238795325, -0.3826834324, 3.5342917353),
+    (-0.7071067812, -0.7071067812, 3.9269908170),
+    (-0.3826834324, -0.9238795325, 4.3196898987),
+    ( 0.0000000000, -1.0000000000, 4.7123889804),
+    ( 0.3826834324, -0.9238795325, 5.1050880621),
+    ( 0.7071067812, -0.7071067812, 5.4977871438),
+    ( 0.9238795325, -0.3826834324, 5.8904862255)
+  ] -%}
+
+
+  <!-- ========================================================== -->
+  <!-- Link de fixação ao drone                                  -->
+  <!-- ========================================================== -->
+
+  <link name="{{ name }}_attacher_link">
+    <pose>0 0 0 0 0 0</pose>
+
+    <inertial>
+      <mass>{{ attach_linker_mass }}</mass>
+
+      <inertia>
+        <ixx>0.0001</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+
+        <iyy>0.0001</iyy>
+        <iyz>0</iyz>
+
+        <izz>0.0001</izz>
+      </inertia>
+    </inertial>
+
+    <visual name="attacher_visual">
+      <pose>0 0 -0.025 0 0 0</pose>
+
+      <geometry>
+        <cylinder>
+          <length>0.05</length>
+          <radius>0.005</radius>
+        </cylinder>
+      </geometry>
+
+      <material>
+        <script>
+          <name>Gazebo/Gray</name>
+        </script>
+      </material>
+    </visual>
+
+    <collision name="attacher_collision">
+      <pose>0 0 -0.025 0 0 0</pose>
+
+      <geometry>
+        <cylinder>
+          <length>0.05</length>
+          <radius>0.005</radius>
+        </cylinder>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="{{ name }}_attacher_joint" type="fixed">
+    <parent>{{ parent_link }}</parent>
+    <child>{{ name }}_attacher_link</child>
+
+    <pose>{{ attach_linker_pose }}</pose>
+  </joint>
+
+
+  <!-- ========================================================== -->
+  <!-- Corda segmentada                                          -->
+  <!-- ========================================================== -->
+
+  {%- for i in range(1, rope_num_segments + 1) -%}
+
+    {%- if i == 1 -%}
+
+      {%- set current_parent =
+        name ~ '_attacher_link'
+      -%}
+
+      {%- set joint_to_parent_pose =
+        '0 0 0 0 0 0'
+      -%}
+
+    {%- else -%}
+
+      {%- set current_parent =
+        name ~ '_rope_link_' ~ (i - 1)
+      -%}
+
+      {%- set joint_to_parent_pose =
+        '0 0 ' ~ (-rope_segment_length) ~ ' 0 0 0'
+      -%}
+
+    {%- endif -%}
+
+
+    <!-- Link auxiliar para o primeiro eixo de rotação -->
+    <link name="{{ name }}_rope_intermediate_link_{{ i }}">
+      <pose>0 0 0 0 0 0</pose>
+
+      <inertial>
+        <mass>{{ rope_segment_mass / 100.0 }}</mass>
+
+        <inertia>
+          <ixx>1e-8</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+
+          <iyy>1e-8</iyy>
+          <iyz>0</iyz>
+
+          <izz>1e-8</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+
+    <!-- Rotação da corda no eixo X -->
+    <joint name="{{ name }}_rope_joint_x_{{ i }}"
+           type="revolute">
+
+      <pose>{{ joint_to_parent_pose }}</pose>
+
+      <parent>{{ current_parent }}</parent>
+      <child>{{ name }}_rope_intermediate_link_{{ i }}</child>
+
+      <axis>
+        <xyz>1 0 0</xyz>
+
+        <limit>
+          <lower>-3.14159265</lower>
+          <upper>3.14159265</upper>
+        </limit>
+
+        <dynamics>
+          <damping>{{ joint_damping }}</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+
+    <!-- Segmento físico da corda -->
+    <link name="{{ name }}_rope_link_{{ i }}">
+      <pose>0 0 0 0 0 0</pose>
+
+      <!-- Evita colisão entre segmentos adjacentes -->
+      <self_collide>false</self_collide>
+
+      <inertial>
+        <mass>{{ rope_segment_mass }}</mass>
+
+        <pose>
+          0 0 {{ -rope_segment_length / 2.0 }}
+          0 0 0
+        </pose>
+
+        <inertia>
+          <ixx>
+            {{
+              (rope_segment_mass / 12.0) *
+              (
+                3.0 * rope_segment_radius * rope_segment_radius
+                +
+                rope_segment_length * rope_segment_length
+              )
+            }}
+          </ixx>
+
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+
+          <iyy>
+            {{
+              (rope_segment_mass / 12.0) *
+              (
+                3.0 * rope_segment_radius * rope_segment_radius
+                +
+                rope_segment_length * rope_segment_length
+              )
+            }}
+          </iyy>
+
+          <iyz>0</iyz>
+
+          <izz>
+            {{
+              (rope_segment_mass / 2.0) *
+              rope_segment_radius * rope_segment_radius
+            }}
+          </izz>
+        </inertia>
+      </inertial>
+
+
+      <visual name="rope_visual">
+        <pose>
+          0 0 {{ -rope_segment_length / 2.0 }}
+          0 0 0
+        </pose>
+
+        <geometry>
+          <cylinder>
+            <length>{{ rope_segment_length }}</length>
+            <radius>{{ rope_segment_radius }}</radius>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+      </visual>
+
+
+      <collision name="rope_collision">
+        <pose>
+          0 0 {{ -rope_segment_length / 2.0 }}
+          0 0 0
+        </pose>
+
+        <geometry>
+          <cylinder>
+            <length>{{ rope_segment_length }}</length>
+            <radius>{{ rope_segment_radius }}</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <!-- Rotação da corda no eixo Y -->
+    <joint name="{{ name }}_rope_joint_y_{{ i }}"
+           type="revolute">
+
+      <pose>0 0 0 0 0 0</pose>
+
+      <parent>
+        {{ name }}_rope_intermediate_link_{{ i }}
+      </parent>
+
+      <child>
+        {{ name }}_rope_link_{{ i }}
+      </child>
+
+      <axis>
+        <xyz>0 1 0</xyz>
+
+        <limit>
+          <lower>-3.14159265</lower>
+          <upper>3.14159265</upper>
+        </limit>
+
+        <dynamics>
+          <damping>{{ joint_damping }}</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+  {%- endfor -%}
+
+
+  <!-- ========================================================== -->
+  <!-- Cilindro oco                                               -->
+  <!-- ========================================================== -->
+
+  <link name="{{ name }}_load_link">
+
+    <pose>
+      {{ load_x_offset }}
+      {{ load_y_offset }}
+      {{ load_z_offset }}
+      0 0 0
+    </pose>
+
+    <self_collide>false</self_collide>
+
+
+    <inertial>
+      <mass>{{ load_mass }}</mass>
+
+      <!-- Inércia aproximada de um cilindro oco -->
+      <inertia>
+        <ixx>
+          {{
+            (load_mass / 12.0) *
+            (
+              3.0 *
+              (
+                cylinder_radius * cylinder_radius
+                +
+                inner_radius * inner_radius
+              )
+              +
+              cylinder_height * cylinder_height
+            )
+          }}
+        </ixx>
+
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+
+        <iyy>
+          {{
+            (load_mass / 12.0) *
+            (
+              3.0 *
+              (
+                cylinder_radius * cylinder_radius
+                +
+                inner_radius * inner_radius
+              )
+              +
+              cylinder_height * cylinder_height
+            )
+          }}
+        </iyy>
+
+        <iyz>0</iyz>
+
+        <izz>
+          {{
+            0.5 *
+            load_mass *
+            (
+              cylinder_radius * cylinder_radius
+              +
+              inner_radius * inner_radius
+            )
+          }}
+        </izz>
+      </inertia>
+    </inertial>
+
+
+    <!-- Fundo -->
+    <visual name="bottom_visual">
+      <pose>
+        0 0
+        {{ -cylinder_height / 2.0 + wall_thickness / 2.0 }}
+        0 0 0
+      </pose>
+
+      <geometry>
+        <cylinder>
+          <radius>{{ cylinder_radius }}</radius>
+          <length>{{ wall_thickness }}</length>
+        </cylinder>
+      </geometry>
+
+      <material>
+        <script>
+          <name>Gazebo/Blue</name>
+        </script>
+      </material>
+
+      <transparency>0.25</transparency>
+    </visual>
+
+
+    <collision name="bottom_collision">
+      <pose>
+        0 0
+        {{ -cylinder_height / 2.0 + wall_thickness / 2.0 }}
+        0 0 0
+      </pose>
+
+      <geometry>
+        <cylinder>
+          <radius>{{ cylinder_radius }}</radius>
+          <length>{{ wall_thickness }}</length>
+        </cylinder>
+      </geometry>
+    </collision>
+
+
+    <!-- Tampa -->
+    <visual name="top_visual">
+      <pose>
+        0 0
+        {{ cylinder_height / 2.0 - wall_thickness / 2.0 }}
+        0 0 0
+      </pose>
+
+      <geometry>
+        <cylinder>
+          <radius>{{ cylinder_radius }}</radius>
+          <length>{{ wall_thickness }}</length>
+        </cylinder>
+      </geometry>
+
+      <material>
+        <script>
+          <name>Gazebo/Blue</name>
+        </script>
+      </material>
+
+      <transparency>0.25</transparency>
+    </visual>
+
+
+    <collision name="top_collision">
+      <pose>
+        0 0
+        {{ cylinder_height / 2.0 - wall_thickness / 2.0 }}
+        0 0 0
+      </pose>
+
+      <geometry>
+        <cylinder>
+          <radius>{{ cylinder_radius }}</radius>
+          <length>{{ wall_thickness }}</length>
+        </cylinder>
+      </geometry>
+    </collision>
+
+
+    <!-- Paredes laterais -->
+    {%- for cos_angle, sin_angle, yaw_angle in cylinder_segments %}
+
+      <visual name="wall_visual_{{ loop.index }}">
+        <pose>
+          {{ cos_angle * wall_center_radius }}
+          {{ sin_angle * wall_center_radius }}
+          0
+          0 0 {{ yaw_angle }}
+        </pose>
+
+        <geometry>
+          <box>
+            <size>
+              {{ wall_thickness }}
+              {{ wall_segment_width }}
+              {{ lateral_wall_height }}
+            </size>
+          </box>
+        </geometry>
+
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+
+        <transparency>0.25</transparency>
+      </visual>
+
+
+      <collision name="wall_collision_{{ loop.index }}">
+        <pose>
+          {{ cos_angle * wall_center_radius }}
+          {{ sin_angle * wall_center_radius }}
+          0
+          0 0 {{ yaw_angle }}
+        </pose>
+
+        <geometry>
+          <box>
+            <size>
+              {{ wall_thickness }}
+              {{ wall_segment_width }}
+              {{ lateral_wall_height }}
+            </size>
+          </box>
+        </geometry>
+      </collision>
+
+    {%- endfor %}
+
+  </link>
+
+
+  <!-- ========================================================== -->
+  <!-- Conexão entre a última seção da corda e o cilindro          -->
+  <!-- ========================================================== -->
+
+  <joint name="{{ name }}_load_joint" type="ball">
+
+    <parent>
+      {{ name }}_rope_link_{{ rope_num_segments }}
+    </parent>
+
+    <child>
+      {{ name }}_load_link
+    </child>
+
+    <!-- Ponto localizado no centro da tampa superior -->
+    <pose>
+      0 0 {{ cylinder_height / 2.0 }}
+      0 0 0
+    </pose>
+  </joint>
+
+{%- endmacro -%}
+<!--}-->
+
 <!-- hollow_load_pendulum {-->
 {%- macro hollow_load_pendulum(name, parent_link, attach_linker_pose, attach_linker_mass, rope_num_segments, rope_segment_length, rope_segment_radius, rope_segment_mass, load_mass, load_x_offset, load_y_offset, load_z_offset) -%}
   <!-- rope_attacher {-->
@@ -1530,30 +2079,356 @@
   <!--}-->
 {%- endmacro -%}
 <!--}-->
-  
+
+<!-- water_particles {-->
+{%- macro spawn_water_particles(
+  name,
+  center_x,
+  center_y,
+  bottom_z,
+  particle_mass,
+  particle_radius,
+  count_x,
+  count_y,
+  count_z,
+  particle_gap=0.001,
+  restitution=0.03,
+  bounce_threshold=0.01,
+  friction=0.08,
+  linear_damping=0.03,
+  angular_damping=0.03,
+  contact_kp=1000000.0,
+  contact_kd=100.0,
+  contact_max_vel=0.5,
+  contact_min_depth=0.0001
+) -%}
+
+  {%- set total_particles =
+    count_x * count_y * count_z
+  -%}
+
+  {%- set total_water_mass =
+    particle_mass * total_particles
+  -%}
+
+  {%- set particle_spacing =
+    2.0 * particle_radius + particle_gap
+  -%}
+
+  {%- for ix in range(count_x) -%}
+    {%- for iy in range(count_y) -%}
+      {%- for iz in range(count_z) -%}
+
+        {%- set particle_x =
+          center_x
+          +
+          (
+            ix - (count_x - 1) / 2.0
+          ) * particle_spacing
+        -%}
+
+        {%- set particle_y =
+          center_y
+          +
+          (
+            iy - (count_y - 1) / 2.0
+          ) * particle_spacing
+        -%}
+
+        {%- set particle_z =
+          bottom_z
+          +
+          particle_radius
+          +
+          iz * particle_spacing
+        -%}
+
+        <model name="{{ name }}_{{ ix }}_{{ iy }}_{{ iz }}">
+
+          <pose>
+            {{ particle_x }}
+            {{ particle_y }}
+            {{ particle_z }}
+            0 0 0
+          </pose>
+
+          <static>false</static>
+          <allow_auto_disable>false</allow_auto_disable>
+
+          <link name="particle_link">
+
+            <pose>0 0 0 0 0 0</pose>
+
+            <gravity>true</gravity>
+
+            <velocity_decay>
+              <linear>{{ linear_damping }}</linear>
+              <angular>{{ angular_damping }}</angular>
+            </velocity_decay>
+
+            <inertial>
+              <mass>{{ particle_mass }}</mass>
+
+              <inertia>
+                <ixx>
+                  {{
+                    (2.0 / 5.0)
+                    * particle_mass
+                    * particle_radius
+                    * particle_radius
+                  }}
+                </ixx>
+
+                <iyy>
+                  {{
+                    (2.0 / 5.0)
+                    * particle_mass
+                    * particle_radius
+                    * particle_radius
+                  }}
+                </iyy>
+
+                <izz>
+                  {{
+                    (2.0 / 5.0)
+                    * particle_mass
+                    * particle_radius
+                    * particle_radius
+                  }}
+                </izz>
+
+                <ixy>0</ixy>
+                <ixz>0</ixz>
+                <iyz>0</iyz>
+              </inertia>
+            </inertial>
+
+            <visual name="water_visual">
+              <geometry>
+                <sphere>
+                  <radius>{{ particle_radius }}</radius>
+                </sphere>
+              </geometry>
+
+              <material>
+                <script>
+                  <name>Gazebo/Red</name>
+                </script>
+              </material>
+
+              <transparency>0.25</transparency>
+            </visual>
+
+            <collision name="water_collision">
+
+              <geometry>
+                <sphere>
+                  <radius>{{ particle_radius }}</radius>
+                </sphere>
+              </geometry>
+
+              <max_contacts>20</max_contacts>
+
+              <surface>
+
+                <bounce>
+                  <restitution_coefficient>
+                    {{ restitution }}
+                  </restitution_coefficient>
+
+                  <threshold>
+                    {{ bounce_threshold }}
+                  </threshold>
+                </bounce>
+
+                <friction>
+                  <ode>
+                    <mu>{{ friction }}</mu>
+                    <mu2>{{ friction }}</mu2>
+                  </ode>
+                </friction>
+
+                <contact>
+                  <ode>
+                    <kp>{{ contact_kp }}</kp>
+                    <kd>{{ contact_kd }}</kd>
+
+                    <max_vel>
+                      {{ contact_max_vel }}
+                    </max_vel>
+
+                    <min_depth>
+                      {{ contact_min_depth }}
+                    </min_depth>
+                  </ode>
+                </contact>
+
+              </surface>
+
+            </collision>
+
+          </link>
+
+        </model>
+
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+{%- endmacro -%}
+<!--}-->
+        
+<!-- passive_balls_grid {-->
+{%- macro spawn_passive_balls(
+  name,
+  center_x,
+  center_y,
+  bottom_z,
+  particle_mass,
+  particle_radius,
+  count_x,
+  count_y,
+  count_z,
+  particle_gap=0.001
+) -%}
+
+  {%- set total_particles =
+    count_x * count_y * count_z
+  -%}
+
+  {%- set total_water_mass =
+    particle_mass * total_particles
+  -%}
+
+  {%- set particle_spacing =
+    2.0 * particle_radius + particle_gap
+  -%}
+
+  {%- set grid_size_x =
+    (count_x - 1) * particle_spacing
+  -%}
+
+  {%- set grid_size_y =
+    (count_y - 1) * particle_spacing
+  -%}
+
+  {%- set start_x =
+    center_x - grid_size_x / 2.0
+  -%}
+
+  {%- set start_y =
+    center_y - grid_size_y / 2.0
+  -%}
+
+  {%- for ix in range(count_x) -%}
+    {%- for iy in range(count_y) -%}
+      {%- for iz in range(count_z) -%}
+
+        {%- set particle_x =
+          start_x + ix * particle_spacing
+        -%}
+
+        {%- set particle_y =
+          start_y + iy * particle_spacing
+        -%}
+
+        {%- set particle_z =
+          bottom_z
+          + particle_radius
+          + iz * particle_spacing
+        -%}
+
+        {%- set particle_name =
+          name
+          ~ '_'
+          ~ ix
+          ~ '_'
+          ~ iy
+          ~ '_'
+          ~ iz
+        -%}
+
+        {{ spawn_passive_ball(
+          name=particle_name,
+          pose=particle_x
+            ~ ' '
+            ~ particle_y
+            ~ ' '
+            ~ particle_z
+            ~ ' 0 0 0',
+          mass=particle_mass,
+          radius=particle_radius
+        ) }}
+
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+{%- endmacro -%}
+<!--}-->
+        
 <!-- passive_ball {-->
 {%- macro spawn_passive_ball(name, pose, mass, radius) -%}
   <model name="{{ name }}">
-    
     <pose>{{ pose }}</pose>
 
     <link name="ball_link">
       <pose>0 0 0 0 0 0</pose>
+
       <inertial>
         <mass>{{ mass }}</mass>
-        <inertia> 
-          <ixx>{{ (2/5.0) * mass * radius * radius }}</ixx>
-          <iyy>{{ (2/5.0) * mass * radius * radius }}</iyy>
-          <izz>{{ (2/5.0) * mass * radius * radius }}</izz>
-          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+
+        <inertia>
+          <ixx>{{ (2.0 / 5.0) * mass * radius * radius }}</ixx>
+          <iyy>{{ (2.0 / 5.0) * mass * radius * radius }}</iyy>
+          <izz>{{ (2.0 / 5.0) * mass * radius * radius }}</izz>
+
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
         </inertia>
       </inertial>
+
       <visual name="visual">
-        <geometry><sphere><radius>{{ radius }}</radius></sphere></geometry>
-        <material><script><name>Gazebo/Red</name></script></material>
+        <geometry>
+          <sphere>
+            <radius>{{ radius }}</radius>
+          </sphere>
+        </geometry>
+
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
       </visual>
+
       <collision name="collision">
-        <geometry><sphere><radius>{{ radius }}</radius></sphere></geometry>
+        <geometry>
+          <sphere>
+            <radius>{{ radius }}</radius>
+          </sphere>
+        </geometry>
+
+        <surface>
+          <contact>
+            <collide_bitmask>0x01</collide_bitmask>
+
+            <ode>
+              <kp>100000.0</kp>
+              <kd>10.0</kd>
+              <max_vel>0.2</max_vel>
+              <min_depth>0.0001</min_depth>
+            </ode>
+          </contact>
+
+          <friction>
+            <ode>
+              <mu>0.02</mu>
+              <mu2>0.02</mu2>
+            </ode>
+          </friction>
+        </surface>
       </collision>
     </link>
   </model>

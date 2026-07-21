@@ -12,6 +12,8 @@ parser.add_argument('--instance', type=int, required=True)
 parser.add_argument('--enable_ground_truth', action='store_true')
 parser.add_argument('--enable_load_pendulum', action='store_true')
 parser.add_argument('--enable_hollow_load_pendulum', action='store_true')
+parser.add_argument('--enable_hollow_load_cylinder_pendulum', action='store_true')
+parser.add_argument('--enable_water_particles', action='store_true')
 parser.add_argument('--enable_d435_front', action='store_true')
 parser.add_argument('--enable_d435i_front', action='store_true')
 parser.add_argument('--enable_d435i_down', action='store_true')
@@ -49,6 +51,8 @@ data = {
     'instance': int(args.instance),
     'enable_load_pendulum': args.enable_load_pendulum, 
     'enable_hollow_load_pendulum': args.enable_hollow_load_pendulum, 
+    'enable_hollow_load_cylinder_pendulum': args.enable_hollow_load_cylinder_pendulum, 
+    'enable_water_particles': args.enable_water_particles, 
     'enable_ground_truth': args.enable_ground_truth, 
     'enable_d435_front': args.enable_d435_front, 
     'enable_d435i_front': args.enable_d435i_front, 
