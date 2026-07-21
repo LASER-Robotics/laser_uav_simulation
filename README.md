@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # LASER UAV Simulation
 
 This repository contains the necessary tools and scripts to simulate the **LASER UAV System**. The `laser_uav_simulation` package, which is part of the **LUS (LASER UAV System)**, provides all the functionalities to spawn a drone in a simulated environment using **Gazebo Classic**.
