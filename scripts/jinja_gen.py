@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
 
-import subprocess
 import argparse
-import jinja2
 import os
+import subprocess
+import sys
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--namespace', type=str, required=True)
-parser.add_argument('--uav_model', type=str, required=True)
-parser.add_argument('--instance', type=int, required=True)
+import jinja2
+
+parser = argparse.ArgumentParser(description='Generate UAV SDF models using Jinja2 templates.')
+parser.add_argument('--namespace', type=str, required=True, help='Robot namespace')
+parser.add_argument('--uav_model', type=str, required=True, help='UAV model name')
+parser.add_argument('--instance', type=int, required=True, help='UAV instance number')
+parser.add_argument(
+    '--flight_controller',
+    type=str,
+    required=True,
+    choices=['px4', 'ap'],
+    help="Flight controller for SITL simulation (choices: 'px4' or 'ap')"
+)
 parser.add_argument('--enable_ground_truth', action='store_true')
 parser.add_argument('--enable_load_pendulum', action='store_true')
 parser.add_argument('--enable_d435_front', action='store_true')
@@ -34,25 +43,30 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 snippets_dir = os.path.realpath(os.path.join(base_dir, '../models/laser_uavs_description'))
 drones_dir = os.path.realpath(os.path.join(snippets_dir, 'sdf'))
 
-# Configurar o carregador de arquivos Jinja2
+# Configure Jinja2 environment loader
 env = jinja2.Environment(loader=jinja2.FileSystemLoader([snippets_dir, drones_dir]))
 
-# Carregar o template principal
-template = env.get_template(args.uav_model + '.sdf.jinja')
+# Load main template
+try:
+    template = env.get_template(args.uav_model + '.sdf.jinja')
+except jinja2.exceptions.TemplateNotFound:
+    print(
+        f"[ERROR] Template '{args.uav_model}.sdf.jinja' not found in {drones_dir}!", file=sys.stderr)
+    sys.exit(1)
 
-
-# Dados para preencher o template
+# Data dictionary to render the template
 data = {
     'namespace': str(args.namespace),
     'model_name': str(args.uav_model),
     'instance': int(args.instance),
-    'enable_load_pendulum': args.enable_load_pendulum, 
-    'enable_ground_truth': args.enable_ground_truth, 
-    'enable_d435_front': args.enable_d435_front, 
-    'enable_d435i_front': args.enable_d435i_front, 
-    'enable_d435i_down': args.enable_d435i_down, 
-    'enable_d435_down': args.enable_d435_down, 
-    'enable_vio': args.enable_vio, 
+    'flight_controller': str(args.flight_controller),
+    'enable_load_pendulum': args.enable_load_pendulum,
+    'enable_ground_truth': args.enable_ground_truth,
+    'enable_d435_front': args.enable_d435_front,
+    'enable_d435i_front': args.enable_d435i_front,
+    'enable_d435i_down': args.enable_d435i_down,
+    'enable_d435_down': args.enable_d435_down,
+    'enable_vio': args.enable_vio,
     'enable_livox': args.enable_livox,
     'enable_garmin': args.enable_garmin,
     'enable_livox_45': args.enable_livox_45,
@@ -65,16 +79,17 @@ data = {
     'yaw_offset': -float(args.yaw)
 }
 
-# Renderizar o template
+# Render template
 output = template.render(data)
 
 dir_path = '/tmp/laser_uavs_description/sdf'
-file_path = os.path.join(dir_path, args.uav_model + '.sdf')
+file_name = f"{args.uav_model}_{args.instance}.sdf"
+file_path = os.path.join(dir_path, file_name)
 
 os.makedirs(dir_path, exist_ok=True)
 
-# Salvando o arquivo SDF
-with open('/tmp/laser_uavs_description/sdf/' + args.uav_model + '_' + str(args.instance) + '.sdf', 'w') as file:
+# Save the generated SDF file
+with open(file_path, 'w') as file:
     file.write(output)
 
-print("Generation jinja is successfuly")
+print(f"[SUCCESS] SDF file successfully generated at: {file_path}")

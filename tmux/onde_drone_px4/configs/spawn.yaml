@@ -1,6 +1,7 @@
 /**/**:
   ros__parameters:
     - id: 1
-      type: "lr7pro"
+      type: "x500"
+      fcu: "px4"
       pose_spawn: [0.0,0.0,0.2,0.0] # x y z yaw
       sensors: "--enable_ground_truth"
