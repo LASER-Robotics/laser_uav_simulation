@@ -12,7 +12,7 @@
   <test_depend>ament_lint_common</test_depend>
 
   <depend>laser_gazebo_resources</depend>
- 
+
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>ros2launch</exec_depend>
 

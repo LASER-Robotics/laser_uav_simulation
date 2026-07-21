@@ -1,11 +1,16 @@
-import launch
 import yaml
-
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
-from launch.actions import ExecuteProcess
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, TextSubstitution
 from launch_ros.substitutions import FindPackageShare
+
+import launch
+from launch.actions import DeclareLaunchArgument
+from launch.actions import ExecuteProcess
+from launch.actions import IncludeLaunchDescription
+from launch.actions import OpaqueFunction
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import TextSubstitution
+
 
 def launch_setup(context: launch.LaunchContext, ld):
     # #{ spawn drone config
@@ -16,9 +21,11 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     # #{ create the cmd lines with arguments for spawn drones
     process_actions = []
-    
-    spawn_script_path = PathJoinSubstitution([FindPackageShare('laser_uav_simulation'), 'scripts', 'spawn_drone.sh']).perform(context)
-    uxrce_script_path = PathJoinSubstitution([FindPackageShare('laser_uav_simulation'), 'scripts', 'start_uxrce_protocol.sh']).perform(context)
+
+    spawn_script_path = PathJoinSubstitution(
+        [FindPackageShare('laser_uav_simulation'), 'scripts', 'spawn_drone.sh']).perform(context)
+    uxrce_script_path = PathJoinSubstitution(
+        [FindPackageShare('laser_uav_simulation'), 'scripts', 'start_uxrce_protocol.sh']).perform(context)
 
     try:
         with open(config_file_path, 'r') as file:
@@ -57,26 +64,27 @@ def launch_setup(context: launch.LaunchContext, ld):
 
         spawn_script_cmd = ExecuteProcess(
             cmd=cmd_line,
-            name="spawn_drone_" + namespace, 
+            name="spawn_drone_" + namespace,
             output='screen'
         )
-        
+
         process_actions.append(spawn_script_cmd)
 
     # #}
 
+    # #{ start uxrce protocol
     if fcu_type == "px4":
-        #{ start uxrce protocol
-            uxrce_script_cmd = ExecuteProcess(
-                cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
-                name="uxrce_protocol",
-                output='screen'
-            )
-            process_actions.append(uxrce_script_cmd)
-        #}
+        uxrce_script_cmd = ExecuteProcess(
+            cmd=["MicroXRCEAgent", "udp4", "-p", "8888"],
+            name="uxrce_protocol",
+            output='screen'
+        )
+        process_actions.append(uxrce_script_cmd)
+    # #}
 
     for action in process_actions:
         ld.add_action(action)
+
 
 def generate_launch_description():
     ld = launch.LaunchDescription()

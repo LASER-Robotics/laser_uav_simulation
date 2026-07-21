@@ -453,6 +453,7 @@
     <!--}-->
 
     <!-- Mavlink interface {-->
+    {% if flight_controller == 'px4' %}
     {{ components.px4_mavlink_interface_macro(
       namespace = namespace,
       instance = instance,
@@ -461,6 +462,13 @@
       baro_topic = baro_topic,
       lidar_topic = lidar_topic)
     }}
+    {% elif flight_controller == 'ap' %}
+    {{ components.ardupilot_mavlink_interface_macro(
+      namespace = namespace,
+      instance = instance,
+      imu_topic = imu_topic)
+    }}
+    {% endif %}
     <!--}-->
 
     <!-- IMU {-->

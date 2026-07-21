@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 
-import subprocess
 import argparse
-import jinja2
 import os
+import subprocess
 import sys
+
+import jinja2
 
 parser = argparse.ArgumentParser(description='Generate UAV SDF models using Jinja2 templates.')
 parser.add_argument('--namespace', type=str, required=True, help='Robot namespace')
 parser.add_argument('--uav_model', type=str, required=True, help='UAV model name')
 parser.add_argument('--instance', type=int, required=True, help='UAV instance number')
 parser.add_argument(
-    '--flight_controller', 
-    type=str, 
-    required=True, 
-    choices=['px4', 'ap'], 
+    '--flight_controller',
+    type=str,
+    required=True,
+    choices=['px4', 'ap'],
     help="Flight controller for SITL simulation (choices: 'px4' or 'ap')"
 )
 parser.add_argument('--enable_ground_truth', action='store_true')
@@ -49,7 +50,8 @@ env = jinja2.Environment(loader=jinja2.FileSystemLoader([snippets_dir, drones_di
 try:
     template = env.get_template(args.uav_model + '.sdf.jinja')
 except jinja2.exceptions.TemplateNotFound:
-    print(f"[ERROR] Template '{args.uav_model}.sdf.jinja' not found in {drones_dir}!", file=sys.stderr)
+    print(
+        f"[ERROR] Template '{args.uav_model}.sdf.jinja' not found in {drones_dir}!", file=sys.stderr)
     sys.exit(1)
 
 # Data dictionary to render the template
@@ -58,13 +60,13 @@ data = {
     'model_name': str(args.uav_model),
     'instance': int(args.instance),
     'flight_controller': str(args.flight_controller),
-    'enable_load_pendulum': args.enable_load_pendulum, 
-    'enable_ground_truth': args.enable_ground_truth, 
-    'enable_d435_front': args.enable_d435_front, 
-    'enable_d435i_front': args.enable_d435i_front, 
-    'enable_d435i_down': args.enable_d435i_down, 
-    'enable_d435_down': args.enable_d435_down, 
-    'enable_vio': args.enable_vio, 
+    'enable_load_pendulum': args.enable_load_pendulum,
+    'enable_ground_truth': args.enable_ground_truth,
+    'enable_d435_front': args.enable_d435_front,
+    'enable_d435i_front': args.enable_d435i_front,
+    'enable_d435i_down': args.enable_d435i_down,
+    'enable_d435_down': args.enable_d435_down,
+    'enable_vio': args.enable_vio,
     'enable_livox': args.enable_livox,
     'enable_garmin': args.enable_garmin,
     'enable_livox_45': args.enable_livox_45,
