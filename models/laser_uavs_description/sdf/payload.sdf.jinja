@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sdf version="1.6">
+
+  {% import "component_snippets.sdf.jinja" as components %}
+
+  <model name="payload">
+
+    {# payload_box {--> #}
+    {{ components.payload_box_macro(
+    name='box_link',
+    mass=0.3,
+    size_x=0.1,
+    size_y=0.1,
+    size_z=0.1,
+    attachment_distance=0.15)
+    }} 
+    {# <!--}--> #}
+
+    {# payload_connection {--> #}
+    <plugin
+      name="payload_connection_plugin"
+      filename="libpayload_connection_plugin.so">
+
+    <uav1_model>uav1_x500_0</uav1_model>
+    <uav2_model>uav2_x500_1</uav2_model>
+
+    <rope_length>1.0</rope_length>
+
+    <stiffness>200.0</stiffness>
+    <damping>10.0</damping>
+
+    <max_force>50.0</max_force>
+
+    </plugin>
+    {# <!--}--> #}
+
+  </model>
+
+</sdf>

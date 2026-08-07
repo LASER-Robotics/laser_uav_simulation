@@ -6,12 +6,34 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(gazebo REQUIRED)
+
+include_directories(
+  ${GAZEBO_INCLUDE_DIRS}
+)
+
+link_directories(
+  ${GAZEBO_LIBRARY_DIRS}
+)
+
+add_library(payload_connection_plugin SHARED
+  src/payload_connection_plugin.cpp
+)
+
+target_link_libraries(payload_connection_plugin
+  ${GAZEBO_LIBRARIES}
+)
+
+install(
+  TARGETS payload_connection_plugin
+  LIBRARY DESTINATION lib
+)
 
 install(PROGRAMS
   scripts/jinja_gen.py
   scripts/autostart.py
   DESTINATION lib/${PROJECT_NAME}
-  )
+)
 
 install(DIRECTORY
   scripts
@@ -19,12 +41,14 @@ install(DIRECTORY
   config
   launch
   DESTINATION share/${PROJECT_NAME}
-  )
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
+
   set(ament_cmake_copyright_FOUND TRUE)
   set(ament_cmake_cpplint_FOUND TRUE)
+
   ament_lint_auto_find_test_dependencies()
 endif()
 

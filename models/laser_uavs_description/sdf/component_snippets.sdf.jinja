@@ -1351,4 +1351,194 @@
   <!--}-->
 {%- endmacro -%}
 <!--}-->
-      
+    
+<!-- rope_attachment {-->
+{%- macro rope_attachment_macro(
+  name,
+  parent_link,
+  x=0.0,
+  y=0.0,
+  z=-0.10,
+  mass=0.0001)
+-%}
+
+<link name="{{ name }}">
+  <pose>{{ x }} {{ y }} {{ z }} 0 0 0</pose>
+
+  <inertial>
+    <mass>{{ mass }}</mass>
+
+    <inertia>
+      <ixx>1e-8</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyy>1e-8</iyy>
+      <iyz>0</iyz>
+      <izz>1e-8</izz>
+    </inertia>
+  </inertial>
+</link>
+
+<joint name="{{ name }}_joint" type="fixed">
+  <parent>{{ parent_link }}</parent>
+  <child>{{ name }}</child>
+</joint>
+
+{%- endmacro -%} 
+<!--}-->
+
+<!-- payload_box {-->
+{%- macro payload_box_macro(
+  name,
+  mass,
+  size_x,
+  size_y,
+  size_z,
+  attachment_distance)
+-%}
+
+<link name="{{ name }}">
+  <inertial>
+    <mass>{{ mass }}</mass>
+
+    <inertia>
+      <ixx>{{ mass * (size_y * size_y + size_z * size_z) / 12.0 }}</ixx>
+      <iyy>{{ mass * (size_x * size_x + size_z * size_z) / 12.0 }}</iyy>
+      <izz>{{ mass * (size_x * size_x + size_y * size_y) / 12.0 }}</izz>
+    </inertia>
+  </inertial>
+
+  <collision name="collision">
+    <geometry>
+      <box>
+        <size>{{ size_x }} {{ size_y }} {{ size_z }}</size>
+      </box>
+    </geometry>
+  </collision>
+
+  <visual name="visual">
+    <geometry>
+      <box>
+        <size>{{ size_x }} {{ size_y }} {{ size_z }}</size>
+      </box>
+    </geometry>
+
+    <material>
+      <ambient>0.8 0.4 0.1 1</ambient>
+      <diffuse>0.8 0.4 0.1 1</diffuse>
+    </material>
+  </visual>
+</link>
+
+
+<!-- Ponto da corda esquerda -->
+
+<link name="left_attachment">
+  <pose>0 {{ attachment_distance }} {{ size_z / 2.0 }} 0 0 0</pose>
+
+  <inertial>
+    <mass>0.0001</mass>
+    <inertia>
+      <ixx>1e-8</ixx>
+      <iyy>1e-8</iyy>
+      <izz>1e-8</izz>
+    </inertia>
+  </inertial>
+</link>
+
+<joint name="left_attachment_joint" type="fixed">
+  <parent>{{ name }}</parent>
+  <child>left_attachment</child>
+</joint>
+
+
+<!-- Ponto da corda direita -->
+
+<link name="right_attachment">
+  <pose>0 -{{ attachment_distance }} {{ size_z / 2.0 }} 0 0 0</pose>
+
+  <inertial>
+    <mass>0.0001</mass>
+    <inertia>
+      <ixx>1e-8</ixx>
+      <iyy>1e-8</iyy>
+      <izz>1e-8</izz>
+    </inertia>
+  </inertial>
+</link>
+
+<joint name="right_attachment_joint" type="fixed">
+  <parent>{{ name }}</parent>
+  <child>right_attachment</child>
+</joint>
+{%- endmacro -%}
+<!--}-->
+
+<!-- rope {-->
+{%- macro rope_macro(
+  name,
+  parent_link,
+  x,
+  y,
+  z,
+  length=1.0,
+  radius=0.005,
+  mass=0.01)
+  -%}
+
+<link name="{{ name }}">
+  <!-- Centro da corda -->
+  <pose>
+    {{ x }} {{ y }} {{ z + length / 2.0 }} 0 0 0
+  </pose>
+
+  <inertial>
+    <mass>{{ mass }}</mass>
+
+    <inertia>
+      <ixx>{{ mass * (3.0 * radius * radius + length * length) / 12.0 }}</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+
+      <iyy>{{ mass * (3.0 * radius * radius + length * length) / 12.0 }}</iyy>
+      <iyz>0</iyz>
+
+      <izz>{{ mass * radius * radius / 2.0 }}</izz>
+    </inertia>
+  </inertial>
+
+  <collision name="{{ name }}_collision">
+    <geometry>
+      <cylinder>
+        <radius>{{ radius }}</radius>
+        <length>{{ length }}</length>
+      </cylinder>
+    </geometry>
+  </collision>
+
+  <visual name="{{ name }}_visual">
+    <geometry>
+      <cylinder>
+        <radius>{{ radius }}</radius>
+        <length>{{ length }}</length>
+      </cylinder>
+    </geometry>
+
+    <material>
+      <ambient>0.1 0.1 0.1 1</ambient>
+      <diffuse>0.1 0.1 0.1 1</diffuse>
+    </material>
+  </visual>
+</link>
+
+
+<!-- Junta na extremidade inferior da corda -->
+<joint name="{{ name }}_bottom_joint" type="ball">
+  <parent>{{ parent_link }}</parent>
+  <child>{{ name }}</child>
+
+    <!-- Extremidade inferior relativa ao centro da corda -->
+  <pose>0 0 {{ -length / 2.0 }} 0 0 0</pose>
+</joint>
+{%- endmacro -%}
+<!--}-->
