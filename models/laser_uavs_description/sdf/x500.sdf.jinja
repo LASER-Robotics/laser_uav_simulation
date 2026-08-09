@@ -852,6 +852,43 @@
     {# <!--}--> #}
     {# <!--}--> #}
 
+    {# Velodyne placements {--> #}
+    {# velodyne {--> #}
+    {% if enable_velodyne %}
+    {# default value for h_samples is 440, but makes simulation run slow in most computers #} 
+    {{ components.velodyne_lidar_macro(
+      namespace = namespace,
+      parent_link = root,
+      sensor_name = 'velodyne',
+      x = 0.0,
+      y = 0.0,
+      z = 0.1,
+      roll = 0.0,
+      pitch = 0.0,
+      yaw = 0.0,
+      min_range = 0.9,
+      max_range = 130,
+      h_samples = 110, 
+      v_samples = 16)
+    }} 
+
+    {{ components.imu_sensor_macro(
+      namespace = namespace,
+      sensor_name = 'velodyne_imu',
+      parent_link = root,
+      topic_name = namespace + '/velodyne/imu',
+      update_rate = 200,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0.0,
+      pitch = 0.0,
+      yaw = 0.0)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+    {# <!--}--> #}
+
     {# ========================== camera sensors ======================== #}
 
     {# Realsense placements {--> #}
