@@ -17,6 +17,32 @@
     }} 
     {# <!--}--> #}
 
+    {# payload_ground_truth {--> #}
+    {% if enable_ground_truth %}
+    {{ components.gazebo_ground_truth_macro(
+    namespace=namespace,
+    odometry_sensor_name='ground_truth',
+    parent_link='box_link',
+    topic_name='ground_truth',
+    noise=0.0,
+    frame_name='world',
+    update_rate=100.0,
+    x=0.0,
+    y=0.0,
+    z=0.0,
+    roll=0.0,
+    pitch=0.0,
+    yaw=0.0,
+    x_offset=x_offset,
+    y_offset=y_offset,
+    z_offset=z_offset,
+    roll_offset=roll_offset,
+    pitch_offset=pitch_offset,
+    yaw_offset=yaw_offset)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+
     {# payload_connection {--> #}
     <plugin
       name="payload_connection_plugin"
@@ -32,6 +58,10 @@
 
     <max_force>50.0</max_force>
 
+    <visual_segments>20</visual_segments>
+    <visual_radius>0.004</visual_radius>
+    <visual_update_rate>20.0</visual_update_rate>
+  
     </plugin>
     {# <!--}--> #}
 
