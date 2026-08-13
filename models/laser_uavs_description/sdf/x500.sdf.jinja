@@ -22,6 +22,7 @@
   {# <!--}--> #}
 
   {# Motor constants {--> #}
+  {# --- Motor and Aerodynamic Constants --- #}
   {%- set rotor_velocity_slowdown_sim = 1.0 -%}
   {%- set motor_quadratic_a = 0.240572 -%}
   {%- set motor_quadratic_b = -0.135153 -%}
@@ -29,9 +30,19 @@
   {%- set moment_constant = 0.016 -%} {# [m] #}
   {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
   {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 800 -%} {# [rad/s] #}
+  {%- set max_rot_velocity = 880 -%} {# [rad/s] #}
   {%- set rotor_drag_coefficient =  8.06428e-04 -%} 
   {%- set rolling_moment_coefficient = "1.0e-6" -%}
+
+  {# --- BEM Model Constants --- #}
+  {%- set use_bem_model = false -%}
+  {%- set bem_rho = 1.225 -%} {# [kg/m^3] Air density #}
+  {%- set prop_diameter_inches = 13.0 -%} {# [in] #}
+  {%- set prop_pitch_inches = 4.4 -%} {# [in] #}
+  {%- set prop_chord_m = 0.033 -%} {# [m] #}
+  {%- set prop_qty_blades = 2 -%}
+  {%- set bem_alpha = 2.8481 -%}
+  {%- set bem_cd0 = 0.0500 -%}
   {# <!--}--> #}
 
   {# Inertia constants {--> #}
@@ -508,7 +519,7 @@
       <!--}-->
     </link>
 
-  {# Propellers {--> #}
+{# Propellers {--> #}
     {%- set prop_list = [
     {
     'motor_number': 0,
@@ -573,7 +584,15 @@
       prop_ixz = prop_ixz,
       prop_iyy = prop_iyy,
       prop_iyz = prop_iyz,
-      prop_izz = prop_izz)
+      prop_izz = prop_izz,
+      use_bem_model = use_bem_model,
+      bem_rho = bem_rho,
+      prop_diameter_inches = prop_diameter_inches,
+      prop_pitch_inches = prop_pitch_inches,
+      prop_chord_m = prop_chord_m,
+      prop_qty_blades = prop_qty_blades,
+      bem_alpha = bem_alpha,
+      bem_cd0 = bem_cd0)
     }}
     {# <!--}--> #}
 
@@ -581,7 +600,7 @@
     {# ||                compulsory sensor definitions                 || #}
     {# ================================================================== #}
 
-    <!-- Pixhawk {-->
+    <!-- Flight Controller {-->
     {%- set imu_topic = '/imu' -%}
     {%- set mag_topic = '/mag' -%}
     {%- set baro_topic = '/baro' -%}
@@ -652,7 +671,8 @@
     <!--}-->
 
     <!-- Mavlink interface {-->
-    {{ components.gazebo_mavlink_interface_macro(
+    {% if flight_controller == 'px4' %}
+    {{ components.px4_mavlink_interface_macro(
       namespace = namespace,
       instance = instance,
       imu_topic = imu_topic,
@@ -660,6 +680,13 @@
       baro_topic = baro_topic,
       lidar_topic = lidar_topic)
     }}
+    {% elif flight_controller == 'ap' %}
+    {{ components.ardupilot_mavlink_interface_macro(
+      namespace = namespace,
+      instance = instance,
+      imu_topic = imu_topic)
+    }}
+    {% endif %}
     <!--}-->
 
     <!-- IMU {-->
@@ -735,7 +762,7 @@
       y = 0.0,
       z = 0.1,
       roll = 0,
-      pitch = 0.0,
+      pitch = 0,
       yaw = 0,
       lasers = 20)
     }} 
@@ -841,7 +868,7 @@
       y = 0.0,
       z = -0.016,
       roll = 0,
-      pitch = 0,
+      pitch = 0.0,
       yaw = 0)
     }}
     {% endif %}
