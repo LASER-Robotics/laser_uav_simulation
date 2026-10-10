@@ -8,80 +8,124 @@
   {# ================================================================== #}
 
   {# Robot parameters and arguments {--> #}
-  {%- set mass = 1.75 -%} {# [kg] #}
-  {%- set body_width = 0.18 -%} {# [m] #}
-  {%- set body_length = 0.05 -%} {# [m] #}
-  {%- set body_height = 0.075 -%} {# [m] #}
-  {%- set mass_prop = 0.005 -%} {# [kg] #}
-  {%- set radius_rotor = 0.05 -%} {# [m] #}
+  {%- set mass = 2.352 -%} {# [kg] #}
+  {%- set body_width = 0.41 -%} {# [m] #}
+  {%- set body_length = 0.41 -%} {# [m] #}
+  {%- set body_height = 0.11 -%} {# [m] #}
+  {%- set mass_prop = 0.012 -%} {# [kg] #}
+  {%- set radius_rotor = 0.09525 -%} {# [m] #}
+
+  {%- set body_cog_x = 0.012961 -%} {# [m] #}
+  {%- set body_cog_y = -0.000153 -%} {# [m] #}
+  {%- set body_cog_z = 0.040918 -%} {# [m] #}
 
   {%- set motor_mesh_z_offset = -0.0196 -%} {# [m] #}
-  {%- set rotor_x_offset = 0.11 -%} {# [m] #}
-  {%- set rotor_y_offset = 0.125 -%} {# [m] #}
-  {%- set rotor_z_offset = 0.035 -%} {# [m] #}
+  {%- set rotor_x_offset = 0.091013 -%} {# [m] #}
+  {%- set rotor_x_offset_front = 0.121119 -%} {# [m] #}
+  {%- set rotor_y_offset = 0.106066 -%} {# [m] #}
+  {%- set rotor_z_offset = -0.006 -%} {# [m] #}
+  {%- set prop_z_offset = -0.04 -%} {# [m] #}
 
   {%- set root = 'base_link' -%}
   {# <!--}--> #}
 
-  {# Motor constants {--> #}
-  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
-  {%- set motor_quadratic_a = 0.243975 -%}
-  {%- set motor_quadratic_b = -0.232754 -%}
-  {%- set motor_constant = 5.68e-6 -%} {# [kg.m/s^2] #}
-  {%- set moment_constant = 0.016 -%} {# [m] #}
-  {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
-  {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
-  {%- set max_rot_velocity = 2038 -%} {# [rad/s] #}
-  {%- set rotor_drag_coefficient =  8.06428e-06 -%} 
-  {%- set rolling_moment_coefficient = "1.0e-6" -%}
+  {# Visual poses {--> #}
+  {%- set chassi_x = 0 -%} {# [m] #}
+  {%- set chassi_y = 0 -%} {# [m] #}
+  {%- set chassi_z = 0 -%} {# [m] #}
+  {%- set chassi_roll = 0 -%} {# [deg] #}
+  {%- set chassi_pitch = 0 -%} {# [deg] #}
+  {%- set chassi_yaw = 90 -%} {# [deg] #}
+
+  {%- set battery_x = -0.052 -%} {# [m] #}
+  {%- set battery_y = 0.0 -%} {# [m] #}
+  {%- set battery_z = 0.0 -%} {# [m] #}
+  {%- set battery_roll = 0 -%} {# [deg] #}
+  {%- set battery_pitch = 0 -%} {# [deg] #}
+  {%- set battery_yaw = 180 -%} {# [deg] #}
+
+  {%- set livox_box_x = 0.06697 -%} {# [m] #}
+  {%- set livox_box_y = 0.04336 -%} {# [m] #}
+  {%- set livox_box_z = 0.0386 -%} {# [m] #}
+  {%- set livox_box_yaw = 180 -%} {# [deg] #}
+  {%- set livox_dome_x = 0.02994 -%} {# [m] #}
+  {%- set livox_dome_y = 0.00133 -%} {# [m] #}
+  {%- set livox_dome_z = 0.08 -%} {# [m] #}
+  {%- set livox_dome_yaw = 270 -%} {# [deg] #}
+  {%- set livox_sensor_x = 0.03 -%} {# [m] #}
+  {%- set livox_sensor_y = 0.0 -%} {# [m] #}
+  {%- set livox_sensor_z = 0.065 -%} {# [m] #}
+
+  {%- set camera_x = 0.11 -%} {# [m] #}
+  {%- set camera_y = 0 -%} {# [m] #}
+  {%- set camera_z = 0.04 -%} {# [m] #}
+  {%- set vio_x = 0.1324 -%} {# [m] #}
+  {%- set vio_y = 0 -%} {# [m] #}
+  {%- set vio_z = 0.04 -%} {# [m] #}
+
+  {%- set motor_visual_x = rotor_x_offset_front -%} {# [m] #}
+  {%- set motor_visual_x_back = rotor_x_offset -%} {# [m] #}
+  {%- set motor_visual_y = rotor_y_offset -%} {# [m] #}
+  {%- set motor_visual_z = rotor_z_offset -%} {# [m] #}
   {# <!--}--> #}
 
-  {# Inertia constants {--> #}
-  {%- set inertia_body_radius = 0.25 -%} {# [m] #}
-  {%- set inertia_body_height = 0.05 -%} {# [m] #}
+  {# Motor constants {--> #}
+  {# --- Motor and Aerodynamic Constants --- #}
+  {%- set rotor_velocity_slowdown_sim = 1.0 -%}
+  {%- set motor_quadratic_a = 0.257592 -%}
+  {%- set motor_quadratic_b = -0.134246 -%}
+  {%- set motor_constant = 7.852747e-06 -%} {# [kg.m/s^2] #}
+  {%- set moment_constant = 0.012817 -%} {# [m] #}
+  {%- set time_constant_up = 1.0 / 80.0 -%} {# [s] #}
+  {%- set time_constant_down = 1.0 / 40.0 -%} {# [s] #}
+  {%- set max_rot_velocity = 1516.03 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient = 8.06428e-06 -%}
+  {%- set rolling_moment_coefficient = "1.0e-6" -%}
+
+  {# --- BEM Model Constants --- #}
+  {%- set use_bem_model = false -%}
+  {%- set bem_rho = 1.225 -%} {# [kg/m^3] Air density #}
+  {%- set prop_diameter_inches = 7.5 -%} {# [in] #}
+  {%- set prop_pitch_inches = 4.6 -%} {# [in] #}
+  {%- set prop_chord_m = 0.033 -%} {# [m] #}
+  {%- set prop_qty_blades = 2 -%}
+  {%- set bem_alpha = 2.8481 -%}
+  {%- set bem_cd0 = 0.0500 -%}
   {# <!--}--> #}
 
   {# Scales {--> #}
   {%- set mesh_scale = '1 1 1' -%}
-  {%- set mesh_scale_prop_ccw = '1 1 1' -%}
-  {%- set mesh_scale_prop_cw = '-1 1 1' -%}
-  {%- set mesh_scale_milimeters = '0.001 0.001 0.001' -%}
+  {%- set mesh_scale_prop_ccw = '0.01 0.01 0.01' -%}
+  {%- set mesh_scale_prop_cw = '-0.01 0.01 0.01' -%}
+  {%- set mesh_scale_cm = '0.01 0.01 0.01' -%}
   {# <!--}--> #}
 
   {# Meshes {--> #}
 
   {# Frame parts {--> #}
-  {%- set board_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/board.stl' -%} 
-  {%- set leg_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/leg.stl' -%}
+  {%- set board_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/chassi_lr7pro_lowpoly.obj' -%}
+  {%- set livox_box_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/Caixa_up_livox.obj' -%}
+  {%- set livox_dome_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/Dome_livox.obj' -%}
   {# <!--}--> #}
 
-  {# Motors and props {--> #} 
-  {%- set motor_bottom_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/bottom_motor.stl' -%}
-  {%- set motor_middle_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/mid_motor.stl' -%}
-  {%- set motor_top_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/top_motor.stl' -%}
-  {%- set prop_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/propeller.stl' -%}
+  {# Motors and props {--> #}
+  {%- set motor_top_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/top_motor.obj' -%}
+  {%- set prop_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/propeller_centered_lowpoly.obj' -%}
   {# <!--}--> #}
 
-  {# Sensors and computers {--> #}
-  {%- set pixhawk6c_mesh_file = 'model://laser_uavs_description/meshes/boards/pixhawk.stl' -%} 
-  {%- set nuc_board_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_board_mesh_file.stl' -%}
-  {%- set nuc_cooler_mesh_file = 'model://laser_uavs_description/meshes/boards/nuc_cooler_mesh_file.stl' -%}
-  {# <!--}--> #}
-
-  {# Mounts {--> #}  
-  {%- set battery_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/battery_mesh_file.stl' -%}
+  {# Mounts {--> #}
+  {%- set battery_mesh_file = 'model://laser_uavs_description/meshes/lr7pro/battery_4s.obj' -%}
   {# <!--}--> #}
 
   {# <!--}--> #}
 
   {# Inertias {--> #}
-  {%- set body_ixx = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
+  {%- set body_ixx = 0.017862 -%}
   {%- set body_ixy = 0 -%}
   {%- set body_ixz = 0 -%}
-  {%- set body_iyy = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
+  {%- set body_iyy = 0.021412 -%}
   {%- set body_iyz = 0 -%}
-  {%- set body_izz = (mass * inertia_body_radius * inertia_body_radius) / 2 -%}
-
+  {%- set body_izz = 0.032660 -%}
 
   {%- set prop_ixx = 0.00002 -%}
   {%- set prop_ixy = 0 -%}
@@ -91,214 +135,131 @@
   {%- set prop_izz = 0.00002 -%}
   {# <!--}--> #}
 
-	<model name="{{  model_name  }}">
-		<link name="{{  root  }}">
+  <model name="{{  model_name  }}">
+    <link name="{{  root  }}">
       <!-- Body physics {-->
-      {{ components.multirotor_box_physics_macro(
-      mass = mass,
-      body_width = body_width,
-      body_length = body_length,
-      body_height = body_height,
-      rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
-      ixx = body_ixx,
-      ixy = body_ixy,
-      ixz = body_ixz,
-      iyy = body_iyy,
-      iyz = body_iyz,
-      izz = body_izz)
-      }}
+      <pose>0 0 0 0 0 0 </pose>
+      <inertial>
+        <pose>{{ body_cog_x }} {{ body_cog_y }} {{ body_cog_z }} 0 0 0</pose>
+        <mass>{{ mass }}</mass>
+        <inertia>
+          <ixx>{{ body_ixx }}</ixx>
+          <ixy>{{ body_ixy }}</ixy>
+          <ixz>{{ body_ixz }}</ixz>
+          <iyy>{{ body_iyy }}</iyy>
+          <iyz>{{ body_iyz }}</iyz>
+          <izz>{{ body_izz }}</izz>
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <collision name="base_link_collision">
+        <pose> 0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>{{ body_width }} {{ body_length }} {{ body_height }}</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+
+      <plugin filename="libgazebo_multirotor_base_plugin.so" name="multirotor_base_plugin">
+        <robotNamespace/>
+        <linkName>base_link</linkName>
+        <rotorVelocitySlowdownSim>{{ rotor_velocity_slowdown_sim }}</rotorVelocitySlowdownSim>
+      </plugin>
       <!--}-->
 
-			<!-- Body visuals {-->
+      <!-- Body visuals {-->
 
-			<!-- Boards {-->
-      {{ components.visual_mesh_macro(
+      <!-- Chassis {-->
+      {{ components.visual_mesh_textured_macro(
         name = 'top_board',
         mesh_file = board_mesh_file,
-        mesh_scale = mesh_scale_milimeters,
-        color = 'Black',
-        x = 0,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(90))
-      }}
-      
-      {{ components.leg_collision_offset_macro(
-        name = 'leg_3d_print_front_right',
-        mesh_file = leg_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Black',
-        x = 0.0,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(270),
-        collision_height = 0.10,
-        collision_radius = 0.01,
-        offset_x = 0.132,
-        offset_y = -0.154,
-        offset_z = -0.050)
-      }}
-
-     {{ components.leg_collision_offset_macro(
-        name = 'leg_3d_print_front_left',
-        mesh_file = leg_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Black',
-        x = 0,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(8),
-        collision_height = 0.10,
-        collision_radius = 0.01,
-        offset_x = 0.132,
-        offset_y = 0.154,
-        offset_z = -0.050)
-      }}
-
-      {{ components.leg_collision_offset_macro(
-        name = 'leg_3d_print_back_left',
-        mesh_file = leg_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Blue',
-        x = 0,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(90),
-        collision_height = 0.10,
-        collision_radius = 0.01,
-        offset_x = -0.132,
-        offset_y = 0.154,
-        offset_z = -0.050)
-      }}
-
-      {{ components.leg_collision_offset_macro(
-        name = 'leg_3d_print_back_right',
-        mesh_file = leg_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Blue',
-        x = 0,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(188),
-        collision_height = 0.10,
-        collision_radius = 0.01,
-        offset_x = -0.132,
-        offset_y = -0.154,
-        offset_z = -0.050)
-      }}
-			<!--}-->
-
-      <!-- Intel nuc {-->
-      {{ components.visual_mesh_macro(
-        name = 'nuc_board',
-        mesh_file = nuc_board_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Grass',
-        x = 0.045,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(0))
-      }}
-      {{ components.visual_mesh_macro(
-        name = 'nuc_cooler',
-        mesh_file = nuc_cooler_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'Grey',
-        x = 0.045,
-        y = 0,
-        z = 0,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(0))
+        mesh_scale = mesh_scale_cm,
+        x = chassi_x,
+        y = chassi_y,
+        z = chassi_z,
+        roll = components.rad(chassi_roll),
+        pitch = components.rad(chassi_pitch),
+        yaw = components.rad(chassi_yaw))
       }}
       <!--}-->
 
-      <!-- Pixhawk {-->
-      {{ components.visual_mesh_macro(
-        name = 'pixhawk6c',
-        mesh_file = pixhawk6c_mesh_file,
-        mesh_scale = mesh_scale,
-        color = 'DarkGrey',
-        x = 0,
-        y = 0,
-        z = -0.025,
-        roll = 0,
-        pitch = 0,
-        yaw = components.rad(90))
-      }}
-      <!--}-->
-      
-      <!-- Motors {-->
-      {%- set affix = 'front_right' -%}
-
-      {%- for id in range(0, 4) -%}
-
-        {%- if id == 1 -%}
-          {%- set affix = 'front_left' -%}
-        {%- endif -%}
-        {%- if id == 2 -%}
-          {%- set affix = 'back_left' -%}
-        {%- endif -%}
-        {%- if id == 3 -%}
-          {%- set affix = 'back_right' -%}
-        {%- endif -%}
-
-        {{ components.visual_mesh_macro(
-          name = 'motor_bottom_' + affix,
-          mesh_file = motor_bottom_mesh_file,
-          mesh_scale = mesh_scale,
-          color = 'Grey',
-          x = 0,
-          y = 0,
-          z = 0,
-          roll = 0,
-          pitch = 0,
-          yaw = id * 1.5708)
-        }}
-
-        {{ components.visual_mesh_macro(
-          name = 'motor_middle_' + affix,
-          mesh_file = motor_middle_mesh_file,
-          mesh_scale = mesh_scale,
-          color = 'Black',
-          x = 0,
-          y = 0,
-          z = 0,
-          roll = 0,
-          pitch = 0,
-          yaw = id * 1.5708)
-        }}
-
-      {%- endfor -%}
-      <!--}-->
-      
-      <!-- Battery mount and battery {-->
-      {{ components.visual_mesh_macro(
+      <!-- Battery {-->
+      {{ components.visual_mesh_textured_macro(
         name = 'battery',
         mesh_file = battery_mesh_file,
-        mesh_scale = mesh_scale_milimeters,
-        color = 'Grey',
-        x = -0.065,
-        y = -0.022,
-        z = -0.002,
+        mesh_scale = mesh_scale_cm,
+        x = battery_x,
+        y = battery_y,
+        z = battery_z,
+        roll = components.rad(battery_roll),
+        pitch = components.rad(battery_pitch),
+        yaw = components.rad(battery_yaw))
+      }}
+      <!--}-->
+
+      <!-- Livox mount {-->
+      {% if enable_livox %}
+      {{ components.visual_mesh_textured_macro(
+        name = 'livox_box',
+        mesh_file = livox_box_mesh_file,
+        mesh_scale = mesh_scale_cm,
+        x = livox_box_x,
+        y = livox_box_y,
+        z = livox_box_z,
         roll = 0,
+        pitch = 0,
+        yaw = components.rad(livox_box_yaw))
+      }}
+      {{ components.visual_mesh_textured_macro(
+        name = 'livox_dome',
+        mesh_file = livox_dome_mesh_file,
+        mesh_scale = mesh_scale_cm,
+        x = livox_dome_x,
+        y = livox_dome_y,
+        z = livox_dome_z,
+        roll = 0,
+        pitch = 0,
+        yaw = components.rad(livox_dome_yaw))
+      }}
+      {% endif %}
+      <!--}-->
+
+      <!-- Motors {-->
+      {%- set motor_offsets = [
+        {'name': 'front_right', 'x': motor_visual_x,       'y': -motor_visual_y},
+        {'name': 'front_left',  'x': motor_visual_x,       'y': motor_visual_y},
+        {'name': 'back_left',   'x': -motor_visual_x_back, 'y': motor_visual_y},
+        {'name': 'back_right',  'x': -motor_visual_x_back, 'y': -motor_visual_y}
+      ] -%}
+
+      {% for m in motor_offsets %}
+      {{ components.visual_mesh_textured_macro(
+        name = 'motor_top_' + m.name,
+        mesh_file = motor_top_mesh_file,
+        mesh_scale = mesh_scale_cm,
+        x = m.x,
+        y = m.y,
+        z = motor_visual_z,
+        roll = components.rad(180),
         pitch = 0,
         yaw = 0)
       }}
+      {% endfor %}
       <!--}-->
-     <!--}-->
+
+      <!--}-->
     </link>
 
 {# Propellers {--> #}
@@ -306,10 +267,10 @@
     {
     'motor_number': 0,
     'direction': 'ccw',
-    'x': rotor_x_offset,
+    'x': rotor_x_offset_front,
     'y': -rotor_y_offset,
-    'z': rotor_z_offset,
-    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'z': prop_z_offset,
+    'mesh_files': [prop_mesh_file],
     'mesh_scale': mesh_scale_prop_ccw,
     'color': 'Grey'
     },
@@ -318,18 +279,18 @@
     'direction': 'ccw',
     'x': -rotor_x_offset,
     'y': rotor_y_offset,
-    'z': rotor_z_offset,
-    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'z': prop_z_offset,
+    'mesh_files': [prop_mesh_file],
     'mesh_scale': mesh_scale_prop_ccw,
     'color': 'Grey'
     },
     {
     'motor_number': 2,
     'direction': 'cw',
-    'x': rotor_x_offset,
+    'x': rotor_x_offset_front,
     'y': rotor_y_offset,
-    'z': rotor_z_offset,
-    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'z': prop_z_offset,
+    'mesh_files': [prop_mesh_file],
     'mesh_scale': mesh_scale_prop_cw,
     'color': 'Grey'
     },
@@ -338,8 +299,8 @@
     'direction': 'cw',
     'x': -rotor_x_offset,
     'y': -rotor_y_offset,
-    'z': rotor_z_offset,
-    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'z': prop_z_offset,
+    'mesh_files': [prop_mesh_file],
     'mesh_scale': mesh_scale_prop_cw,
     'color': 'Grey'
     }
@@ -514,7 +475,13 @@
       z = 0,
       roll = 0,
       pitch = 0,
-      yaw = 0)
+      yaw = 0,
+      x_offset = x_offset,
+      y_offset = y_offset,
+      z_offset = z_offset,
+      roll_offset = roll_offset,
+      pitch_offset = pitch_offset,
+      yaw_offset = yaw_offset)
     }}
     {% endif %}
     {# <!--}--> #}
@@ -529,24 +496,24 @@
     {{ components.livox_lidar_macro(
       namespace = namespace,
       parent_link = root,
-      sensor_name = 'livox',
+      sensor_name = 'livox_up',
       rot_freq = 15,
       noise = 0.01,
       max_range = 40,
-      x = -0.07,
-      y = 0.0,
-      z = 0.065,
+      x = livox_sensor_x,
+      y = livox_sensor_y,
+      z = livox_sensor_z,
       roll = 0,
-      pitch = components.rad(40),
-      yaw = components.rad(180),
+      pitch = 0,
+      yaw = 0,
       lasers = 30)
-    }} 
+    }}
 
     {{ components.imu_sensor_macro(
       namespace = namespace,
-      sensor_name = 'livox_imu',
-      parent_link = 'livox',
-      topic_name = namespace + '/livox/imu',
+      sensor_name = 'livox_up_imu',
+      parent_link = 'livox_up',
+      topic_name = namespace + '/livox_up/imu',
       update_rate = 200,
       x = 0,
       y = 0,
@@ -560,34 +527,17 @@
 
     {# ========================== camera sensors ======================== #}
 
-    {# Realsense placements {--> #}
     {# realsense front {--> #}
-    {% if enable_d435_front %}
+    {% if enable_vio %}
     {{ components.realsense_d435_macro(
       namespace = namespace,
       camera_name = 'front_rgbd', camera_suffix='',
       parent_link = root,
       realistic = 1,
       update_rate = 60,
-      x = 0.073,
-      y = 0.0,
-      z = -0.016,
-      roll = 0,
-      pitch = 0,
-      yaw = 0)
-    }}
-    {% endif %}
-
-    {% if enable_d435i_front %}
-    {{ components.realsense_d435_macro(
-      namespace = namespace,
-      camera_name = 'front_rgbd', camera_suffix='',
-      parent_link = root,
-      realistic = 1,
-      update_rate = 60,
-      x = 0.073,
-      y = 0.0,
-      z = -0.016,
+      x = camera_x,
+      y = camera_y,
+      z = camera_z,
       roll = 0,
       pitch = 0,
       yaw = 0)
@@ -608,10 +558,25 @@
     }}
     {% endif %}
     {# <!--}--> #}
-    {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
 
-
+    {# VIO (classic) {--> #}
+    {% if enable_vio %}
+    {{ components.vio_macro(
+      namespace = namespace,
+      sensor_name = 'vio',
+      parent_link = root,
+      camera_rate = 120,
+      imu_rate = 200,
+      x = vio_x,
+      y = vio_y,
+      z = vio_z,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+    {% endif %}
+    {# <!--}--> #}
   </model>
 </sdf>
