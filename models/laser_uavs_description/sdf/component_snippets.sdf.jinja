@@ -1470,7 +1470,8 @@
   size_x,
   size_y,
   size_z,
-  attachment_distance)
+  attachment_distance,
+  center_connections=false)
 -%}
 
 <link name="{{ name }}">
@@ -1507,6 +1508,7 @@
 </link>
 
 
+{% if not center_connections %}
 <!-- Ponto da corda esquerda -->
 
 <link name="left_attachment">
@@ -1547,6 +1549,7 @@
   <parent>{{ name }}</parent>
   <child>right_attachment</child>
 </joint>
+{% endif %}
 {%- endmacro -%}
 <!--}-->
 

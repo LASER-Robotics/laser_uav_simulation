@@ -3,10 +3,14 @@
 x=$1
 y=$2
 z=$3
+roll=$4
+pitch=$5
+yaw=$6
 
-shift 3
+# Agora deslocamos 6 argumentos em vez de 3
+shift 6
 
-JINJA_GEN=~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py
+JINJA_GEN="$(dirname "$(readlink -f "$0")")/jinja_gen.py"
 
 "$JINJA_GEN" \
   --namespace payload \
@@ -29,4 +33,7 @@ gz model \
   --model-name=payload \
   -x "$x" \
   -y "$y" \
-  -z "$z"
+  -z "$z" \
+  -R "$roll" \
+  -P "$pitch" \
+  -Y "$yaw"

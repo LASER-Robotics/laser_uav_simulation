@@ -3,6 +3,13 @@
 instance=$(echo "$1" | sed -n 's/^uav\([0-9]\+\)$/\1/p')
 instance=$((instance - 1))
 
+# Verifica se o fcu é "none". Se for, oculta o parâmetro.
+if [ "$3" == "none" ]; then
+    FCU_PARAM=""
+else
+    FCU_PARAM="--flight_controller $3"
+fi
+
 ~/git/laser_uav_system/ros_packages/laser_uav_simulation/scripts/jinja_gen.py --namespace $1 --uav_model $2 --flight_controller $3 --instance $instance --x $4 --y $5 --z $6 --yaw $7 $8
 
 echo "Waiting for gazebo run."

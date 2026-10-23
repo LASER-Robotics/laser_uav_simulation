@@ -1,28 +1,13 @@
 /**/**:
   ros__parameters:
-    - id: 1
-      type: "x500"
-      fcu: "px4"
-      pose_spawn: [0.0,0.5,0.2,0.0] # x y z yaw
+    - id: 3
+      type: "lr7pro"
+      fcu: "px4" # Desativa o PX4 para este teste
+      pose_spawn: [-0.5, 0.0, 0.2, 0.0] # x y z yaw
       sensors: "--enable_ground_truth"
     
-    - id: 2
-      type: "x500"
-      fcu: "px4"
-      pose_spawn: [0.0,-0.5,0.2,0.0] # x y z yaw
+    - id: 5
+      type: "lr7pro"
+      fcu: "px4" # Desativa o PX4 para este teste
+      pose_spawn: [0.5, 0.0, 0.2, 0.0] # x y z yaw
       sensors: "--enable_ground_truth"
-    
-    # - id: 3
-    #   type: "lr7pro"
-    #   pose_spawn: [15.0,15.0,0.2,0.0] # x y z yaw
-    #   sensors: "--enable_ground_truth"
-    
-    # - id: 4
-    #   type: "lr7pro"
-    #   pose_spawn: [0.0,15.0,0.2,0.0] # x y z yaw
-    #   sensors: "--enable_ground_truth"
-    
-    # - id: 5
-    #   type: "lr7pro"
-    #   pose_spawn: [45.0,5.0,0.2,0.0] # x y z yaw
-    #   sensors: "--enable_ground_truth"

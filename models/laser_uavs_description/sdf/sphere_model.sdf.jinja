@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  {% import "component_snippets.sdf.jinja" as components %}
+
+<sdf version="1.6">
+  <model name="{{ model_name }}">
+    <link name="base_link">
+      <inertial>
+        <mass>0.5</mass> 
+        <inertia>
+          <ixx>0.01</ixx><ixy>0.0</ixy><ixz>0.0</ixz>
+          <iyy>0.01</iyy><iyz>0.0</iyz><izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <visual name="visual">
+        <geometry>
+          <sphere><radius>0.1</radius></sphere>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <sphere><radius>0.1</radius></sphere>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Cable force is applied at base_link center; no attachment mass. -->
+
+    <plugin name="gazebo_ros_force_{{ namespace }}" filename="libgazebo_ros_force.so">
+      <ros>
+        <namespace>/{{ namespace }}</namespace>
+        <remapping>gazebo_ros_force:=cmd_wrench</remapping>
+      </ros>
+      <link_name>base_link</link_name>
+      <force_frame>world</force_frame>
+    </plugin>
+
+      {# Ground truth da esfera usa base_link como link principal. #}
+      {% if enable_ground_truth %}
+    <!-- Measure the actual force body; no extra sensor-link mass or offset. -->
+    <plugin name="{{ namespace }}_ground_truth" filename="libgazebo_ros_p3d.so">
+      <ros>
+        <namespace>/{{ namespace }}</namespace>
+        <remapping>odom:=ground_truth</remapping>
+      </ros>
+      <body_name>base_link</body_name>
+      <frame_name>world</frame_name>
+      <update_rate>100.0</update_rate>
+      <gaussian_noise>0.0</gaussian_noise>
+    </plugin>
+    {% endif %}
+
+  </model>
+</sdf>

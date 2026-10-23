@@ -61,3 +61,28 @@ This launch file also automatically starts the `MicroXRCEAgent` required for PX4
 
 ```bash
 ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=<path_to_your_yaml>
+
+
+## PPO center-cable scenario
+
+The `sphere_model` + `payload` templates used by `tmux/multi_drone_test`
+select `<training_center_model>true</training_center_model>`. The connection
+plugin uses `base_link`/`box_link` origins for geometry, velocities, force
+application and cable visuals. Extra attachment links are omitted from these
+templates; sphere mass is exactly 0.5 kg and payload mass is 1.0 kg.
+The cable model uses L=1 m, K=200 N/m, D=60 Ns/m, epsilon=1e-8 and
+`max(0, K*max(0, distance-L) + D*axial_velocity)`, including damping when slack.
+Per-cable saturation is disabled in this mode; `max_force` applies only to the
+legacy attachment mode. The PPO's 50 N resultant termination threshold remains
+in the controller. Omitting the flag preserves the original attachment physics.
+
+Restart Gazebo and regenerate/respawn models after rebuilding this package.
+Spawners resolve their own adjacent generator instead of a separate checkout.
+The tmux sphere scenario starts suspended with payload z=1.7 m. Pair it with
+`laser_uav_multi_drones/params/payload_transport.yaml` (payload_mass=1.0,
+sphere_mass=0.5 and updated PD targets). Start transport explicitly after PD
+settling, using `start_payload_trajectory`.
+
+This matches cable geometry and force law, not the complete numerical simulator:
+Gazebo still uses its own timestep, collision solver and rigid-body integration;
+training has velocity damping/clipping and randomized mass/cable curriculum.

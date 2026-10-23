@@ -1,23 +1,23 @@
 name: simulation
 root: ./
 startup_window: tui
-pre_window: export UAV_NAME=uav1; export UAV_TYPE=x500
+pre_window: export UAV_NAME=uav3; export UAV_TYPE=lr7pro
 windows:
   - spawn:
       layout: even-horizontal
       panes:
         - ros2 launch laser_uav_simulation gazebo.launch.py
+        - sleep 4; ../../scripts/./spawn_payload.sh 0.0 0.0 0.1 0.0 0.0 1.57 --enable_ground_truth
         # - ros2 launch laser_uav_simulation gazebo.launch.py real_time:=0.75
-        - sleep 4; ../../scripts/./spawn_payload.sh 0.0 0.0 0.1 --enable_ground_truth
         - ros2 launch laser_uav_simulation spawn_drones.launch.py spawn_drones_file:=./configs/spawn.yaml
   - api:
       layout: even-horizontal
       panes:
         - sleep 1; ros2 launch laser_uav_hw_api px4_api.launch.py 
-        - sleep 1; ros2 run laser_uav_simulation autostart.py 
-        - export UAV_NAME=uav2; sleep 3; ros2 launch laser_uav_hw_api px4_api.launch.py
-        - export UAV_NAME=uav2; sleep 3; ros2 run laser_uav_simulation autostart.py
-        # - export UAV_NAME=uav3; sleep 6; ros2 launch laser_uav_px4_api api.launch.py
+        # - sleep 1; ros2 run laser_uav_simulation autostart.py 
+        - export UAV_NAME=uav5; sleep 5; ros2 launch laser_uav_hw_api px4_api.launch.py
+        # - export UAV_NAME=uav2; sleep 5; ros2 run laser_uav_simulation autostart.py
+        # - export UAV_NAME=uav3; sleep 6; ros2 launch laser_uav_hw_api px4_api.launch.py
         # - export UAV_NAME=uav3; sleep 6; ros2 run laser_uav_simulation autostart.py
         # - export UAV_NAME=uav4; sleep 8; ros2 launch laser_uav_px4_api api.launch.py
         # - export UAV_NAME=uav4; sleep 8; ros2 run laser_uav_simulation autostart.py
@@ -25,26 +25,30 @@ windows:
       layout: tiled
       panes:
           - sleep 1; ros2 launch laser_uav_managers estimation_manager.launch.py
-          - export UAV_NAME=uav2; sleep 3; ros2 launch laser_uav_managers estimation_manager.launch.py
-          - sleep 6; ros2 topic echo /payload/ground_truth --no-arr
+          - export UAV_NAME=uav5; sleep 3; ros2 launch laser_uav_managers estimation_manager.launch.py
           # - export UAV_NAME=uav3; sleep 6; ros2 launch laser_uav_managers estimation_manager.launch.py
           # - export UAV_NAME=uav4; sleep 8; ros2 launch laser_uav_managers estimation_manager.launch.py
   - tui:
       layout: even-horizontal
       panes:
         - sleep 1; ros2 run laser_uav_tui tui --config ./configs/topics.yaml
-  - neighbor_odom:
+  - multi_drones:
       layout: tiled
       panes:
-        # - sleep 1; ros2 launch multi_drone_state multi_drone_state.launch.py
-        # - export UAV_NAME=uav2; sleep 3; ros2 launch multi_drone_state multi_drone_state.launch.py
-        # - export UAV_NAME=uav3; sleep 6; ros2 launch multi_drone_state multi_drone_state.launch.py
-        # - export UAV_NAME=uav4; sleep 8; ros2 launch multi_drone_state multi_drone_state.launch.py
+        # - sleep 1; ros2 launch laser_uav_multi_drones drone_avoidance.launch.py
+        - 'history -s ros2 service call /uav3/payload_transport/start_payload_trajectory laser_uav_multi_drones/srv/StartPayloadTrajectory \"{waypoints: [
+          {x: 3.0, y: 0.0, z: 4.0}, 
+          {x: 3.0, y: 3.0, z: 4.0}, 
+          {x: 0.0, y: 3.0, z: 4.0}, 
+          {x: 0.0, y: 0.0, z: 4.0} ]}\"'
+        
+        - sleep 1; ros2 launch laser_uav_multi_drones payload_transport.launch.py
+        - sleep 1; ros2 launch laser_uav_multi_drones ppo.launch.py
   - control_manager:
       layout: tiled
       panes:
-        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py
-        - export UAV_NAME=uav2; sleep 3; ros2 launch laser_uav_managers control_manager.launch.py
+        - sleep 1; ros2 launch laser_uav_managers control_manager.launch.py reference_source:=external
+        - export UAV_NAME=uav5; sleep 3; ros2 launch laser_uav_managers control_manager.launch.py reference_source:=external
         # - export UAV_NAME=uav3; sleep 6; ros2 launch laser_uav_managers control_manager.launch.py
         # - export UAV_NAME=uav4; sleep 9; ros2 launch laser_uav_managers control_manager.launch.py
         # - 'history -s ros2 service call /$UAV_NAME/px4_api/arm std_srvs/srv/Trigger {}'
@@ -250,3 +254,4 @@ windows:
       layout: even-horizontal
       panes:
         - 'history -s ros2 launch laser_uav_managers plotjuggler.launch.py'
+

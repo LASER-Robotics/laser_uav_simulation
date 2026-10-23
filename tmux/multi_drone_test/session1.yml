@@ -1,0 +1,64 @@
+name: simulation
+root: ~/laser_uav_system_ws
+startup_window: spawn
+pre_window: >
+  export UAV_NAME=uav1;
+  export UAV_TYPE=lr7pro;
+windows:
+  - spawn:
+      layout: even-horizontal
+      panes:
+        # Python PPO/shield service
+        - ros2 launch laser_uav_multi_drones ppo_shield.launch.py
+        - ros2 launch laser_uav_simulation force_sphere_test.launch.py
+        - sleep 2; ros2 launch laser_uav_multi_drones payload_transport.launch.py
+
+  - diagnostics:
+      layout: even-horizontal
+      panes:
+        # Monitor lifecycle state
+        - |
+          sleep 3
+          watch -n 1 \
+            ros2 lifecycle get /uav1/payload_transport
+
+        # Wait for the C++ node and both sphere subscribers,
+        # set full PPO gain, then unpause Gazebo.
+        - |
+          until ros2 lifecycle get \
+            /uav1/payload_transport \
+            2>/dev/null |
+            grep -q "active"
+          do
+            echo "Waiting for payload_transport lifecycle node..."
+            sleep 0.5
+          done
+
+          echo "payload_transport is active."
+
+          ros2 topic pub \
+            --once \
+            --wait-matching-subscriptions 2 \
+            /sphere_force/activation_gain \
+            std_msgs/msg/Float64 \
+            "{data: 1.0}"
+
+          echo "Activation gain sent to both spheres."
+
+          sleep 1
+
+          ros2 service call \
+            /unpause_physics \
+            std_srvs/srv/Empty \
+            "{}"
+
+          echo "Gazebo unpaused."
+
+          ros2 topic echo \
+            /uav1/action
+
+        # Monitor cable diagnostics
+        - |
+          sleep 4
+          ros2 topic echo \
+            /payload/rope_tension

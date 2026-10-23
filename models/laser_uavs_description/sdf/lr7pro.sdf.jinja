@@ -9,11 +9,11 @@
 
   {# Robot parameters and arguments {--> #}
   {%- set mass = 1.75 -%} {# [kg] #}
-  {%- set body_width = 0.18 -%} {# [m] #}
-  {%- set body_length = 0.05 -%} {# [m] #}
-  {%- set body_height = 0.075 -%} {# [m] #}
+  {%- set body_width = 0.001 -%} {# [m] #}
+  {%- set body_length = 0.001 -%} {# [m] #}
+  {%- set body_height = 0.001 -%} {# [m] #}
   {%- set mass_prop = 0.005 -%} {# [kg] #}
-  {%- set radius_rotor = 0.05 -%} {# [m] #}
+  {%- set radius_rotor = 0.005 -%} {# [m] #}
 
   {%- set motor_mesh_z_offset = -0.0196 -%} {# [m] #}
   {%- set rotor_x_offset = 0.11 -%} {# [m] #}
@@ -611,7 +611,119 @@
     {# <!--}--> #}
 
     {# ========================== VIO sensors ======================== #}
+    {# ========================== research itens ======================== #}
 
+    {# load_pendulum {--> #}
+    {% if enable_load_pendulum %}
+    {{ components.load_pendulum(
+      name='load_attacher',
+      parent_link='base_link',
+      attach_linker_pose='0 0 -0.01 0 0 0',
+      attach_linker_mass=0.01,
+      rope_num_segments=20,
+      rope_segment_length=0.03,
+      rope_segment_radius=0.002,
+      rope_segment_mass=0.001,
+      load_mass=0.3)
+    }}
+    {% endif %}
+    {# <!--}--> #}
+      
+    {# rope_attachment {--> #}
+    {{ components.rope_attachment_macro(
+      name='rope_attachment',
+      parent_link=root,
+      x=0.0,
+      y=0.0,
+      z=-0.10,
+      mass=0.0001)
+    }} 
+    {# <!--}--> #}
+      
+    {%- macro payload_box_macro(
+      name,
+      mass,
+      size_x,
+      size_y,
+      size_z,
+      attachment_distance)
+    -%}
+
+    <link name="{{ name }}">
+      <inertial>
+        <mass>{{ mass }}</mass>
+
+        <inertia>
+          <ixx>{{ mass * (size_y * size_y + size_z * size_z) / 12.0 }}</ixx>
+          <iyy>{{ mass * (size_x * size_x + size_z * size_z) / 12.0 }}</iyy>
+          <izz>{{ mass * (size_x * size_x + size_y * size_y) / 12.0 }}</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>{{ size_x }} {{ size_y }} {{ size_z }}</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>{{ size_x }} {{ size_y }} {{ size_z }}</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>0.8 0.4 0.1 1</ambient>
+          <diffuse>0.8 0.4 0.1 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+
+    <!-- Ponto da corda esquerda -->
+
+    <link name="left_attachment">
+      <pose>0 {{ attachment_distance }} {{ size_z / 2.0 }} 0 0 0</pose>
+
+      <inertial>
+        <mass>0.0001</mass>
+        <inertia>
+          <ixx>1e-8</ixx>
+          <iyy>1e-8</iyy>
+          <izz>1e-8</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <joint name="left_attachment_joint" type="fixed">
+      <parent>{{ name }}</parent>
+      <child>left_attachment</child>
+    </joint>
+
+
+    <!-- Ponto da corda direita -->
+
+    <link name="right_attachment">
+      <pose>0 -{{ attachment_distance }} {{ size_z / 2.0 }} 0 0 0</pose>
+
+      <inertial>
+        <mass>0.0001</mass>
+        <inertia>
+          <ixx>1e-8</ixx>
+          <iyy>1e-8</iyy>
+          <izz>1e-8</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <joint name="right_attachment_joint" type="fixed">
+      <parent>{{ name }}</parent>
+      <child>right_attachment</child>
+    </joint>
+    {%- endmacro -%}
 
   </model>
 </sdf>

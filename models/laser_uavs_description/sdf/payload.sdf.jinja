@@ -8,38 +8,29 @@
 
     {# payload_box {--> #}
     {{ components.payload_box_macro(
-    name='box_link',
-    mass=0.3,
-    size_x=0.1,
-    size_y=0.1,
-    size_z=0.1,
-    attachment_distance=0.15)
-    }} 
+      name='box_link',
+      mass=1.0,
+      size_x=0.1,
+      size_y=0.1,
+      size_z=0.1,
+      attachment_distance=0.05,
+      center_connections=true)
+    }}
     {# <!--}--> #}
 
-    {# payload_ground_truth {--> #}
+    {# ground_truth {--> #}
     {% if enable_ground_truth %}
-    {{ components.gazebo_ground_truth_macro(
-    namespace=namespace,
-    odometry_sensor_name='ground_truth',
-    parent_link='box_link',
-    topic_name='ground_truth',
-    noise=0.0,
-    frame_name='world',
-    update_rate=100.0,
-    x=0.0,
-    y=0.0,
-    z=0.0,
-    roll=0.0,
-    pitch=0.0,
-    yaw=0.0,
-    x_offset=x_offset,
-    y_offset=y_offset,
-    z_offset=z_offset,
-    roll_offset=roll_offset,
-    pitch_offset=pitch_offset,
-    yaw_offset=yaw_offset)
-    }}
+    <!-- Measure the actual force body; no extra sensor-link mass or offset. -->
+    <plugin name="{{ namespace }}_ground_truth" filename="libgazebo_ros_p3d.so">
+      <ros>
+        <namespace>/{{ namespace }}</namespace>
+        <remapping>odom:=ground_truth</remapping>
+      </ros>
+      <body_name>box_link</body_name>
+      <frame_name>world</frame_name>
+      <update_rate>100.0</update_rate>
+      <gaussian_noise>0.0</gaussian_noise>
+    </plugin>
     {% endif %}
     {# <!--}--> #}
 
@@ -48,20 +39,24 @@
       name="payload_connection_plugin"
       filename="libpayload_connection_plugin.so">
 
-    <uav1_model>uav1_x500_0</uav1_model>
-    <uav2_model>uav2_x500_1</uav2_model>
+      <uav1_model>uav3_lr7pro_2</uav1_model>
+      <uav2_model>uav5_lr7pro_4</uav2_model>
 
-    <rope_length>1.0</rope_length>
+      <!-- Center geometry and cable law match unified_world. -->
+      <training_center_model>true</training_center_model>
+      <rope_length>1.0</rope_length>
 
-    <stiffness>200.0</stiffness>
-    <damping>10.0</damping>
+      <stiffness>200.0</stiffness>
+      <damping>60.0</damping>
+      <max_force>50.0</max_force>
 
-    <max_force>50.0</max_force>
+      <tension_topic>/payload/rope_tension</tension_topic>
+      <tension_update_rate>30.0</tension_update_rate>
 
-    <visual_segments>20</visual_segments>
-    <visual_radius>0.004</visual_radius>
-    <visual_update_rate>20.0</visual_update_rate>
-  
+      <visual_segments>20</visual_segments>
+      <visual_radius>0.004</visual_radius>
+      <visual_update_rate>20.0</visual_update_rate>
+
     </plugin>
     {# <!--}--> #}
 

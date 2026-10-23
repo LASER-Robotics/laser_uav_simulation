@@ -39,7 +39,7 @@ def launch_setup(context: launch.LaunchContext, ld):
 
     uavs = config_data.get('ros__parameters', {})
 
-    uavs_available = ['x500', 'lr7pro']
+    uavs_available = ['x500', 'lr7pro', 'sphere_model']
 
     for uav in uavs:
         id = uav.get('id', 0)
