@@ -31,7 +31,7 @@ windows:
   - planning_manager:
       layout: tiled
       panes:
-        - sleep 1; ros2 launch laser_uav_managers planning_manager.launch.py
+        - sleep 1; ros2 launch laser_uav_managers planning_manager.launch.py planning_manager_file:=\"./configs/planning_manager.yaml\"
   - free_cmd:
       layout: tiled
       panes:
