@@ -32,6 +32,11 @@ windows:
       layout: even-horizontal
       panes:
         - sleep 1; ros2 run laser_uav_tui tui --config ./configs/topics.yaml
+  - localization:
+      layout: even-horizontal
+      panes:
+        - ros2 launch laser_uav_localization gamma.launch.py gamma_file:=./configs/gamma1.yaml
+        - export UAV_NAME=uav5; sleep 3; ros2 launch laser_uav_localization gamma.launch.py gamma_file:=./configs/gamma2.yaml
   - multi_drones:
       layout: tiled
       panes:

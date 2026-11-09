@@ -1,0 +1,24 @@
+/**/**:
+  ros__parameters:
+    map_path: "/path/to/file.pcd"
+
+    map_frame_id: "map"
+    odom_frame_id: "odometry"
+    fcu_frame_id: "fcu"
+    lidar_frame_id: "livox_up/link"
+
+    search_range: 15.0 # [m]
+    step_size: 3.0 # [m]
+    yaw_search_range: 3.141592653589793 # [rad], +/- range around zero yaw during global search
+    yaw_step_size: 0.523598775598299 # [rad], 30 degrees
+
+    initial_guess: 
+      use: true
+      x: -0.5    # [m]
+      y: 0.0    # [m]
+      z: 0.0    # [m]
+      yaw: 0.0  # [rad]
+
+    use_imu: false
+
+    use_odom: false
