@@ -1,0 +1,2 @@
+#!/bin/sh
+commander set_ekf_origin 47.3977 8.54559 0
